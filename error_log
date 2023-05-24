@@ -1,0 +1,39 @@
+[19-Aug-2022 21:16:35 UTC] PHP Parse error:  syntax error, unexpected '|', expecting variable (T_VARIABLE) in /home/wooloh/public_html/patient/vendor/nunomaduro/termwind/src/Functions.php on line 17
+[01-Oct-2022 02:25:05 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.30. in /home/wooloh/public_html/patient/vendor/composer/platform_check.php on line 24
+[01-Oct-2022 02:27:01 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.30. in /home/wooloh/public_html/patient/vendor/composer/platform_check.php on line 24
+[01-Oct-2022 02:32:20 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.30. in /home/wooloh/public_html/patient/vendor/composer/platform_check.php on line 24
+[03-Oct-2022 00:54:21 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.30. in /home/wooloh/public_html/patient/vendor/composer/platform_check.php on line 24
+[03-Oct-2022 03:13:34 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.30. in /home/wooloh/public_html/patient/vendor/composer/platform_check.php on line 24
+[08-Oct-2022 23:12:18 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function App\Exceptions\Handler::App\Exceptions\{closure}(), 1 passed and exactly 2 expected in /home/a8h7dab8sd/public_html/backend.accualigners.com/app/Exceptions/Handler.php:45
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}(Object(ParseError))
+#1 /home/a8h7dab8sd/public_html/backend.accualigners.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func(Object(Closure), Object(ParseError))
+#2 /home/a8h7dab8sd/public_html/backend.accualigners.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(256): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke(Object(ParseError))
+#3 /home/a8h7dab8sd/public_html/backend.accualigners.com/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(432): Illuminate\Foundation\Exceptions\Handler->report(Object(ParseError))
+#4 /home/a8h7dab8sd/public_html/backend.accualigners.com/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(153): Illuminate\Foundation\Console\Kernel->reportException(Object(ParseError))
+#5 /home/a8h7dab8sd/public_html/backend.accualigners.com/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 {main}
+  thrown in /home/a8h7dab8sd/public_html/backend.accualigners.com/app/Exceptions/Handler.php on line 45
+[07-Jan-2023 16:09:12 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function App\Exceptions\Handler::App\Exceptions\{closure}(), 1 passed and exactly 2 expected in /home/accualignersapp/public_html/app/Exceptions/Handler.php:45
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}(Object(ArgumentCountError))
+#1 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func(Object(Closure), Object(ArgumentCountError))
+#2 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(256): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke(Object(ArgumentCountError))
+#3 /home/accualignersapp/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report(Object(ArgumentCountError))
+#4 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(191): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report(Object(ArgumentCountError))
+#5 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(259): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ArgumentCountError))
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(ArgumentCountError))
+#7 {main}
+  thrown in /home/accualignersapp/public_html/app/Exceptions/Handler.php on line 45
+[07-Jan-2023 16:09:12 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function App\Exceptions\Handler::App\Exceptions\{closure}(), 1 passed and exactly 2 expected in /home/accualignersapp/public_html/app/Exceptions/Handler.php:45
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func(Object(Closure), Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#2 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(256): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 /home/accualignersapp/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#4 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(191): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#5 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(235): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#6 /home/accualignersapp/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(259): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/accualignersapp/public_html/app/Exceptions/Handler.php on line 45

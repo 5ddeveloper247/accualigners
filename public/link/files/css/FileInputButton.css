@@ -1,0 +1,12 @@
+input[type="file"] {
+    display: none;
+}
+
+label.img-lable {
+    border: 1px solid #d1d5ea;
+    cursor: pointer;
+}
+
+.img-lable img {
+    margin: 0px 0px 0px 0px !important;
+}
