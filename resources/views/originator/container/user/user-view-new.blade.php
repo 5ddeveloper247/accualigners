@@ -48,14 +48,14 @@ $title = 'Users';
                         <div class="col-xl-5 mb-30 ">
                             <div class="carx2 input">
                             <form action="{{url(Request()->path())}}" id="filter-form" method="get">
-                                <input type="text" name="filter" class="form-control" placeholder="Search...">
+                                <input type="text" name="filter" class="form-control" placeholder="Search..." value="{{Request()->has('filter') ? Request()->get('filter') : ''}}">
                                 <div class="searchicons">
                                     <button type="submit" style="background: none;border:none;"><i class="bi bi-search" style="margin-right:12px;"></i></button>|
                                     <a href="{{Request()->has('filter') ? url(Request()->path()) : 'JavaScript:void(0);'}}">
                                         <i class="bi bi-sliders"></i>
                                     </a>
                                 </div>
-                            
+
                             </form>
                             </div>
                         </div>
@@ -148,23 +148,23 @@ $title = 'Users';
                     </div>
                     <div class="row m-0  py-4 mt-3" style="border:1px dashed #e3e3e3;border-radius: 8px;">
                         <div class="col-md-3 bold ">
-                       
+
                             <img src="{{asset('vendors/images/gallery.png')}}" id="output" style="width:80px;height: 80px;border-radius:50%;">
-                          
+
                         </div>
                         <div class="col-md-6 bold ">
                                   <h6 class="textcolor pt-3" style="font-size: 14px;">Upload Profile Picture</h6>
                             <span style="font-size: 12px;">Select a file to upload</span>
-                          
-                        </div> 
+
+                        </div>
                         <div class="col-md-3 px-4 bold pt-4">
                             <a class="textcolor add_files_btn" style="cursor: pointer;">Browse</a>
                             <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden>
-                          
+
                         </div>
-            
+
                     </div>
-                             
+
                      <div class="row  pt-4">
                          <div class="col-md-6 bold ">
                             <span>Full Name*</span>
@@ -176,14 +176,14 @@ $title = 'Users';
                              <select class="form-select form-control" name="role_id" id="txt_roll_id">
                                  <option selected value="first_index">Select </option>
                                      @foreach ($roles as $role)
-                                          <option value="{{$role->id}}" {{ isset($edit_values) ? (($edit_values->role_id == $role->id) ?  'selected' : '') : ((old('role_id') == $role->id) ? 'selected' : '') }}>{{ ucwords($role->name) }}</option>  
+                                          <option value="{{$role->id}}" {{ isset($edit_values) ? (($edit_values->role_id == $role->id) ?  'selected' : '') : ((old('role_id') == $role->id) ? 'selected' : '') }}>{{ ucwords($role->name) }}</option>
                                      @endforeach
                             </select>
                         </div>
                               <div class="col-md-12 mb-4 bold ">
                             <span>Email*</span>
                             <input type="email" name="email" id="txtemail" class="form-control" placeholder="Enter Here">
-                            </div>      
+                            </div>
                         <div class="col-md-6 bold ">
                             <span>Password*</span>
                             <input type="password" name="password" @if( !$edit_id ) required data-validation-required-message="Password is required" @endif id="txtpass" class="form-control" placeholder="Enter Here">
@@ -192,8 +192,8 @@ $title = 'Users';
                             <input type="password" name="password_confirmation" id="confirm_password" class="form-control" placeholder="Enter Here">
                         </div>
                     </div>
-              
-                   
+
+
                 </div>
                     </div>
              <div class="row mt-3 ">
@@ -291,11 +291,11 @@ $title = 'Users';
                 {
                 recordId[a] = $("#a"+i).val();
                 a++;
-                } 
+                }
             }
         if(recordId.length != 0)
         {
-         $(".pop2").removeClass("d-none");   
+         $(".pop2").removeClass("d-none");
         }
     });
       $('.cleardo').click(function() {
@@ -312,7 +312,7 @@ $title = 'Users';
         $('.fourdo').addClass('col-xl-4');
         $('.onedo').removeClass('col-xl-4');
         $('.onedo').addClass('col-xl-5');
-        
+
     });
 </script>
 <script src="{{asset('vendors/scripts/user_ajax.js')}}"></script>

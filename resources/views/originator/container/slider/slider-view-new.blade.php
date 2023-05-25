@@ -1,10 +1,10 @@
 <style>
-    
+
      body{
         display:none;
      }
      .imgdata img{
-        
+
     height: 200px;
     background-size: cover;
     width: 280px;
@@ -47,14 +47,14 @@ $title = 'Sliders';
                         <div class="col-xl-5 mb-30">
                             <div class="carx2 input">
                             <form action="{{url(Request()->path())}}" id="filter-form" method="get">
-                                <input type="text" name="filter" class="form-control" placeholder="Search...">
+                                <input type="text" name="filter" class="form-control" placeholder="Search..." value="{{Request()->has('filter') ? Request()->get('filter') : ''}}">
                                 <div class="searchicons">
                                     <button type="submit" style="background: none;border:none;"><i class="bi bi-search" style="margin-right:12px;"></i></button>|
                                     <a href="{{Request()->has('filter') ? url(Request()->path()) : 'JavaScript:void(0);'}}">
                                         <i class="bi bi-sliders"></i>
                                     </a>
                                 </div>
-                            
+
                             </form>
 
                             </div>
@@ -82,9 +82,9 @@ $title = 'Sliders';
                           </a>
                          <img src="{{$slider->slider_image}}" class="img-fluid" style="border-radius:10px;">
                          <p class="text-center"> {{$slider->sort_order}}</p>
-                        </div>  
-                        </div>  
-                @endforeach 
+                        </div>
+                        </div>
+                @endforeach
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
             </div>
@@ -112,7 +112,7 @@ $title = 'Sliders';
                             <p class="greytext">Complete the information related to the slider</p>
                             <i class="fa-solid bandeka float-right cursor fa-xmark " onclick="bndka();"></i>
                         </div>
-                     
+
                     </div>
                 </div>
                 <div class="col-md-12 px-4 brdall py-4">
@@ -121,37 +121,37 @@ $title = 'Sliders';
                     </div>
                     <div class="row m-0  py-4 mt-3" style="border:1px dashed #e3e3e3;border-radius: 8px;">
                         <div class="col-md-3 bold ">
-                       
+
                         <img src="{{asset('vendors/images/gallery.png')}}" id="output" style="width:80px;height: 80px;border-radius:50%;">
-                          
+
                         </div>
                         <div class="col-md-6 bold ">
                                   <h6 class="textcolor pt-3" style="font-size: 14px;">Upload Profile Picture</h6>
                             <span style="font-size: 12px;">The file Dimesions should be height: 380 px width: 980 px</span>
-                          
-                        </div> 
+
+                        </div>
                         <div class="col-md-3 px-4 bold pt-4">
                             <a class="textcolor add_files_btn" style="cursor: pointer;">Browse</a>
                             <input type="file" id="slider_image" name="slider_image" class="fileInput" accept="image/*" value="" hidden required>
-                          
+
                         </div>
-            
+
                     </div>
-                             
+
                     <div class="row  pt-4">
                                <div class="col-md-12 bold ">
                             <span>Sort order*</span>
                             <input type="text" name="ElementId" id="ElementId" hidden/>
                             <input type="number" name="sort_order" id="sort_order" class="form-control" placeholder="Enter Here">
                         </div>
-                        
+
                     </div>
-              
-                   
+
+
                 </div>
                     </div>
              <div class="row mt-3 ">
-                    
+
                         <div class="col-md-12 col ">
                             <button type="submit" class="btn bgcolor text-white casebtn float-right ">Submit</button>
                             <a class="btn bgcolorborder float-right mx-3" style="font-size:22px;" onclick="bndka();">Cancel</a>
@@ -159,7 +159,7 @@ $title = 'Sliders';
                     </div>
         </div>
     </div>
-    
+
     </form>
 </div>
 <div class="pop2 d-none">
@@ -203,7 +203,7 @@ $title = 'Sliders';
         var base_url = "{{url('admin/')}}";
         var records = "{{$a}}";
         function bndka() {
-            // $('.pop1').addClass('d-none');               
+            // $('.pop1').addClass('d-none');
             $('.pop1').fadeOut('slow');
 
         }
@@ -232,11 +232,11 @@ $title = 'Sliders';
                 {
                 recordId[a] = $("#a"+i).val();
                 a++;
-                } 
+                }
             }
         if(recordId.length != 0)
         {
-         $(".pop2").removeClass("d-none");   
+         $(".pop2").removeClass("d-none");
         }
         });
         $('.cleardo').click(function() {

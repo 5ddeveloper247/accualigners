@@ -77,7 +77,8 @@
                         <div class="col-xl-5 mb-30">
                             <div class="carx2 input">
                                 <form action="{{url(Request()->path())}}" id="filter-form" method="get">
-                                    <input type="text" name="filter" class="form-control" placeholder="Search...">
+                                    <input type="text" name="filter" class="form-control" placeholder="Search..."
+                                           value="{{Request()->has('filter') ? Request()->get('filter') : ''}}">
                                     <div class="searchicons">
                                         <button type="submit" style="background: none;border:none;"><i
                                                 class="bi bi-search" style="margin-right:12px;"></i></button>
@@ -401,7 +402,7 @@
                                 </div>
                                 <div class="col-md-6 mb-4 bold ">
                                     <span>Contact Person Number*</span>
-                                    <input type="number" name="contact_person_number" id="contact_person_number"
+                                    <input type="text" name="contact_person_number" id="contact_person_number"
                                            class="form-control" placeholder="Enter Here" required>
                                 </div>
 
