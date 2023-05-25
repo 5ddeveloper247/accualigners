@@ -8,24 +8,24 @@
 
 @php
     $requiredSections = [];
-    
+
     $componentsJsCss = ['adminPanel.general', 'adminPanel.login-register', 'adminPanel.validation', 'adminPanel.switchery-checkbox'];
-    
+
     $emailError = null;
     if ($errors->has('email')) {
         $emailError = $errors->first('email');
     }
-    
+
     $passwordError = null;
     if ($errors->has('password')) {
         $passwordError = $errors->first('password');
     }
-    
+
     $bodyClasses = 'vertical-layout vertical-menu 1-column menu-expanded blank-page blank-page pace-done';
     $dataCol = '1-column';
     $countries = App\Models\Country::orderBy('name')->get();
     $postRoute = route('signUpPost');
-    
+
 @endphp
 
 <div class="mainbackground">
@@ -43,7 +43,7 @@
         <div class="col-md-4 mt-5 pt-3 " id="prev">
 
             <div class=" control mt-">
-                <form class="form-horizontal form-simple" method="post" action="{{ $postRoute }}">
+                <form class="form-horizontal form-simple" method="post" id="signup_form" action="{{ $postRoute }}">
 
                     {{ csrf_field() }}
                     <div class="row maincard py-4 ">
@@ -93,7 +93,7 @@
                                         <div class="inputdokanaza ">
                                             <label>Title*</label>
                                             <input type="text" name="title" id="title" class="form-control"
-                                                placeholder="Enter here">
+                                                placeholder="Enter here" value="{{ old('title') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -101,7 +101,7 @@
                                             <label>First Name* </label>
 
                                             <input type="text" name="firstname" id="firstname" class="form-control"
-                                                placeholder="Enter here">
+                                                placeholder="Enter here" value="{{ old('firstname') }}">
 
                                         </div>
                                     </div>
@@ -111,14 +111,14 @@
                                         <div class="inputdokanaza ">
                                             <label>Last Name* </label>
                                             <input type="text" name="lastname" id="lastname" class="form-control"
-                                                placeholder="Enter here">
+                                                placeholder="Enter here" value="{{ old('lastname') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="inputdokanaza">
                                             <label>Email* </label>
                                             <input type="email" name="email" id="email" class="form-control"
-                                                placeholder="Enter here">
+                                                placeholder="Enter here" value="{{ old('email') }}">
 
                                         </div>
                                     </div>
@@ -129,10 +129,10 @@
                                             <label>Country* </label>
                                             <!-- <input type="" name=" " class="form-control" placeholder="Enter here"> -->
                                             <select class="select2 form-control" id="country_id" name="country_id"
-                                                style="font-size: 12px;color: #858181;" required>
+                                                style="font-size: 12px;color: #858181;" >
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    <option  value="{{ $country->id }}">{{ $country->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -140,8 +140,8 @@
                                     <div class="col-md-6">
                                         <div class="inputdokanaza ">
                                             <label>Phone Number* </label>
-                                            <input type="number" name="phone" id="phone" class="form-control"
-                                                placeholder="Enter here">
+                                            <input type="text" name="phone" id="phone" maxlength="14" class="form-control"
+                                                placeholder="Enter here" value="{{ old('phone') }}">
 
                                         </div>
                                     </div>
@@ -149,9 +149,9 @@
                                 <div class="row  pb-4 mt-1 ">
                                     <div class="col-md-12">
                                         <div class="inputdokanaza ">
-                                            <label>Website </label>
+                                            <label>Website* </label>
                                             <input type="text" name="website" id="website_name"
-                                                class="form-control" placeholder="Enter here">
+                                                class="form-control" placeholder="Enter here" value="{{ old('website') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -197,22 +197,27 @@
                         <m style="position: relative;top: 4px;"></m>
                         <b style="position: relative;top: 7px;font-size:13px;">Billing Info</b>
                     </div>
+
                     <div class="row m-3 py-4 ">
+                        <div class="col-md-12 hide_msg2" style="display:none;">
+                            <div class="alert alert-danger hide_msg2" id="msg2" style="text-align: center;">
+                                hello</div>
+                        </div>
                         <div class="col-md-12 registerborder">
                             <div class="row">
                                 <div class="col-md-12 mt-4">
-                                    <h6>Billing Info
-                                        <span style="font-size: 13px;margin-left: 15%;color: red;"
-                                            id="msg2"></span>
-                                    </h6>
+{{--                                    <h6>Billing Info--}}
+{{--                                        <span style="font-size: 13px;margin-left: 15%;color: red;"--}}
+{{--                                            id="msg2"></span>--}}
+{{--                                    </h6>--}}
                                 </div>
                             </div>
                             <div class="row  mt-3">
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
                                         <label>Clinic Name*</label>
-                                        <input type="text" name="clinic_name" class="form-control"
-                                            placeholder="Enter here" required>
+                                        <input type="text" name="clinic_name" id="clinic_name" class="form-control"
+                                            placeholder="Enter here" value="{{ old('clinic_name') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -220,7 +225,7 @@
                                         <label>Street* </label>
 
                                         <input type="text" class="form-control" placeholder="Enter here"
-                                            name="address" class="form-control" required
+                                            name="address" class="form-control" id="Street"
                                             data-validation-required-message="Address is required" maxlength="255"
                                             data-validation-maxlength-message="Max 255 characters allowed"
                                             value="{{ old('address') }}">
@@ -233,7 +238,7 @@
                                     <div class="inputdokanaza ">
                                         <label>State* </label>
                                         <!-- <input type="" name="state_id" class="form-control" placeholder="Enter here"> -->
-                                        <select class="select2 form-control" id="state_id" name="state_id" required
+                                        <select class="select2 form-control" id="state_id" name="state_id"
                                             style="font-size: 12px;color: grey;">
                                             <option>Select State</option>
                                         </select>
@@ -243,7 +248,7 @@
                                     <div class="inputdokanaza ">
                                         <label>City* </label>
                                         <!-- <input type="" name="" class="form-control" placeholder="Enter here"> -->
-                                        <select class="select2 form-control" id="city_id" name="city_id" required
+                                        <select class="select2 form-control" id="city_id" name="city_id"
                                             style="font-size: 12px;color: grey;">
                                             <option>Select City</option>
                                         </select>
@@ -254,15 +259,15 @@
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
                                         <label>Zip* </label>
-                                        <input type="text" name="zip" class="form-control"
-                                            placeholder="Enter here" required>
+                                        <input type="text" name="zip" id="zip" class="form-control"
+                                            placeholder="Enter here" value="{{ old('zip') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
                                         <label>Contact Person* </label>
-                                        <input type="text" name="contact_person_name" class="form-control"
-                                            placeholder="Enter here">
+                                        <input type="text" name="contact_person_name" id="contact_person_name" class="form-control"
+                                            placeholder="Enter here" value="{{ old('contact_person_name') }}">
 
                                     </div>
                                 </div>
@@ -271,15 +276,15 @@
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
                                         <label>Contact Person Email* </label>
-                                        <input type="email" name="contact_person_email" class="form-control"
-                                            placeholder="Enter here" required>
+                                        <input type="email" name="contact_person_email" id="contact_person_email" class="form-control"
+                                            placeholder="Enter here" value="{{ old('contact_person_name')}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
                                         <label>VAT number* </label>
-                                        <input type="text" name="vat" class="form-control"
-                                            placeholder="Enter here" required>
+                                        <input type="text" name="vat" id="vat_number" class="form-control"
+                                            placeholder="Enter here" value="{{ old('vat') }}">
                                     </div>
                                 </div>
                             </div>
@@ -288,23 +293,25 @@
                                     <div class="inputdokanaza ">
                                         <label>Password* </label>
                                         <input type="password" name="password" id="pass" class="form-control"
-                                            placeholder="Enter here" required>
+                                            placeholder="Enter here" value="{{ old('password') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
                                         <label>Confirm Password* </label>
                                         <input type="password" name="confirm_password" id="confirm_pass"
-                                            class="form-control" placeholder="Enter here" required>
+                                            class="form-control" placeholder="Enter here" value="{{ old('confirm_password') }}">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-11 pt-3 m-auto textlogin">
-                            <button type="submit" id="btncreate" class="bgcolor d-block text-white text-center py-2"
-                                style="font-size: 18px;font-weight:300;width: 100%;">Create</button>
-                            </form>
+                            <a  id="btncreate" class="bgcolor d-block text-white text-center py-2"
+                                style="font-size: 18px;font-weight:300;width: 100%;">Create</a>
+
                         </div>
+
+                        </form>
                         <div class="col-md-11 pt-3 m-auto text-center">
                             <a class="  " style="font-size: 14px;font-weight:300;">Already have an <span
                                     style="font-weight: bold;font-size:14px;color: #6a6a6a;">Account?</span> </a>

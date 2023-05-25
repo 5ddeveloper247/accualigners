@@ -348,6 +348,7 @@ function CopyToClipboard(value, showNotification, notificationText) {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
 			else if($("#firstname").val() == ''){
 				$('#msg').text('Please Enter First Name');
@@ -356,6 +357,7 @@ function CopyToClipboard(value, showNotification, notificationText) {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
 			else if($("#lastname").val() == ''){
 				$('#msg').text('Please Enter Last Name');
@@ -365,6 +367,7 @@ function CopyToClipboard(value, showNotification, notificationText) {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
 			else if($("#email").val() == ''){
 				$('#msg').text('Please Enter Email');
@@ -374,6 +377,7 @@ function CopyToClipboard(value, showNotification, notificationText) {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
 			else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test($("#email").val())){
 				$('#msg').text('Please Enter Correct Email');
@@ -382,30 +386,35 @@ function CopyToClipboard(value, showNotification, notificationText) {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
 			else if($("#country_id").val() == ''){
-				$('#msg').text('Please Enter Country ID');
+				$('#msg').text('Please Select Country');
 				$('.hide_msg').fadeIn();
 
 				setTimeout(function() {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
-			else if($("#phone").val() == ''){
-				$('#msg').text('Please Enter First Phone Number');
-				setTimeout(function() {
-					$('#msg').text('');
-				 $('.hide_msg').hide();
-				  }, 8000);
-			}
+			else if(!(/^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/).test($("#phone").val())){
+                $('#msg').text('Please Enter Correct Phone Number');
+                $('.hide_msg').fadeIn();
+                setTimeout(function() {
+                    $('#msg').text('');
+                    $('.hide_msg').hide();
+                }, 8000);
+                return false;
+            }
 			else if($("#website_name").val() == ''){
-				$('#msg').text('Please Enter Website Name');
+				$('#msg').text('Please Enter Website');
 				$('.hide_msg').fadeIn();
 				setTimeout(function() {
 					$('#msg').text('');
 				 $('.hide_msg').hide();
 				  }, 8000);
+                return false;
 			}
 			else{
 				$('#msg1').text('');
@@ -413,6 +422,109 @@ function CopyToClipboard(value, showNotification, notificationText) {
 		  		$("#next").removeClass('d-none');
 			}
 		});
+
+        $("#btncreate").click(function(){
+            if($("#clinic_name").val() == ''){
+                $('#msg2').text('Please Enter Clinic Name');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#Street").val() == ''){
+                $('#msg2').text('Please Enter Street');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#state_id").val() == ''){
+                $('#msg2').text('Please Select State');
+                $('.hide_msg2').fadeIn();
+
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#city_id").val() == ''){
+                $('#msg2').text('Please Select City');
+                $('.hide_msg2').fadeIn();
+
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#zip").val() == ''){
+                $('#msg2').text('Please Enter Zip');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#contact_person_name").val() == ''){
+                $('#msg2').text('Please Select Contact Person Name');
+                $('.hide_msg2').fadeIn();
+
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#contact_person_email").val() == ''){
+
+                $('#msg2').text('Please Enter Contact Person Email');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#vat_number").val() == ''){
+                $('#msg2').text('Please Enter VAT Number');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#pass").val() == ''){
+                $('#msg2').text('Please Enter Password');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else if($("#pass").val() != $('#confirm_pass').val()){
+                $('#msg2').text('Password Must Be Same');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
+            else{
+                $('#msg2').text('');
+            }
+
+            $('#signup_form').submit();
+
+        });
 
 		$("#user_info").click(function(){
 			$("#next").addClass('d-none');
@@ -432,4 +544,3 @@ function CopyToClipboard(value, showNotification, notificationText) {
 		  });
 	  });
 
-	
