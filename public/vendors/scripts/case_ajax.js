@@ -4,7 +4,7 @@ var b=1;
 var Attachment_Ids = [];
 /*_________________________Update and save ajax_________________________*/
 $("#frmcase").submit(function (event) {
-    
+
     if (!validationOfCase()) {
         event.preventDefault(); // prevent the default form submission
         return false; // prevent the execution of the submit event handler
@@ -37,7 +37,7 @@ $("#frmcase").submit(function (event) {
                 toastr.error(data.msg, '', {timeOut: 2000});
             }
     },
-    error: function(message, error) 
+    error: function(message, error)
     {
         $('#loader').fadeOut();
         $.each( message['responseJSON'].errors, function( key, value ) {
@@ -45,7 +45,7 @@ $("#frmcase").submit(function (event) {
             });
     }
     });}else{
-        
+
 /*_________________________Save ajax_________________________*/
     $.ajax({
         type: "POST",
@@ -69,7 +69,7 @@ $("#frmcase").submit(function (event) {
                 toastr.error(data.msg, '', {timeOut: 2000});
             }
         },
-        error: function(message, error) 
+        error: function(message, error)
         {
             $('#loader').fadeOut();
             $.each( message['responseJSON'].errors, function( key, value ) {
@@ -89,7 +89,7 @@ function editFunction(id = '') {
     $('#dob , #address , #email , #phone_no , #name').prop('readonly', true);
     $('.disable_input , #prescription_comment , #clinical_comment , #midline , #overbite , #overjet , #a_p_relationship , #arch_to_treat , #select1 , #select2').prop('disabled', true);
     $('.add_image , .remove_image').hide();
-    
+
     var Attach_Img = $("#Attach_Img");
     Attach_Img.find("img.attach_img").remove();
 if(id=='')
@@ -109,10 +109,10 @@ data: {
 
 },
 success: function (data) {
-    
-   
+
+
     if(data){
-          
+
             $("#name").val(data['edit_values']['name']);
             $("#email").val(data['edit_values']['email']);
             $("#embedded_url").val(data['edit_values']['embedded_url']);
@@ -121,12 +121,12 @@ success: function (data) {
             $("#dob").val(data['edit_values']['dob']);
             $("#ElementId").val(data['edit_values']['id']);
 
-            
+
             if(data['edit_values']['arch_to_treat'] == 'LOWER'){
                 $('#arch_to_treat').parent().addClass('btn-outline-secondary off').removeClass('btn-outline-primary');
                 $('#arch_to_treat').prop("checked",false);}else{
                 $('#arch_to_treat').parent().removeClass('btn-outline-secondary off').addClass('btn-outline-primary');
-                $('#arch_to_treat').prop("checked",true); 
+                $('#arch_to_treat').prop("checked",true);
                 }
             if(data['edit_values']['a_p_relationship'] == 'IMPROVE'){
                     $('#a_p_relationship').parent().addClass('btn-outline-secondary off').removeClass('btn-outline-primary');
@@ -157,7 +157,7 @@ success: function (data) {
             for (numberOfImages = 0; numberOfImages <data['caseClinicalConditions'].length; numberOfImages++) {
                 var index = data['caseClinicalConditions'][numberOfImages];
                 $("#conidion"+index).prop("checked",true);
-                
+
             }}
             manageAddImage = numberOfImages;
             b=2;
@@ -176,7 +176,7 @@ success: function (data) {
             {
                 for(var i =0;i<data['attachments']['X_RAY'].length;i++){
                     var sort_order = data['attachments']['X_RAY'][i].sort_order;
-                    $("#X_RAY_"+sort_order).attr("src", data['attachments']['X_RAY'][i].full_path);         
+                    $("#X_RAY_"+sort_order).attr("src", data['attachments']['X_RAY'][i].full_path);
                    $("#xray_img_id_"+(i+1)).val(data['attachments']['X_RAY'][i].id);
                 }
             }
@@ -184,7 +184,7 @@ success: function (data) {
             if(data['attachments']['OTHER'])
             {
                 for(var i =0;i<data['attachments']['OTHER'].length;i++){
-                
+
                     var sort_order = data['attachments']['OTHER'][i].sort_order;
                     $("#OTHER_"+sort_order).attr("src", 'https://accualigners.app/storage/images/file.png');
                         }
@@ -254,7 +254,7 @@ error: function (data) {
 /*_________________________Delete data ajax_________________________*/
  $(".deletebtn").click(function (event) {
     event.preventDefault();
-   
+
     var recordId = [];
     var a = 0;
     var b = 0;
@@ -264,8 +264,8 @@ error: function (data) {
             {
                 recordId[a] = $("#a"+i).val();
                 a++;
-            } 
-           
+            }
+
         }
         for(i=1;i<records2;i++)
         {
@@ -273,9 +273,9 @@ error: function (data) {
             {
                 recordId[b] = $("#b"+i).val();
                 b++;
-            } 
+            }
         }
-        
+
     if(recordId.length != 0)
     {
         $.ajax({
@@ -291,7 +291,7 @@ error: function (data) {
             if(data){
                     if(data.done == true)
                     {
-                        $(".pop2").addClass("d-none");  
+                        $(".pop2").addClass("d-none");
                         toastr.success('Success Message',data.msg, {timeOut: 2000});
                         setTimeout(function () {location.reload(true)}, 1000);
                     }else{
@@ -312,21 +312,21 @@ error: function (data) {
       /*________preview img________*/
 function preViewImage(input){
     //getting values in variables
-    
+
     var file = input.files[0];
 
      var fileInput = $('#image_attach')[0];
      var files = fileInput.files;
      var sort = $(input).data('sort');
      var type = $(input).data('type');
-    
+
     //appending form
     formData= new FormData();
     formData.append("_token", '{{csrf_token()}}');
     formData.append("case_id", case_id);
     formData.append("attachment", file);
 
-  
+
     formData.append("sort_order", sort);
     formData.append("attachment_type", type);
 
@@ -341,7 +341,7 @@ function preViewImage(input){
       }
     //output.src = reader.result;
     };
-    reader.readAsDataURL(event.target.files[0]); 
+    reader.readAsDataURL(event.target.files[0]);
     //getting id of attcahment image
     var id=$(input).siblings('.get_id').val();
 
@@ -365,9 +365,9 @@ function preViewImage(input){
                    var attachment_ids_field = $('#attachment_ids');
                    var attachment_ids = attachment_ids_field.val();
                    attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
-                   
+
                 },
-                 error: function(message, error) 
+                 error: function(message, error)
                 {
                    $('#loader').fadeOut();
                $.each( message['responseJSON'].errors, function( key, value ) {
@@ -387,7 +387,7 @@ function preViewImage2(input){
              var files = fileInput.files;
              var sort = $(input).data('sort');
              var type = $(input).data('type');
-            
+
             //appending form
              formData= new FormData();
              formData.append("_token", '{{csrf_token()}}');
@@ -397,11 +397,11 @@ function preViewImage2(input){
              for (var i = 0; i < files.length; i++) {
                 formData.append("attachment[]", files[i]);
              }
-             
+
              formData.append("sort_order", sort);
              formData.append("attachment_type", type);
 
-             
+
             //preview image on front
              var reader = new FileReader();
              reader.onload = function(){
@@ -430,7 +430,7 @@ function preViewImage2(input){
                 // var attachment_ids = attachment_ids_field.val();
                 // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
          },
-         error: function(message, error) 
+         error: function(message, error)
          {
             $('#loader').fadeOut();
             $.each( message['responseJSON'].errors, function( key, value ) {
@@ -438,8 +438,8 @@ function preViewImage2(input){
             });
     }
     });
-        
-    
+
+
 }
 /*_________________________preview img_________________________*/
 function preViewImage3(input){
@@ -451,7 +451,7 @@ function preViewImage3(input){
     var files = fileInput.files;
     var sort = $(input).data('sort');
     var type = $(input).data('type');
-   
+
    //appending form
     formData= new FormData();
     formData.append("_token", '{{csrf_token()}}');
@@ -489,7 +489,7 @@ success: function (data) {
        var attachment_ids = attachment_ids_field.val();
        attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
 },
-error: function(message, error) 
+error: function(message, error)
 {
     $('#loader').fadeOut();
    $.each( message['responseJSON'].errors, function( key, value ) {
@@ -528,7 +528,7 @@ function preViewJawImage(input){
 }
       //onchange select
 function saveJawImage(select,i){
-    
+
     ($(select).val() == 1)?(type = 'UPPER_JAW'):(type = 'LOWER_JAW');
     input = document.getElementById('jaw_'+i);
     var sort = $(input).data('sort');
@@ -568,7 +568,7 @@ function jawImageAJAX(formData,id=''){
                 var attachment_ids = attachment_ids_field.val();
                 attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
         },
-        error: function(message, error) 
+        error: function(message, error)
         {
             $('#loader').fadeOut();
             $.each( message['responseJSON'].errors, function( key, value ) {
@@ -596,7 +596,7 @@ $("#btnCheckAll").click(function () {
         }
         chkboxes = 0;
     }
-            
+
 });
 
 /*____________________Add_Case_Validation____________________*/
@@ -638,7 +638,7 @@ function validationOfCase(){
     return true;
 }
   /*__________________validation on input___________*/
-  
+
    //phone number validation
    var phoneRegex = /^\+?[0-9]{6,14}$/;
    var phoneInput = $('input[name="phone_no"]');
@@ -652,7 +652,7 @@ function validationOfCase(){
        $('#phone_v_msg').text('');
    }
    });
-   
+
    //email validation
    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    var emailInput = $('input[name="email"]');
@@ -666,7 +666,7 @@ function validationOfCase(){
        $('#email_v_msg').text('');
    }
    });
-    
+
     /*____________________Add_Case_Reset____________________*/
     function resetAddCase() {
         $('#name, #email,#phone_no,#dob,#address,#clinical_comment,#prescription_comment,#embedded_url').val('');
@@ -678,13 +678,13 @@ function validationOfCase(){
             if(a!=1){
                 $(".add_new_"+a).addClass('d-none');
             }
-            var src = $('#img_src_'+a).val(); 
+            var src = $('#img_src_'+a).val();
             $('#IMAGE_'+a).attr('src',src)
         }
     }
 
     /*____________________Add_Case_image fields____________________*/
- 
+
     $(".add_image").click(function () {
         if(manageAddImage==1){
             manageAddImage=2;
@@ -708,12 +708,12 @@ function validationOfCase(){
         {
             toastr.error("One Image must be attached","Message", {timeOut: 3000});
         }else{
-            $(".add_new_"+manageAddImage).addClass('d-none'); 
-            $("#IMAGE_"+manageAddImage).attr("src", 'https://accualigners.app/link/files/app-assets/images/case/upload.png');   
+            $(".add_new_"+manageAddImage).addClass('d-none');
+            $("#IMAGE_"+manageAddImage).attr("src", 'https://accualigners.app/link/files/app-assets/images/case/upload.png');
             manageAddImage--;
         }
         b=2;
-        
+
         //getting id of attcahment image
         var id = $("#img_id_"+manageAddImage).val();
         if(id != ""){
@@ -737,7 +737,7 @@ function validationOfCase(){
                             toastr.error(data.message, '', {timeOut: 2000});
                         }
                 },
-                error: function(message, error) 
+                error: function(message, error)
                 {
                     $('#loader').fadeOut();
                     $.each( message['responseJSON'].errors, function( key, value ) {
