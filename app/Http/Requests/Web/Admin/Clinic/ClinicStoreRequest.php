@@ -24,11 +24,13 @@ class ClinicStoreRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|max:255|unique:clinics,name,'.$this->route('clinic').',id,deleted_at,NULL',
+             'name' => 'required|max:255|unique:clinics',
             'country_id' => 'required|exists:countries,id',
             'state_id' => 'required|exists:states,id',
             'city_id' => 'required|exists:cities,id',
             'address' => 'required|max:255',
+            'contact_person_email' => 'required|email',
+            'contact_person_number' => 'required|numeric|min:11',
         ];
     }
 }

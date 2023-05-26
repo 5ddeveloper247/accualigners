@@ -44,7 +44,7 @@ class ClinicController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-    
+
     //new index
     public function index(Request $request)
     {
@@ -61,7 +61,7 @@ class ClinicController extends Controller
                         ->orWhere('id', $filter);
                 });
             }
-            
+
             $clinics = $clinics->paginate(15);
             $i=0;
             // foreach($clinics as $rec){
@@ -121,7 +121,7 @@ class ClinicController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-        //new adding clinic 
+        //new adding clinic
     public function new_store(ClinicStoreRequest $request)
      {
         try{
@@ -149,11 +149,11 @@ class ClinicController extends Controller
             return response()->json($arrRes);
         }
     }
-        
+
 
     public function show($id)
     {
-        
+
     }
 
     public function edit(ClinicEditRequest $request, $id)
@@ -204,7 +204,7 @@ class ClinicController extends Controller
         try{
             $inputs = $request->except('_method', '_token');
             $clinic = Clinic::findOrFail($id);
-           
+
             $inputs['created_by'] = auth()->user()->id;
             $address = Address::firstOrCreate(
                 ['value' => $inputs['address']],
@@ -219,20 +219,20 @@ class ClinicController extends Controller
         }
     }
         //new update
-    public function update_new(Request $request)
+    public function update_new(ClinicUpdateRequest $request)
     {
         $id = $request['ElementId'];
         try{
             $inputs = $request->except('_method', '_token');
             $clinic = Clinic::findOrFail($id);
-           
+
             $inputs['created_by'] = auth()->user()->id;
             $address = Address::updateOrCreate(
                 ['value' => $inputs['address']],
                 $inputs
             );
             $inputs['address_id'] = $address->id;
-            if($clinic->update($inputs))         
+            if($clinic->update($inputs))
             {
                 $arrRes['msg']  = "Data updated successfully";
                 $arrRes['done'] = true;
@@ -254,7 +254,7 @@ class ClinicController extends Controller
             foreach($recordIds as $id)
             {
             $clinic = Clinic::find($id);
-            if($clinic->forceDelete())         
+            if($clinic->forceDelete())
             {
                 $arrRes['msg']  = "Data Deleted successfully";
                 $arrRes['done'] = true;
