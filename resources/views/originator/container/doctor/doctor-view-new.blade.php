@@ -154,7 +154,7 @@
 
 </html>
 <div class="pop1  scrolldo" style="display: none">
-    <form class="form-horizontal" method="post" id="frmuser" action="" enctype="multipart/form-data" novalidate>
+    <form class="form-horizontal" method="post" id="frmuser" action="" enctype="multipart/form-data" novalidate autocomplete="off">
         @csrf
         {{-- {{csrf_field()}} --}}
         <div class="row m-0">
@@ -215,7 +215,7 @@
                             <div class="col-md-6 bold ">
                                 <span>Password*</span>
                                 <input type="password" name="password" @if( !$edit_id ) required
-                                       data-validation-required-message="Password is required" @endif id="txtpass"
+                                       data-validation-required-message="Password is required"  @endif id="txtpass"
                                        class="form-control" placeholder="Enter Here">
                             </div>
                             <div class="col-md-6  bold ">
