@@ -4,6 +4,8 @@ namespace App\Http\Requests\Web\Admin\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -14,7 +16,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::where('id', $this->route('user'))->exists();
+        return User::where('id', Auth::id())->exists();
     }
 
     /**
@@ -24,12 +26,23 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $user =  Auth::user();
+
         return [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email,'.$this->route('user').',id',
-            'password' => 'nullable|min:6|confirmed',
-            'picture' => 'sometimes|nullable|mimes:png,jpg',
-            'role_id' => 'required|exists:roles,id'
+
+            'name' => 'required|min:3|max:100',
+            'gender' => 'required',
+            'phone' => 'required|min:10|max:20',
+            'email' => 'required|email|max:100|unique:users,email,' . ($user ? $user->id : ''),
+            'current_password' => [
+                function ($attribute, $value, $fail) use ($user) {
+                    if (!Hash::check($value, $user->password)) {
+                        $fail(':attribute is Incorrect !');
+                    }
+                }
+            ],
+            'password_confirmation' => 'same:password'
         ];
+
     }
 }

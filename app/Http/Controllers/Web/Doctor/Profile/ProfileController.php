@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Doctor\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\Admin\User\UserUpdateRequest;
 use App\Models\CaseModel;
 use App\Models\Order;
 use App\Models\Doctor;
@@ -69,25 +70,20 @@ class ProfileController extends Controller
       ClinicDoctor::where(['doctor_id'=> auth()->user()->id])->whereNotIn('clinic_id',$clinics_ids)->update(['status'=> 0]);
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(UserUpdateRequest $request)
      {
-                 // dd($request->all());
-                 //  ini_set('display_errors', 'On');
-                 //  error_reporting(E_ALL);
+
                   try {
                   DB::beginTransaction();
                  // return Auth()
                  $user_id = auth()->user()->id;
-                 $data = $request->except('_token','password_confirmation');
+                 $data = $request->except('_token','password_confirmation','current_password');
 
              if ($request->hasFile('picture')) {
                          $media = $request->file('picture');
                          $ImageName = 'User-' . Carbon::now()->timestamp . '.' . $media->extension();
                          Storage::disk(env('FILE_SYSTEM'))->putFileAs('users', $media, $ImageName);
                      if (!is_null($request->password) && $request->filled('password')) {
-                         if(!User::where('id',Auth::id())->where('password',$request->current_password)->exists()){
-                             return redirect()->back()->with('error','Current Password Does not Match');
-                         }
                              //  dd($ImageName);
                             //  if(isset($request->clinics_ids)){
                             //     $this->update_clinic($request->clinics_ids);
@@ -104,9 +100,7 @@ class ProfileController extends Controller
                      }
              }else{
                 if (!is_null($request->password) && $request->filled('password')) {
-                    if(!User::where('id',Auth::id())->where('password',$request->current_password)->exists()){
-                        return redirect()->back()->with('error','Current Password Does not Match');
-                    }
+
                      $data['password'] = Hash::make($request->password);
                     //  if(isset($request->clinics_ids)){
                     //     $this->update_clinic($request->clinics_ids);
