@@ -21,7 +21,7 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
 
      @extends('originator.root.dashboard_side_bar',['title' => $title])
      @section('title', "Profile")
- 
+
 <div class="mobile-menu-overlay"></div>
     <!-- saadullah -->
     <div class="main-container">
@@ -36,8 +36,8 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                             <form enctype="multipart/form-data" id="frmuser" method="post" action="{{ url('doctor/profile-update')}}">
                             <div class="row">
                                 <div class="col-xl-2 mb-30 johndo" >
-                                    <img src="{{$doctor->picture}}" onclick="choose_image()" style="cursor:pointer;" id="profile_picture">
-                                    <input type="file" name="picture" class="d-none" id="picture" class="text-white" placeholder="Change Picture">
+                                    <img src="{{$doctor->picture}}"  onclick="choose_image()" style="cursor:pointer;" id="profile_picture">
+                                    <input type="file" name="picture" id="picture" accept="image/*" class="d-none text-white" placeholder="Change Picture">
                                     <span>
                                         <img src="{{ asset('vendors/images/camera.png') }}" onclick="choose_image()" style="cursor:pointer;"  class=""><br>
                                     </span>
@@ -59,7 +59,7 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                                     <input type="text" name="name" class="form-control" value="{{ $doctor->name }}" placeholder="Enter Name" disabled>
                                  </div>
                                  <div class="col-xl-2 col mb-30 pendo pendo_new">
-                                     <img src="{{ asset('vendors/images/pen.png') }}"> 
+                                     <img src="{{ asset('vendors/images/pen.png') }}">
                                  </div>
                             </div>
 
@@ -70,7 +70,7 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                                     <input type="email" name="email" class="form-control" value="{{ $doctor->email }}" placeholder="Enter Email" disabled>
                                 </div>
                                 <div class="col-xl-2  col mb-30 pendo pendo_new">
-                                     <img src="{{ asset('vendors/images/pen.png') }}"> 
+                                     <img src="{{ asset('vendors/images/pen.png') }}">
                                 </div>
                             </div>
 
@@ -80,7 +80,7 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                                     <input type="number" name="phone" value="{{ $doctor->phone }}" class="form-control" placeholder="Enter Phone Number" disabled>
                                 </div>
                                 <div class="col-xl-2  col mb-30 pendo pendo_new">
-                                     <img src="{{ asset('vendors/images/pen.png') }}"> 
+                                     <img src="{{ asset('vendors/images/pen.png') }}">
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                                          </select>
                                  </div>
                                  <div class="col-xl-2 col mb-30 pendo pendo_new" >
-                                     <img src="{{ asset('vendors/images/pen.png') }}"> 
+                                     <img src="{{ asset('vendors/images/pen.png') }}">
                                  </div>
                              </div>
                              <div class="col-md-6 ">
@@ -111,7 +111,7 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                           </div> -->
                           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
                              <!-- </form> -->
-                        
+
                       <!-- <form method="POST" action="{{ $updateClinicsRoute }}"> -->
                       {{csrf_field()}}
                              <div class="row">
@@ -145,35 +145,36 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
 
                      <div class="row">
                          <div class="col-md-6 ">
-                            
+
                              <div class="row">
                                 <div class="col-xl-12 col  ">
                                 <!-- <form method="POST" action="{{ $changePasswordRoute }}"> -->
 
                              <div class="password mt-4 eyescontrol border p-3" style="border-radius: 8px;">
-                                <!-- <p class="tee mt-4" style="font-weight: bold;">Current Password
+                                 <p class="tee mt-4" style="font-weight: bold;">Current Password
                                 </p>
-                                <input type="text" name="" class="form-control changePassowrd eyescontrolinput" placeholder="***********">-->
-                                <!-- <img class="iconImage" src="{{ asset('vendors/images/EyesHide.png') }}"> 
-                                <img class="iconImageShow d-none" src="{{ asset('vendors/images/EyesShow.png') }}"> -->
+                                <input type="password" id="current_password" name="current_password" class="form-control changePassowrd eyescontrolinput" placeholder="Current password">
+                                <img class="iconImage" id="current_icon_show" src="{{ asset('vendors/images/EyesHide.png') }}">
+                                <img class="iconImageShow d-none" id="current_icon" src="{{ asset('vendors/images/EyesShow.png') }}">
+
                                 <p class="tee mt-4" style="font-weight: bold;">New Password</p>
-                                <input type="text" id="pass" name="password" class="form-control  newpassword" placeholder="Enter password">
+                                <input type="password" id="pass" name="password" class="form-control  newpassword" placeholder="Enter password">
                                 <img class="iconImage pwdImg"  id="pass_icon_show" src="{{ asset('vendors/images/EyesHide.png') }}">
                                 <img class="iconImageShow d-none pwdImg" id="pass_icon" src="{{ asset('vendors/images/EyesShow.png') }}">
                                 <p class="tee mt-4" style="font-weight: bold;">Confirm Password
                                 </p>
-                                <input type="text" id="confirm" name="password_confirmation" class="form-control changePassowrd" placeholder="Confirm Password">
+                                <input type="password" id="confirm" name="password_confirmation" class="form-control changePassowrd" placeholder="Confirm Password">
                                 <img class="iconImage pwdImg" id="confirm_icon_show" src="{{ asset('vendors/images/EyesHide.png') }}">
                                 <img class="iconImageShow d-none pwdImg" id="confirm_icon" src="{{ asset('vendors/images/EyesShow.png') }}">
                              </div>
                               </div>
-                              
+
                                 <div class="col-xl-6col mb-30 pendo ">
                                 </div>
                             </div>
 
                         </div>
-                       
+
                         </div>
                         <div class="col-md-6 ">
                         </div>
@@ -204,11 +205,17 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                         $('#pass_icon').addClass('d-none');
                         $('#pass').attr('type','password');
                      });
-                         $('#confirm_icon').click(function(){
+                    $('#confirm_icon').click(function(){
                          $('#confirm_icon_show').removeClass('d-none');
                          $('#confirm_icon').addClass('d-none');
                          $('#confirm').attr('type','password');
                      });
+                    $('#current_icon').click(function(){
+                        $('#current_icon_show').removeClass('d-none');
+                        $('#current_icon').addClass('d-none');
+                        $('#current_password').attr('type','password');
+                    });
+
                      $('#pass_icon_show').click(function(){
                         $('#pass_icon').removeClass('d-none');
                         $('#pass_icon_show').addClass('d-none');
@@ -219,22 +226,28 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                          $('#confirm_icon_show').addClass('d-none');
                          $('#confirm').attr('type','text');
                      });
+                    $('#current_icon_show').click(function(){
+                        $('#current_icon').removeClass('d-none');
+                        $('#current_icon_show').addClass('d-none');
+                        $('#current_password').attr('type','text');
+                    });
+
                 // $(".iconImage").click(function(){
-                    
+
                 //     $('.iconImage').addClass('d-none');
-                    
+
                 //     $('.iconImageShow').removeClass('d-none');
-                    
-                //    $(this).attr('type', 'password'); 
+
+                //    $(this).attr('type', 'password');
                 //    $(".changePassowrd").attr("placeholder", "12345678").placeholder();
-                    
+
                 // })
-      
+
                 // $(".iconImageShow").click(function(){
                 //     $('.iconImage').removeClass('d-none');
                 //     $('.iconImageShow').addClass('d-none');
                 //   $(".changePassowrd").attr("placeholder", "********").placeholder();
-    
+
                 // })
                     function bndka() {
                         $('.pop1').addClass('d-none');
@@ -278,12 +291,12 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
                              }else{
                                 input.prop('disabled', true);
                              }
-                            
+
                             });
 
                 </script>
                 @if(session()->has('successMessage'))
-                <script> 
+                <script>
                          alert('success');
                 </script>
                 @endif
@@ -386,12 +399,12 @@ $updateClinicsRoute = url('doctor/update-clinics/'.auth()->user()->id);
 
 </div>
 @if(session('success'))
-<script>   
+<script>
         toastr.success('{{ session('success')}}', 'Success', {timeOut: 2000});
 </script>
 @endif
 @if(session()->has('error'))
-<script>   
+<script>
         toastr.error('{{session('error')}}', 'Error', {timeOut: 2000});
 </script>
 
@@ -429,7 +442,7 @@ $("#frmuser").submit(function (event) {
                     location.reload();
                     }, 1000);
             },
-            error: function(message, error) 
+            error: function(message, error)
             {
                 $('#loader').fadeOut();
                 // console.log(message);

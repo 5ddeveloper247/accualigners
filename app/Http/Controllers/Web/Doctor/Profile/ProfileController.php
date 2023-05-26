@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\ClinicDoctor;
 use App\Models\Clinic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Carbon\Carbon;
@@ -63,7 +64,7 @@ class ProfileController extends Controller
     }
 
     static function update_clinic($clinics_ids){
-        
+
       ClinicDoctor::where(['doctor_id'=> auth()->user()->id])->whereIn('clinic_id',$clinics_ids)->update(['status'=> 1]);
       ClinicDoctor::where(['doctor_id'=> auth()->user()->id])->whereNotIn('clinic_id',$clinics_ids)->update(['status'=> 0]);
     }
@@ -78,28 +79,34 @@ class ProfileController extends Controller
                  // return Auth()
                  $user_id = auth()->user()->id;
                  $data = $request->except('_token','password_confirmation');
-        
+
              if ($request->hasFile('picture')) {
                          $media = $request->file('picture');
                          $ImageName = 'User-' . Carbon::now()->timestamp . '.' . $media->extension();
                          Storage::disk(env('FILE_SYSTEM'))->putFileAs('users', $media, $ImageName);
                      if (!is_null($request->password) && $request->filled('password')) {
+                         if(!User::where('id',Auth::id())->where('password',$request->current_password)->exists()){
+                             return redirect()->back()->with('error','Current Password Does not Match');
+                         }
                              //  dd($ImageName);
                             //  if(isset($request->clinics_ids)){
                             //     $this->update_clinic($request->clinics_ids);
                             //  }
                              $data['password'] = Hash::make($request->password);
                              $data = $request->except('password_confirmation','_token','password');
-                             
+
                      }else{
                             //  if(isset($request->clinics_ids)){
                             //     $this->update_clinic($request->clinics_ids);
                             //  }
-                             $data = $request->except('password','password_confirmation','_token');
+                             $data = $request->except('password','password_confirmation','_token','current_password');
                              $data['picture'] = 'users/'.$ImageName;
                      }
              }else{
                 if (!is_null($request->password) && $request->filled('password')) {
+                    if(!User::where('id',Auth::id())->where('password',$request->current_password)->exists()){
+                        return redirect()->back()->with('error','Current Password Does not Match');
+                    }
                      $data['password'] = Hash::make($request->password);
                     //  if(isset($request->clinics_ids)){
                     //     $this->update_clinic($request->clinics_ids);
@@ -107,13 +114,13 @@ class ProfileController extends Controller
                 }else{
                      //  if(isset($request->clinics_ids)){
                      //     $this->update_clinic($request->clinics_ids);
-                     //  }     
-                     $data = $request->except('_token','password_confirmation','password','picture');  
+                     //  }
+                     $data = $request->except('_token','password_confirmation','password','picture','current_password');
                  }
              }
 
-         
-            
+
+
              if(User::where('id', $user_id)->update($data)) {
                 $data['done'] = true;
                 $data['msg'] = 'Profile updated successfully';
@@ -121,16 +128,15 @@ class ProfileController extends Controller
                 $data['done'] = false;
                 $data['msg'] = 'Error updating profile';
              }
-        
+
              DB::commit();
              return redirect()->back()->with('success','Profile updated successfully');
-             return response()->json($data);
         } catch (\Throwable $e) {
              DB::rollback();
             //  return redirect()->back()->with('error',$e->getMessage());
              return response()->json(['error' => $e->getMessage()], 500);
         }
-        
+
      }
 
     public function chnagePassword(Request $request)
@@ -151,28 +157,28 @@ class ProfileController extends Controller
              return redirect()->back()->withErrors($e->getMessage());
         }
     }
-    
+
     public function updateClinics(Request $request){
         $this->validate($request, [
             'clinics_ids.*' => 'exists:clinics,id',
         ]);
-        
+
         try {
             DB::beginTransaction();
               $clinics_ids = $request->clinics_ids;
               $user_id = auth()->user()->id;
-              
-              
+
+
             ClinicDoctor::where(['doctor_id'=> auth()->user()->id])->whereIn('clinic_id',$clinics_ids)->update(['status'=> 1]);
             ClinicDoctor::where(['doctor_id'=> auth()->user()->id])->whereNotIn('clinic_id',$clinics_ids)->update(['status'=> 0]);
-           
+
              // foreach($clinics_ids as $key => $clinic_id){
              //     ClinicDoctor::firstOrCreate(
              //       ['doctor_id' => $user_id,'clinic_id' => $clinic_id],
              //       ['doctor_id' => $user_id,'clinic_id' => $clinic_id]
-             //     );    
+             //     );
              // }
-        
+
             DB::commit();
             return redirect(url('doctor/account-details/' . $user_id))->with(['successMessage' => 'Clinic has been added successfully']);
         } catch (\Throwable $e) {
