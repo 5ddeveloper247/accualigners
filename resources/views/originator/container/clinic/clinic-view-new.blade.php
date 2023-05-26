@@ -100,7 +100,7 @@
                             <a class="btn bgcolor float-right m-1 text-white  addcase" id="addClinic"
                                onclick="editFunction()">New Clinic<i class="bi bi-plus-circle"></i></a>
 
-                            <a class="btn bgcolorborder  m-1 float-right delete" style="font-size:22px;">Delete<i
+                            <a class="btn btn bg border border-dark  btn-xl color  border-radius-8 bgcolorborder  m-1  float-right  delete" style="font-size:22px;">Delete<i
                                     class="bi bi-trash3"></i></a>
 
                             <a class="btn bgcolorborder hitme d-none m-1 float-right pooopdo addkado"
@@ -414,7 +414,7 @@
                                     <button type="submit" class="btn bgcolor text-white casebtn float-right"
                                             id="btn_submit">Submit
                                     </button>
-                                    <a class="btn bgcolorborder float-right mx-3" style="font-size:22px;"
+                                    <a class="btn bg border border-radius-8  btn-xl color mb-5 bgcolorborder float-right mx-2" style="font-size:22px;"
                                        onclick="bndka();">Cancel</a>
                         </form>
                     </div>

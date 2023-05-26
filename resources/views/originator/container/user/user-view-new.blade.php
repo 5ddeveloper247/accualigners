@@ -67,7 +67,7 @@ $title = 'Users';
                         <div class="col-xl-3 mb-30 threedo bgcolorbordertxt">
                             <a class="btn bgcolor text-white casebtn addcase float-right" style="margin-left:7%;" onclick="editFunction()">New User <i class="bi bi-plus-circle"></i></a>
 
-                            <a class="btn bgcolorborder  delete" style="font-size:22px; float:right">Delete<i class="bi bi-trash3"></i></a>
+                            <a class="btn btn bg border border-dark  btn-xl color  border-radius-8 bgcolorborder   float-right  delete" style="font-size:22px; float:right">Delete<i class="bi bi-trash3"></i></a>
 
                             <a class="ete checkboxbandka cursor cleardo float-right" style="font-size:22px;display: none;">Clear<i class="bi bi-eraser-fill"></i></a>
 
@@ -201,7 +201,7 @@ $title = 'Users';
                         </div>
                         <div class="col-md-6 col ">
                                  <button type="submit" class="btn bgcolor text-white mx-2 float-right ">Submit</button>
-                            <a class="btn bgcolorborder float-right mx-3" style="font-size:22px;" onclick="bndka();">Cancel</a>
+                            <a class="btn bg border border-radius-8 btn btn-xl color  mb-5 bgcolorborder float-right mx-2" style="font-size:22px;" onclick="bndka();">Cancel</a>
                            </div>
                     </div>
         </div>
