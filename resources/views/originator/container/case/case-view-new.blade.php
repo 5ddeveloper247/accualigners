@@ -170,14 +170,14 @@
     }
 
     #connect_to_doctor {
-        width: 60px !important;
+        width: 86px !important;
         display: inline-block;
         background: white;
         text-align: center;
         border: 2px solid #00205c;
         border-radius: 10px;
-        line-height: 30px;
-        font-size: 10px;
+        line-height: 35px;
+        font-size: 15px;
         cursor: pointer;
         color: #00205c;
         transition: all 0.5s ease-in-out;
@@ -345,8 +345,7 @@
                                                                 @endif
                                                             </a></td>
 
-                                                        <td class="maindo"><a class="inprogressbtn"
-                                                                              style="padding: 8px 12px;">
+                                                        <td class="maindo"><a class="inprogressbtn">
 
                                                                 @if ($case->status == 'CANCELED')
                                                                     {{ ucfirst(strtolower($case->status)) }}
