@@ -74,7 +74,7 @@ table th{
                         </div>
                         <div class="col-xl-4  fourdo mb-30 bgcolorbordertxt">
                                 <a class="btn float-right mx-2 bgcolor text-white casebtn addcase">New Appointment <i class="bi bi-plus-circle"></i></a>
-                              <a class="btn bgcolorborder float-right  delete" style="font-size:22px;width: 93px;">Delete<i class="bi bi-trash3" style=""></i>
+                              <a class="btn btn bg border border-dark  btn-xl color  border-radius-8 bgcolorborder   float-right  delete" style="font-size:22px;width: 93px;">Delete<i class="bi bi-trash3" style=""></i>
                               <a class="ete checkboxbandka cursor cleardo float-right" style="font-size:22px;display: none;">Clear<i class="bi bi-eraser-fill"></i></a>
                             </a>
                         </div>
@@ -455,7 +455,7 @@ error: function (data) {
              <div class="row mt-3 ">
                            <div class="col-md-12 col ">
                                  <button  class="btn bgcolor text-white casebtn float-right mx-2">Submit</button>
-                                 <a class="btn bgcolorborder float-right mx-3" style="font-size:22px;" onclick="bndka();">Cancel</a>
+                                 <a class="btn bg border border-radius-8 btn btn-xl color mb-5  bgcolorborder float-right mx-2" style="font-size:22px;" onclick="bndka();">Cancel</a>
                            </div>
                     </div>
                  </div>

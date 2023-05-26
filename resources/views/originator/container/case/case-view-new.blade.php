@@ -170,14 +170,14 @@
     }
 
     #connect_to_doctor {
-        width: 60px !important;
+        width: 86px !important;
         display: inline-block;
         background: white;
         text-align: center;
         border: 2px solid #00205c;
         border-radius: 10px;
-        line-height: 30px;
-        font-size: 10px;
+        line-height: 35px;
+        font-size: 15px;
         cursor: pointer;
         color: #00205c;
         transition: all 0.5s ease-in-out;
@@ -276,7 +276,7 @@
                         <a class="btn bgcolor float-right m-1 text-white  addcase">Add Case <i
                                 class="bi bi-plus-circle"></i></a>
 
-                        <a class="btn bgcolorborder  m-1 float-right delete1" style="font-size:22px;">Delete<i
+                        <a class="btn bg border border-dark  btn-xl color mb-5 m-1 paginate_button border-radius-8 bgcolorborder  float-right delete1" style="font-size:22px;">Delete<i
                                 class="bi bi-trash3"></i></a>
 
                         <!-- <a class="btn bgcolorborder hitme d-none m-1 float-right pooopdo addkado" style="font-size:22px;">Delete<i class="bi bi-trash3"></i></a> -->
@@ -345,8 +345,7 @@
                                                                 @endif
                                                             </a></td>
 
-                                                        <td class="maindo"><a class="inprogressbtn"
-                                                                              style="padding: 8px 12px;">
+                                                        <td class="maindo"><a class="inprogressbtn">
 
                                                                 @if ($case->status == 'CANCELED')
                                                                     {{ ucfirst(strtolower($case->status)) }}
@@ -534,7 +533,7 @@
                                             @if ($a == 0)
                                                 <tr>
                                                     <td colspan="5">
-                                                        <h3 align="center" style="color:#d3d3d3;">No data to show
+                                                        <h3 class="align center" style="color:#d3d3d3;">No data to show
                                                         </h3>
                                                     </td>
                                                 </tr>
@@ -1165,10 +1164,10 @@
                                 </div>
                             </div>
                             <div class="main mb-5 m-4" style="width:100%;">
-                                <button type="submit" class="btn bgcolor text-white casebtn float-right"
+                                <button type="submit" class="btn btn-xl btn-primary bgcolor text-white casebtn float-right"
                                         id="btn_submit">Submit
                                 </button>
-                                <a class="btn bgcolorborder mx-2 mb-5 float-right" style="font-size:22px;"
+                                <a class="bg border border-radius-8 btn btn-xl color float-right mb-5 mx-2" style="font-size:22px;"
                                    onclick="bndka();">Cancel</a>
 
                             </div>
