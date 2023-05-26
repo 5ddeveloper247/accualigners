@@ -164,16 +164,12 @@
                 <div class="page6box py-3 p-2">
                 </div>
                 <div class="row px-4 mb-5 ">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-11 bold m-auto">
+                            <div class="col-md-12 bold m-auto pl-0">
                                 <h5 class="textcolor">Add New Doctor</h5>
                                 <p class="greytext">
                                     Complete the information related to the doctor</p>
-                                <i class="fa-solid float-right bandeka cursor fa-xmark " onclick="bndka();"></i>
+                                <i class="fa-solid float-right bandeka cursor fa-xmark mr-20" onclick="bndka();"></i>
                             </div>
-                        </div>
-                    </div>
                     <div class="col-md-12 px-4 brdall py-4">
                         <div class="row">
                             <h5 class="textcolor px-2">Doctor's Detail</h5>
