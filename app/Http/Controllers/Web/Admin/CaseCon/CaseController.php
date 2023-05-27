@@ -91,7 +91,7 @@ class CaseController extends Controller
      */
     public function index(Request $request)
      {   
-        
+          
          
         try {
             $doctors = ClinicDoctor::has('doctor')->with('doctor')->get();
@@ -326,10 +326,12 @@ class CaseController extends Controller
     //      }
     // }
     public function show($id, Request $request){
+       
         try {
             $case = CaseModel::find($id);
-            $data['edit_values'] = $case;
-            
+            $data['edit_values'] = $case;  
+            $data['edit_values'] = $case;  
+           
             $ip = $request->ip(); // Get user's IP address from request object
             
             // Call the ipgeolocation API to get user's timezone based on their IP address
@@ -344,6 +346,7 @@ class CaseController extends Controller
             $data['order']=$order;
         
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
+        
             
             return view('originator.container.case.case-form-new', $data);
          } catch (Exception $e) {
@@ -448,9 +451,9 @@ class CaseController extends Controller
             $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'comment', 'processing_fee_amount', 'impression_kit_order_id', 'created_by'));
 
             if ($Case) {
-
+        
                 $case_id = $id;
-
+       
                 if (!empty($request->impression_kit_order_id))
                     Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
 
