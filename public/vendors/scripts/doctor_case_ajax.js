@@ -426,36 +426,49 @@ function preViewImage(input){
          });
   }
 
-/*_________________________preview img_________________________*/
-function preViewImage2(input){
-             //getting values in variables
-             // var file= [];
-             // var file = input.files[0];
+ /*_________________________preview img_________________________*/
+ function preViewImage2(input){
+     //getting values in variables
+     // var file= [];
+     // var file = input.files[0];
 
-             var fileInput = $('#image_attach')[0];
-             var files = fileInput.files;
-             var sort = $(input).data('sort');
-             var type = $(input).data('type');
+     var files = input.files;
+     var lastfile = files[files.length-1];
+     var sort = $(input).data('sort');
+     var type = $(input).data('type');
 
-            //appending form
-             formData= new FormData();
-             formData.append("_token", '{{csrf_token()}}');
-             formData.append("case_id", case_id);
-            // formData.append("attachment[]", file);
+     //appending form
+     formData= new FormData();
+     formData.append("_token", '{{csrf_token()}}');
+     formData.append("case_id", case_id);
+     // formData.append("attachment[]", file);
 
-             for (var i = 0; i < files.length; i++) {
-                formData.append("attachment[]", files[i]);
-             }
-             formData.append("sort_order", sort);
-             formData.append("attachment_type", type);
+     for (var i = 0; i < files.length; i++) {
+         formData.append("attachment[]", files[i]);
+     }
 
-            //preview image on front
-             var reader = new FileReader();
-             reader.onload = function(){
-             var output = document.getElementById(type+'_'+sort);
-             output.src = reader.result;
-             };
-             reader.readAsDataURL(event.target.files[0]);
+     formData.append("sort_order", sort);
+     formData.append("attachment_type", type);
+
+
+     //preview image on front
+     var reader = new FileReader();
+     reader.onload = function(){
+         var output = document.getElementById(type+'_'+sort);
+         if (lastfile.type === "application/pdf") {
+             output.setAttribute("src", "https://accualigners.app/storage/images/file.png");
+         } else {
+             output.setAttribute("src", reader.result);
+         }
+     };
+     reader.readAsDataURL(event.target.files[0]);
+     //getting id of attcahment image
+     var id=$(input).siblings('.get_id').val();
+
+     if(id!="")
+     {
+         formData.append("image_id", id);
+     }
 
      $.ajax({
          type: "POST",
@@ -464,29 +477,30 @@ function preViewImage2(input){
          processData: false,
          contentType: false,
          beforeSend: function(){
-            ajaxLoader();
-        },
+             ajaxLoader();
+         },
          success: function (data) {
-            $('#loader').fadeOut();
-            $.each( data['data'], function( key, value ) {
-                Attachment_Ids.push(value.id);
-            });
-                toastr.success('Success Message','Pictures Uploaded Successfully', {timeOut: 2000});
-                // var attachment_ids_field = $('#attachment_ids');
-                // var attachment_ids = attachment_ids_field.val();
-                // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
+             $('#loader').fadeOut();
+             $.each( data['data'], function( key, value ) {
+                 Attachment_Ids.push(value.id);
+             });
+             console.log(Attachment_Ids);
+             toastr.success('Success Message','Pictures Uploaded Successfully', {timeOut: 2000});
+             // var attachment_ids_field = $('#attachment_ids');
+             // var attachment_ids = attachment_ids_field.val();
+             // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
          },
          error: function(message, error)
          {
-            $('#loader').fadeOut();
-            $.each( message['responseJSON'].errors, function( key, value ) {
-                toastr.error('Error Message',value, {timeOut: 3000});
-            });
-    }
-    });
+             $('#loader').fadeOut();
+             $.each( message['responseJSON'].errors, function( key, value ) {
+                 toastr.error('Error Message',value, {timeOut: 3000});
+             });
+         }
+     });
 
 
-}
+ }
 /*_________________________preview img_________________________*/
 function preViewImage3(input){
     //getting values in variables
@@ -783,7 +797,7 @@ function validationOfCase(){
                     $('#prescription_msg').text('');
                 }
                 //Image Attachment
-                if($('#image_attach').val() == '') {
+                if($('.image_attach').attr('src') == '') {
                     toastr.error('Please attach Image atleast one image','Validation Error',{timeOut: 5000});
                     return false;
                 }

@@ -639,10 +639,10 @@ function validationOfCase(){
         $('#prescription_msg').text('');
     }
     //Image Attachment
-    // if($('#image_attach').val() == '') {
-    //     toastr.error('Please attach Image atleast one image','Validation Error',{timeOut: 5000});
-    //     return false;
-    // }
+    if($('.image_attach').attr('src') == '') {
+        toastr.error('Please attach Image atleast one image','Validation Error',{timeOut: 5000});
+        return false;
+    }
     return true;
 }
   /*__________________validation on input___________*/

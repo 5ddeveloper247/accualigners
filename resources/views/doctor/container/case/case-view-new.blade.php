@@ -894,7 +894,7 @@
                                                                            hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ 'IMAGE_' . $i }}" alt="Image"
-                                                                         class="img-thumbnail"
+                                                                         class="img-thumbnail image_attach"
                                                                          onclick="updateImage('{{ $i }}')">
                                                                     <input type="hidden" value="{{ $media }}"
                                                                            id="img_src_{{ $i }}">

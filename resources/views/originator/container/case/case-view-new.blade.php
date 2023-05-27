@@ -897,11 +897,11 @@
                                                                            class="hidden upload-attachment {{ 'IMAGE_' . $i }} image_disable disable_input"
                                                                            data-type="IMAGE"
                                                                            data-sort="{{ $i }}"
-                                                                           onchange="preViewImage2(this)" c
+                                                                           onchange="preViewImage2(this)"
                                                                            hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ 'IMAGE_' . $i }}" alt="Image"
-                                                                         class="img-thumbnail">
+                                                                         class="img-thumbnail image_attach">
                                                                     <input type="hidden" value="{{ $media }}"
                                                                            id="img_src_{{ $i }}">
                                                                     <input type="hidden" value=""
