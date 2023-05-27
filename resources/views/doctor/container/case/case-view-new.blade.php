@@ -958,7 +958,7 @@
                                                                    name="X_RAY_[]"
                                                                    class="hidden upload-attachment disable_input"
                                                                    data-type="X_RAY" data-sort="{{ $i }}"
-                                                                   onchange="preViewImage(this)" multiple hidden>
+                                                                   onchange="preViewImage(this)"  hidden>
                                                             <img src="{{ $media }}" id="{{ 'X_RAY_' . $i }}"
                                                                  alt="Image" class="img-thumbnail">
                                                             <input type="hidden" value=""
@@ -1019,7 +1019,7 @@
                                                                            class="hidden upload-attachment disable_input"
                                                                            data-type="{{ $jaw_type }}"
                                                                            onchange="preViewJawImage(this)"
-                                                                           data-sort="{{ $i }}" hidden>
+                                                                           data-sort="{{ $i }}" multiple hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ $jaw_type . '_' . $i }}" alt="Image"
                                                                          class="img-thumbnail">
@@ -1154,7 +1154,7 @@
                                                                 <input type="file" name="OTHER"
                                                                        accept="image/*,application/pdf"
                                                                        class="upload-attachment" data-type="OTHER"
-                                                                       data-sort="2" hidden
+                                                                       data-sort="2" hidden multiple
                                                                        onchange="preViewImage2(this)">
                                                                 <input type="hidden" value=""
                                                                        id="embedded_url_1" class="get_id">
