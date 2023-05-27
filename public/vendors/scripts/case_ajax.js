@@ -507,7 +507,9 @@ function preViewJawImage(input){
      //getting values in variables
       var sort = $(input).data('sort');
       var type = $(input).data('type');
+
       var file = input.files[0];
+
        //preview image on front
        var reader = new FileReader();
        reader.onload = function(){
@@ -548,6 +550,7 @@ function saveJawImage(select,i){
         formData.append("case_id", id);
         jawImageAJAX(formData,id);
      }
+
 }
 
 function jawImageAJAX(formData,id=''){
@@ -640,11 +643,11 @@ function validationOfCase(){
   /*__________________validation on input___________*/
 
    //phone number validation
-   var phoneRegex = /^\+?[0-9]{6,14}$/;
+   var phoneRegex = /^\+?[0-9]{11,14}$/;
    var phoneInput = $('input[name="phone_no"]');
    phoneInput.on('input', function() {
    var phone = phoneInput.val();
-   if (!phoneRegex.test(phone)) {
+   if (phone != '' && !phoneRegex.test(phone)) {
        phoneInput.css('border', '2px solid red');
        $('#phone_v_msg').text('Format not valid!');
    } else {
@@ -658,7 +661,7 @@ function validationOfCase(){
    var emailInput = $('input[name="email"]');
    emailInput.on('input', function() {
    var email = emailInput.val();
-   if (!emailRegex.test(email)) {
+   if (email != '' &&  !emailRegex.test(email)) {
        emailInput.css('border', '2px solid red');
        $('#email_v_msg').text('Email format not valid!');
    } else {

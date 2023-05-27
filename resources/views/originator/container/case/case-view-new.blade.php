@@ -276,7 +276,8 @@
                         <a class="btn bgcolor float-right m-1 text-white  addcase">Add Case <i
                                 class="bi bi-plus-circle"></i></a>
 
-                        <a class="btn bg border border-dark  btn-xl color mb-5 m-1 paginate_button border-radius-8 bgcolorborder  float-right delete1" style="font-size:22px;">Delete<i
+                        <a class="btn bg border border-dark  btn-xl color mb-5 m-1 paginate_button border-radius-8 bgcolorborder  float-right delete1"
+                           style="font-size:22px;">Delete<i
                                 class="bi bi-trash3"></i></a>
 
                         <!-- <a class="btn bgcolorborder hitme d-none m-1 float-right pooopdo addkado" style="font-size:22px;">Delete<i class="bi bi-trash3"></i></a> -->
@@ -671,34 +672,38 @@
                                         <div class="hidden-box">
                                             <div class="row pb-4 mt-3">
                                                 <div class="col-md-6 bold ">
-                                                    <span>Patient's Name*</span><span id="name_v_msg"
-                                                                                      style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
+                                                    <span>Patient's Name*</span>
                                                     <input type="hidden" name="ElementId" id="ElementId"
                                                            value=""/>
                                                     <input type="text" name="name" id="name"
                                                            class="form-control" placeholder="Enter Here">
+                                                    <span id="name_v_msg"
+                                                          style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
                                                 </div>
                                                 <div class="col-md-6 bold ">
-                                                    <span>Patient's Email(Optional)</span><span id="email_v_msg"
-                                                                                                style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
+                                                    <span>Patient's Email(Optional)</span>
                                                     <input type="email" name="email" id="email"
                                                            class="form-control" placeholder="Enter Here">
+                                                    <span id="email_v_msg"
+                                                          style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
                                                 </div>
                                             </div>
                                             <div class="row  pb-4">
                                                 <div class="col-md-6 bold ">
-                                                    <span>Patient's Phone No(Optional)</span><span id="phone_v_msg"
-                                                                                                   style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
-                                                    <input type="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                                    <span>Patient's Phone No(Optional)</span>
+                                                    <input type="text" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                                            name="phone_no" id="phone_no" class="form-control"
                                                            placeholder="Enter Here">
+                                                    <span id="phone_v_msg"
+                                                          style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
                                                 </div>
                                                 <div class="col-md-6 bold ">
-                                                    <span>Patient's DOB(Optional)</span><span id="dob_v_msg"
-                                                                                              style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
+                                                    <span>Patient's DOB(Optional)</span>
                                                     <input type="date" name="dob" id="dob"
                                                            class="form-control" pattern="\d{2}/\d{2}/\d{4}"
                                                            placeholder="mm/dd/yyyy">
+                                                    <span id="dob_v_msg"
+                                                          style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
                                                 </div>
                                             </div>
                                             <div class="row  pb-4">
@@ -887,6 +892,7 @@
                                                                 <!-- <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden> -->
                                                                 <label class="btn">
                                                                     <input type="file" id="image_attach"
+                                                                           accept="image/*,application/pdf"
                                                                            name="IMAGE_[]"
                                                                            class="hidden upload-attachment {{ 'IMAGE_' . $i }} image_disable disable_input"
                                                                            data-type="IMAGE"
@@ -943,7 +949,8 @@
 
                                                     <div class="col-md-2 mt-2 p-0 pt-2">
                                                         <label class="btn">
-                                                            <input type="file" id="upload_attach" name="X_RAY_[]"
+                                                            <input type="file" accept="image/*,application/pdf"
+                                                                   id="upload_attach" name="X_RAY_[]"
                                                                    class="hidden upload-attachment image_disable disable_input"
                                                                    data-type="X_RAY" data-sort="{{ $i }}"
                                                                    onchange="preViewImage(this)" hidden>
@@ -1004,6 +1011,7 @@
                                                             <div class="col-md-2 mt-2 p-0 pt-2">
                                                                 <label class="btn">
                                                                     <input type="file"
+                                                                           accept="image/*,application/pdf"
                                                                            id="jaw_{{ $i }}"
                                                                            name="{{ $jaw_type . '_' . $i }}"
                                                                            class="hidden upload-attachment disable_input"
@@ -1105,7 +1113,9 @@
                                                         </div>
                                                         <div class="col-md-2 mt-2 p-0 pt-2">
                                                             <label class="btn">
-                                                                <input type="file" name="OTHER"
+                                                                <input type="file"
+                                                                       accept="image/*,application/pdf"
+                                                                       name="OTHER"
                                                                        class="hidden upload-attachment"
                                                                        data-type="OTHER"
                                                                        data-sort="1" hidden
@@ -1140,7 +1150,9 @@
                                                         </div>
                                                         <div class="col-md-2 mt-2 p-0 pt-2">
                                                             <label class="btn">
-                                                                <input type="file" name="OTHER"
+                                                                <input type="file"
+                                                                       accept="image/*,application/pdf"
+                                                                       name="OTHER"
                                                                        class="upload-attachment" data-type="OTHER"
                                                                        data-sort="2" hidden
                                                                        onchange="preViewImage(this)">
@@ -1164,10 +1176,12 @@
                                 </div>
                             </div>
                             <div class="main mb-5 m-4" style="width:100%;">
-                                <button type="submit" class="btn btn-xl btn-primary bgcolor text-white casebtn float-right"
+                                <button type="submit"
+                                        class="btn btn-xl btn-primary bgcolor text-white casebtn float-right"
                                         id="btn_submit">Submit
                                 </button>
-                                <a class="bg border border-radius-8 btn btn-xl color float-right mb-5 mx-2" style="font-size:22px;"
+                                <a class="bg border border-radius-8 btn btn-xl color float-right mb-5 mx-2"
+                                   style="font-size:22px;"
                                    onclick="bndka();">Cancel</a>
 
                             </div>
