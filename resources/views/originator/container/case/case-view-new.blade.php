@@ -891,7 +891,7 @@
                                                                            class="hidden upload-attachment {{ 'IMAGE_' . $i }} image_disable disable_input"
                                                                            data-type="IMAGE"
                                                                            data-sort="{{ $i }}"
-                                                                           onchange="preViewImage2(this)" multiple
+                                                                           onchange="preViewImage2(this)" c
                                                                            hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ 'IMAGE_' . $i }}" alt="Image"
@@ -1008,7 +1008,7 @@
                                                                            name="{{ $jaw_type . '_' . $i }}"
                                                                            class="hidden upload-attachment disable_input"
                                                                            data-type="{{ $jaw_type }}"
-                                                                           onchange="preViewJawImage(this)"
+                                                                           onchange="preViewJawImage(this)"multiple
                                                                            data-sort="{{ $i }}" hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ $jaw_type . '_' . $i }}"
@@ -1143,7 +1143,7 @@
                                                                 <input type="file" name="OTHER"
                                                                        class="upload-attachment" data-type="OTHER"
                                                                        data-sort="2" hidden
-                                                                       onchange="preViewImage(this)">
+                                                                       onchange="preViewImage2(this)" multiple>
                                                                 <img
                                                                     src="{{ asset('link/files/app-assets/images/case/upload.png') }}"
                                                                     id="OTHER_2" alt="Image"
@@ -1500,3 +1500,5 @@
     }
 </script>
 <script src="{{ asset('vendors/scripts/case_ajax.js') }} "></script>
+
+

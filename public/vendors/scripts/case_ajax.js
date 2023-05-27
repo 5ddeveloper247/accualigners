@@ -172,382 +172,390 @@ success: function (data) {
              }
             }
             /*_____Xray Images____*/
-            if(data['attachments']['X_RAY'])
+                if(data['attachments']['X_RAY'])
+                {
+                    for(var i =0;i<data['attachments']['X_RAY'].length;i++){
+                        var sort_order = data['attachments']['X_RAY'][i].sort_order;
+                        $("#X_RAY_"+sort_order).attr("src", data['attachments']['X_RAY'][i].full_path);
+                    $("#xray_img_id_"+(i+1)).val(data['attachments']['X_RAY'][i].id);
+                    }
+                }
+                /*_____Other Images____*/
+                if(data['attachments']['OTHER'])
+                {
+                    for(var i =0;i<data['attachments']['OTHER'].length;i++){
+
+                        var sort_order = data['attachments']['OTHER'][i].sort_order;
+                        $("#OTHER_"+sort_order).attr("src", 'https://accualigners.app/storage/images/file.png');
+                            }
+                }else{
+                    $("#OTHER_1").attr("src", 'https://accualigners.app/link/files/app-assets/images/case/upload.png');
+                    $("#OTHER_2").attr("src", 'https://accualigners.app/link/files/app-assets/images/case/upload.png');
+                }
+                /*_____Jaw Images____*/
+                if(data['attachments']['LOWER_JAW'])
+                {
+                    for(var i =0;i<data['attachments']['LOWER_JAW'].length;i++){
+
+                        var sort_order = data['attachments']['LOWER_JAW'][i].sort_order;
+                        $("#select2").val(sort_order);
+                        $("#LOWER_JAW_2").attr("src", data['attachments']['LOWER_JAW'][i].full_path);
+                        $("#imgShow2").attr("src", data['attachments']['LOWER_JAW'][i].full_path);
+                        // Get a reference to our file input
+                        const fileInput = document.querySelector('input[type="file"]');
+
+                        // Create a new File object
+                        const myFile = new File(['Hello World!'], data['attachments']['LOWER_JAW'][i].full_path, {
+                            type: 'image/*',
+                            lastModified: new Date(),
+                        });
+
+                        // Now let's create a DataTransfer to get a FileList
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(myFile);
+                        fileInput.files = dataTransfer.files;
+                            }
+                }
+                if(data['attachments']['UPPER_JAW'])
+                {
+                    for(var i =0;i<data['attachments']['UPPER_JAW'].length;i++){
+
+                        var sort_order = data['attachments']['UPPER_JAW'][i].sort_order;
+                        $("#select1").val(sort_order);
+                        $("#UPPER_JAW_1").attr("src", data['attachments']['UPPER_JAW'][i].full_path);
+                        $("#imgShow1").attr("src", data['attachments']['UPPER_JAW'][i].full_path);
+                        const fileInput = document.querySelector('input[type="file"]');
+
+                        // Create a new File object
+                        const myFile = new File(['Hello World!'], data['attachments']['UPPER_JAW'][i].full_path, {
+                            type: 'image/*',
+                            lastModified: new Date(),
+                        });
+
+                        // Now let's create a DataTransfer to get a FileList
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(myFile);
+                        fileInput.files = dataTransfer.files;
+                            }
+                }
+                // $('.pop1').removeClass('d-none');
+                $('.pop1').fadeIn('slow');
+        }else{
+            toastr.error('some error','Error');
+        }
+
+    },
+    error: function (data) {
+        toastr.error('Something Went Wrong', 'Error');
+    }
+    });
+    }
+
+    /*_________________________Delete data ajax_________________________*/
+    $(".deletebtn").click(function (event) {
+        event.preventDefault();
+
+        var recordId = [];
+        var a = 0;
+        var b = 0;
+            for(i=1;i<records1;i++)
             {
-                for(var i =0;i<data['attachments']['X_RAY'].length;i++){
-                    var sort_order = data['attachments']['X_RAY'][i].sort_order;
-                    $("#X_RAY_"+sort_order).attr("src", data['attachments']['X_RAY'][i].full_path);
-                   $("#xray_img_id_"+(i+1)).val(data['attachments']['X_RAY'][i].id);
+                if($("#a"+i).is(':checked')==true)
+                {
+                    recordId[a] = $("#a"+i).val();
+                    a++;
+                }
+
+            }
+            for(i=1;i<records2;i++)
+            {
+                if($("#b"+i).is(':checked')==true)
+                {
+                    recordId[b] = $("#b"+i).val();
+                    b++;
                 }
             }
-            /*_____Other Images____*/
-            if(data['attachments']['OTHER'])
-            {
-                for(var i =0;i<data['attachments']['OTHER'].length;i++){
 
-                    var sort_order = data['attachments']['OTHER'][i].sort_order;
-                    $("#OTHER_"+sort_order).attr("src", 'https://accualigners.app/storage/images/file.png');
+        if(recordId.length != 0)
+        {
+            $.ajax({
+            type: 'DELETE',
+            url: base_url+"/case/"+recordId,
+            data: {
+            },
+            beforeSend: function(){
+                ajaxLoader();
+            },
+            success: function (data) {
+                $('#loader').fadeOut();
+                if(data){
+                        if(data.done == true)
+                        {
+                            $(".pop2").addClass("d-none");
+                            toastr.success('Success Message',data.msg, {timeOut: 2000});
+                            setTimeout(function () {location.reload(true)}, 1000);
+                        }else{
+                            toastr.error(data.msg, '', {timeOut: 2000});
                         }
-            }else{
-                $("#OTHER_1").attr("src", 'https://accualigners.app/link/files/app-assets/images/case/upload.png');
-                $("#OTHER_2").attr("src", 'https://accualigners.app/link/files/app-assets/images/case/upload.png');
+                }else{
+                    toastr.error('some error','Error');
+                }
+
+            },
+            error: function (data) {
+                $('#loader').fadeOut();
+                toastr.error('Something Went Wrong', 'Error');
             }
-             /*_____Jaw Images____*/
-            if(data['attachments']['LOWER_JAW'])
-            {
-                for(var i =0;i<data['attachments']['LOWER_JAW'].length;i++){
-
-                    var sort_order = data['attachments']['LOWER_JAW'][i].sort_order;
-                    $("#select2").val(sort_order);
-                    $("#LOWER_JAW_2").attr("src", data['attachments']['LOWER_JAW'][i].full_path);
-                    $("#imgShow2").attr("src", data['attachments']['LOWER_JAW'][i].full_path);
-                    // Get a reference to our file input
-                    const fileInput = document.querySelector('input[type="file"]');
-
-                    // Create a new File object
-                    const myFile = new File(['Hello World!'], data['attachments']['LOWER_JAW'][i].full_path, {
-                        type: 'image/*',
-                        lastModified: new Date(),
-                    });
-
-                    // Now let's create a DataTransfer to get a FileList
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(myFile);
-                    fileInput.files = dataTransfer.files;
-                        }
-            }
-            if(data['attachments']['UPPER_JAW'])
-            {
-                for(var i =0;i<data['attachments']['UPPER_JAW'].length;i++){
-
-                    var sort_order = data['attachments']['UPPER_JAW'][i].sort_order;
-                    $("#select1").val(sort_order);
-                    $("#UPPER_JAW_1").attr("src", data['attachments']['UPPER_JAW'][i].full_path);
-                    $("#imgShow1").attr("src", data['attachments']['UPPER_JAW'][i].full_path);
-                    const fileInput = document.querySelector('input[type="file"]');
-
-                    // Create a new File object
-                    const myFile = new File(['Hello World!'], data['attachments']['UPPER_JAW'][i].full_path, {
-                        type: 'image/*',
-                        lastModified: new Date(),
-                    });
-
-                    // Now let's create a DataTransfer to get a FileList
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(myFile);
-                    fileInput.files = dataTransfer.files;
-                        }
-            }
-            // $('.pop1').removeClass('d-none');
-            $('.pop1').fadeIn('slow');
-    }else{
-        toastr.error('some error','Error');
+            });
     }
+    });
+        /*________preview img________*/
+    function preViewImage(input){
+        //getting values in variables
 
-},
-error: function (data) {
-    toastr.error('Something Went Wrong', 'Error');
-}
-});
-}
+        var file = input.files[0];
 
-/*_________________________Delete data ajax_________________________*/
- $(".deletebtn").click(function (event) {
-    event.preventDefault();
+        
+        var sort = $(input).data('sort');
+        var type = $(input).data('type');
 
-    var recordId = [];
-    var a = 0;
-    var b = 0;
-        for(i=1;i<records1;i++)
-        {
-            if($("#a"+i).is(':checked')==true)
-            {
-                recordId[a] = $("#a"+i).val();
-                a++;
-            }
+        //appending form
+        formData= new FormData();
+        formData.append("_token", '{{csrf_token()}}');
+        formData.append("case_id", case_id);
+        formData.append("attachment", file);
 
+    
+    
+        formData.append("sort_order", sort);
+        formData.append("attachment_type", type);
+
+        //preview image on front
+        var reader = new FileReader();
+        reader.onload = function(){
+        var output = document.getElementById(type+'_'+sort);
+        if (file.type === "application/pdf") {
+            output.setAttribute("src", "https://accualigners.app/storage/images/file.png");
+        } else {
+            output.setAttribute("src", reader.result);
         }
-        for(i=1;i<records2;i++)
-        {
-            if($("#b"+i).is(':checked')==true)
-            {
-                recordId[b] = $("#b"+i).val();
-                b++;
-            }
-        }
+        //output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        //getting id of attcahment image
+        var id=$(input).siblings('.get_id').val();
 
-    if(recordId.length != 0)
-    {
-        $.ajax({
-        type: 'DELETE',
-        url: base_url+"/case/"+recordId,
-        data: {
-        },
-        beforeSend: function(){
-            ajaxLoader();
-        },
-        success: function (data) {
-            $('#loader').fadeOut();
-            if(data){
-                    if(data.done == true)
+        if(id!="")
+        {
+            formData.append("image_id", id);
+        }
+            $.ajax({
+                type: "POST",
+                url: base_url+"/case/upload-attachment",
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function(){
+                ajaxLoader();
+            },
+                success: function (data) {
+                $('#loader').fadeOut();
+                    var id = data['data']['id']
+                    toastr.success('Success Message','File Uploaded Successfully', {timeOut: 2000});
+                    var attachment_ids_field = $('#attachment_ids');
+                    var attachment_ids = attachment_ids_field.val();
+                    attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
+
+                    },
+                    error: function(message, error)
                     {
-                        $(".pop2").addClass("d-none");
-                        toastr.success('Success Message',data.msg, {timeOut: 2000});
-                        setTimeout(function () {location.reload(true)}, 1000);
-                    }else{
-                        toastr.error(data.msg, '', {timeOut: 2000});
+                    $('#loader').fadeOut();
+                $.each( message['responseJSON'].errors, function( key, value ) {
+                    toastr.error('Error Message',value, {timeOut: 3000});
+                });
                     }
-            }else{
-                toastr.error('some error','Error');
-            }
-
-        },
-        error: function (data) {
-            $('#loader').fadeOut();
-            toastr.error('Something Went Wrong', 'Error');
-        }
-        });
-}
-});
-      /*________preview img________*/
-function preViewImage(input){
-    //getting values in variables
-
-    var file = input.files[0];
-
-     var fileInput = $('#image_attach')[0];
-     var files = fileInput.files;
-     var sort = $(input).data('sort');
-     var type = $(input).data('type');
-
-    //appending form
-    formData= new FormData();
-    formData.append("_token", '{{csrf_token()}}');
-    formData.append("case_id", case_id);
-    formData.append("attachment", file);
-
-
-    formData.append("sort_order", sort);
-    formData.append("attachment_type", type);
-
-    //preview image on front
-    var reader = new FileReader();
-    reader.onload = function(){
-    var output = document.getElementById(type+'_'+sort);
-    if (file.type === "application/pdf") {
-        output.setAttribute("src", "https://accualigners.app/storage/images/file.png");
-      } else {
-        output.setAttribute("src", reader.result);
-      }
-    //output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-    //getting id of attcahment image
-    var id=$(input).siblings('.get_id').val();
-
-    if(id!="")
-    {
-        formData.append("image_id", id);
+                });
     }
+
+    /*_________________________preview img_________________________*/
+    function preViewImage2(input){
+                //getting values in variables
+                // var file= [];
+                // var file = input.files[0];
+
+                var files = input.files;
+                var lastfile = files[files.length-1];
+                var sort = $(input).data('sort');
+                var type = $(input).data('type');
+
+                //appending form
+                formData= new FormData();
+                formData.append("_token", '{{csrf_token()}}');
+                formData.append("case_id", case_id);
+                // formData.append("attachment[]", file);
+
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("attachment[]", files[i]);
+                }
+
+                formData.append("sort_order", sort);
+                formData.append("attachment_type", type);
+
+
+                //preview image on front
+                var reader = new FileReader();
+                reader.onload = function(){
+                var output = document.getElementById(type+'_'+sort);
+                if (lastfile.type === "application/pdf") {
+                    output.setAttribute("src", "https://accualigners.app/storage/images/file.png");
+                } else {
+                    output.setAttribute("src", reader.result);
+                }
+                };
+                reader.readAsDataURL(event.target.files[0]);
+                //getting id of attcahment image
+        var id=$(input).siblings('.get_id').val();
+
+        if(id!="")
+        {
+            formData.append("image_id", id);
+        }
+
         $.ajax({
             type: "POST",
-            url: base_url+"/case/upload-attachment",
+            url: base_url+"/case/upload-attachment2",
             data: formData,
             processData: false,
             contentType: false,
             beforeSend: function(){
-               ajaxLoader();
-           },
+                ajaxLoader();
+            },
             success: function (data) {
-               $('#loader').fadeOut();
-                   var id = data['data']['id']
-                   toastr.success('Success Message','File Uploaded Successfully', {timeOut: 2000});
-                   var attachment_ids_field = $('#attachment_ids');
-                   var attachment_ids = attachment_ids_field.val();
-                   attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
-
-                },
-                 error: function(message, error)
-                {
-                   $('#loader').fadeOut();
-               $.each( message['responseJSON'].errors, function( key, value ) {
-                   toastr.error('Error Message',value, {timeOut: 3000});
-               });
-                }
-             });
-  }
-
-/*_________________________preview img_________________________*/
-function preViewImage2(input){
-             //getting values in variables
-             // var file= [];
-             // var file = input.files[0];
-
-             var fileInput = $('#image_attach')[0];
-             var files = fileInput.files;
-             var sort = $(input).data('sort');
-             var type = $(input).data('type');
-
-            //appending form
-             formData= new FormData();
-             formData.append("_token", '{{csrf_token()}}');
-             formData.append("case_id", case_id);
-            // formData.append("attachment[]", file);
-
-             for (var i = 0; i < files.length; i++) {
-                formData.append("attachment[]", files[i]);
-             }
-
-             formData.append("sort_order", sort);
-             formData.append("attachment_type", type);
+                $('#loader').fadeOut();
+                $.each( data['data'], function( key, value ) {
+                    Attachment_Ids.push(value.id);
+                });
+                console.log(Attachment_Ids);
+                    toastr.success('Success Message','Pictures Uploaded Successfully', {timeOut: 2000});
+                    // var attachment_ids_field = $('#attachment_ids');
+                    // var attachment_ids = attachment_ids_field.val();
+                    // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
+            },
+            error: function(message, error)
+            {
+                $('#loader').fadeOut();
+                $.each( message['responseJSON'].errors, function( key, value ) {
+                    toastr.error('Error Message',value, {timeOut: 3000});
+                });
+        }
+        });
 
 
-            //preview image on front
-             var reader = new FileReader();
-             reader.onload = function(){
-             var output = document.getElementById(type+'_'+sort);
-             output.src = reader.result;
-             };
-             reader.readAsDataURL(event.target.files[0]);
+    }
+    /*_________________________preview img_________________________*/
+    function preViewImage3(input){
+        //getting values in variables
+        // var file= [];
+        // var file = input.files[0];
 
-     $.ajax({
-         type: "POST",
-         url: base_url+"/case/upload-attachment2",
-         data: formData,
-         processData: false,
-         contentType: false,
-         beforeSend: function(){
-            ajaxLoader();
-        },
-         success: function (data) {
-            $('#loader').fadeOut();
-            $.each( data['data'], function( key, value ) {
-                Attachment_Ids.push(value.id);
-            });
-            console.log(Attachment_Ids);
-                toastr.success('Success Message','Pictures Uploaded Successfully', {timeOut: 2000});
-                // var attachment_ids_field = $('#attachment_ids');
-                // var attachment_ids = attachment_ids_field.val();
-                // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
-         },
-         error: function(message, error)
-         {
-            $('#loader').fadeOut();
-            $.each( message['responseJSON'].errors, function( key, value ) {
-                toastr.error('Error Message',value, {timeOut: 3000});
-            });
+        var fileInput = $('#upload_attach')[0];
+        var files = fileInput.files;
+        var sort = $(input).data('sort');
+        var type = $(input).data('type');
+
+    //appending form
+        formData= new FormData();
+        formData.append("_token", '{{csrf_token()}}');
+        formData.append("case_id", case_id);
+    // formData.append("attachment[]", file);
+
+        for (var i = 0; i < files.length; i++) {
+        formData.append("attachment[]", files[i]);
+        }
+        formData.append("sort_order", sort);
+        formData.append("attachment_type", type);
+
+    //preview image on front
+        var reader = new FileReader();
+        reader.onload = function(){
+        var output = document.getElementById(type+'_'+sort);
+        output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+
+    $.ajax({
+    type: "POST",
+    url: base_url+"/case/upload-attachment2",
+    data: formData,
+    processData: false,
+    contentType: false,
+    beforeSend: function(){
+        ajaxLoader();
+    },
+    success: function (data) {
+        $('#loader').fadeOut();
+        var id = data['data']['id']
+        toastr.success('Success Message','Picture Uploaded Successfully', {timeOut: 2000});
+        var attachment_ids_field = $('#attachment_ids');
+        var attachment_ids = attachment_ids_field.val();
+        attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
+    },
+    error: function(message, error)
+    {
+        $('#loader').fadeOut();
+    $.each( message['responseJSON'].errors, function( key, value ) {
+        toastr.error('Error Message',value, {timeOut: 3000});
+    });
     }
     });
-
-
-}
-/*_________________________preview img_________________________*/
-function preViewImage3(input){
-    //getting values in variables
-    // var file= [];
-    // var file = input.files[0];
-
-    var fileInput = $('#upload_attach')[0];
-    var files = fileInput.files;
-    var sort = $(input).data('sort');
-    var type = $(input).data('type');
-
-   //appending form
-    formData= new FormData();
-    formData.append("_token", '{{csrf_token()}}');
-    formData.append("case_id", case_id);
-   // formData.append("attachment[]", file);
-
-    for (var i = 0; i < files.length; i++) {
-       formData.append("attachment[]", files[i]);
-    }
-    formData.append("sort_order", sort);
-    formData.append("attachment_type", type);
-
-   //preview image on front
-    var reader = new FileReader();
-    reader.onload = function(){
-    var output = document.getElementById(type+'_'+sort);
-    output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-
-$.ajax({
-type: "POST",
-url: base_url+"/case/upload-attachment2",
-data: formData,
-processData: false,
-contentType: false,
-beforeSend: function(){
-    ajaxLoader();
-},
-success: function (data) {
-    $('#loader').fadeOut();
-       var id = data['data']['id']
-       toastr.success('Success Message','Picture Uploaded Successfully', {timeOut: 2000});
-       var attachment_ids_field = $('#attachment_ids');
-       var attachment_ids = attachment_ids_field.val();
-       attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
-},
-error: function(message, error)
-{
-    $('#loader').fadeOut();
-   $.each( message['responseJSON'].errors, function( key, value ) {
-       toastr.error('Error Message',value, {timeOut: 3000});
-   });
-}
-});
 
 
 }
 
 
   //onchange image
-function preViewJawImage(input){
-     //getting values in variables
-      var sort = $(input).data('sort');
-      var type = $(input).data('type');
-      var file = input.files[0];
-       //preview image on front
-       var reader = new FileReader();
-       reader.onload = function(){
-       var output = document.getElementById(type+'_'+sort);
-       var imgShow = document.getElementById('imgShow'+sort);
-       output.src = reader.result;
-       imgShow.src = reader.result;
-       };
-       reader.readAsDataURL(event.target.files[0]);
-       //appending form
-        formData= new FormData();
-        formData.append("_token", '{{csrf_token()}}');
-        formData.append("case_id", case_id);
-        formData.append("attachment", file);
-        formData.append("sort_order", sort);
-        formData.append("attachment_type", type);
-        // jawImageAJAX(formData);
-}
+    function preViewJawImage(input){
+        //getting values in variables
+        var sort = $(input).data('sort');
+        var type = $(input).data('type');
+
+        var file = input.files[input.files.length-1];
+        //preview image on front
+        var reader = new FileReader();
+        reader.onload = function(){
+        var output = document.getElementById(type+'_'+sort);
+        var imgShow = document.getElementById('imgShow'+sort);
+        output.src = reader.result;
+        imgShow.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+        
+    }
       //onchange select
-function saveJawImage(select,i){
+    function saveJawImage(select,i){
 
-    ($(select).val() == 1)?(type = 'UPPER_JAW'):(type = 'LOWER_JAW');
-    input = document.getElementById('jaw_'+i);
-    var sort = $(input).data('sort');
-     //appending form
-     formData= new FormData();
-     formData.append("_token", '{{csrf_token()}}');
-     formData.append("case_id", case_id);
-     formData.append("attachment", $('#jaw_'+i)[0].files[0]);
-     formData.append("sort_order", sort);
-     formData.append("attachment_type", type);
-     var id = $("#ElementId").val();
-     if((typeof $('#jaw_'+i)[0].files[0] === 'undefined')&&(id === 'undefined')){
-        toastr.error('Error MEssage','Please Upload Image First', {timeOut: 3000});
-        select.selectedIndex = 0;
-     }else{
-
-        formData.append("case_id", id);
-        jawImageAJAX(formData,id);
-     }
+        ($(select).val() == 1)?(type = 'UPPER_JAW'):(type = 'LOWER_JAW');
+        input = document.getElementById('jaw_'+i);
+        var sort = $(input).data('sort');
+        //appending form
+        var id = $("#ElementId").val();
+        if((typeof $('#jaw_'+i)[0].files[0] === 'undefined')&&(id === 'undefined')){
+            toastr.error('Error MEssage','Please Upload Image First', {timeOut: 3000});
+        
+        }
+        for (var j = 0; j <  $('#jaw_'+i)[0].files.length; j++) {
+        
+        
+            formData= new FormData();
+            formData.append("_token", '{{csrf_token()}}');
+            formData.append("case_id", case_id);
+            formData.append("attachment", $('#jaw_'+i)[0].files[j]);
+            formData.append("sort_order", sort);
+            formData.append("attachment_type", type);
+                formData.append("case_id", id);
+                jawImageAJAX(formData,id);
+        }
+        
 }
 
 function jawImageAJAX(formData,id=''){
@@ -631,10 +639,10 @@ function validationOfCase(){
         $('#prescription_msg').text('');
     }
     //Image Attachment
-    if($('#image_attach').val() == '') {
-        toastr.error('Please attach Image atleast one image','Validation Error',{timeOut: 5000});
-        return false;
-    }
+    // if($('#image_attach').val() == '') {
+    //     toastr.error('Please attach Image atleast one image','Validation Error',{timeOut: 5000});
+    //     return false;
+    // }
     return true;
 }
   /*__________________validation on input___________*/
