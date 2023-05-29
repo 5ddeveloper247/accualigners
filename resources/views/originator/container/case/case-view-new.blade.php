@@ -1117,12 +1117,12 @@
                                                                        accept="image/*,application/pdf"
                                                                        name="OTHER"
                                                                        class="hidden upload-attachment"
-                                                                       data-type="OTHER"
+                                                                       data-type="PATIENT_FORM"
                                                                        data-sort="1" hidden
                                                                        onchange="preViewImage(this)">
                                                                 <img
                                                                     src="{{ asset('link/files/app-assets/images/case/upload.png') }}"
-                                                                    id="OTHER_1" alt="Image"
+                                                                    id="PATIENT_FORM_1" alt="Image"
                                                                     class="img-thumbnail" style="width: 35px;"/>
                                                                 <input type="hidden" value=""
                                                                        id="embedded_url_1" class="get_id">
@@ -1160,7 +1160,7 @@
                                                                     src="{{ asset('link/files/app-assets/images/case/upload.png') }}"
                                                                     id="OTHER_2" alt="Image"
                                                                     class="img-thumbnail" style="width: 35px;">
-                                                                <input type="hidden" value=""
+                                                                <input type="hidden" value="2"
                                                                        id="embedded_url_2" class="get_id">
                                                             </label>
                                                         </div>

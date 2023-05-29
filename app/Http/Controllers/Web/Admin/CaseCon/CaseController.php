@@ -330,24 +330,16 @@ class CaseController extends Controller
         try {
             $case = CaseModel::find($id);
             $data['edit_values'] = $case;
-            $data['edit_values'] = $case;
-
             $ip = $request->ip(); // Get user's IP address from request object
-
             // Call the ipgeolocation API to get user's timezone based on their IP address
             $api_key = "4eb0722e7f464951aef4c772283952fb"; // replace with your actual API key
             $api_url = "https://api.ipgeolocation.io/timezone?apiKey={$api_key}&ip={$ip}";
             $api_response = json_decode(file_get_contents($api_url), true);
             $user_timezone = new DateTimeZone($api_response['timezone']);
-
             $data['user_timezone'] = $user_timezone->getName(); // Set user's timezone
-
             $order= Order::where('case_id','=',$id)->first();
             $data['order']=$order;
-
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
-
-
             return view('originator.container.case.case-form-new', $data);
          } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -905,7 +897,7 @@ class CaseController extends Controller
             $user_id = $request->user()->id;
             $sort_order = $request->sort_order;
             $attachment_type = $request->attachment_type;
-            $sort_order=1;
+           
 
 
             foreach($request->file('attachment') as $file){

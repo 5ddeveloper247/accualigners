@@ -443,7 +443,7 @@ class CaseController extends Controller
         try {
             $case = CaseModel::where('id', $id)->where('doctor_id', $request->user()->id)->first();
             $data['edit_values'] = $case;
-            
+
             $ip = $request->ip(); // Get user's IP address from request object
             
             // Call the ipgeolocation API to get user's timezone based on their IP address
