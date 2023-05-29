@@ -1051,7 +1051,7 @@
                                                                         <select
                                                                             style="font-size: 10px;padding:0px;font-size: 10px;"
                                                                             id="select{{ $i }}"
-                                                                            onchange="saveJawImage(this,'{{ $i }}')"
+                                                                            onchange="saveJawImage(this,'{{ $i }}',true)"
                                                                             class="form-select form-control">
                                                                             <option selected value=""
                                                                                     style="font-size: 10px;">Select Jaw

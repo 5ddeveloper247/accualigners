@@ -539,13 +539,16 @@ function saveJawImage(select, i) {
     input = document.getElementById('jaw_' + i);
     var sort = $(input).data('sort');
 
-    var invertype = (i == 1) ? 'select'+2: 'select'+1;
-    var selectval = '<option selected="" value="" style="font-size: 10px;">Select Jaw</option>';
-     selectval += ($(select).val() == 1) ?
-         '<option value="2" style="font-size: 10px;">Lower</option>'
-         :
-         '<option value="1" style="font-size: 10px;">Upper</option>';
-    $('#'+invertype).html(selectval);
+    if (is) {
+        var invertype = (i == 1) ? 2 : 1;
+        var selectval = '<option selected="" value="" style="font-size: 10px;">Select Jaw</option>';
+        selectval += ($(select).val() == 1) ?
+            '<option value="2" style="font-size: 10px;">Lower</option>'
+            :
+            '<option value="1" style="font-size: 10px;">Upper</option>';
+        $('#select' + invertype).html(selectval);
+        $('#select' + invertype).attr('onchange', "saveJawImage(this," + invertype + ",false)");
+    }
 
     //appending form
     var id = $("#ElementId").val();
