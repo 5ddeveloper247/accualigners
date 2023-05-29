@@ -840,41 +840,78 @@
                         <a href="{{ $edit_values->embedded_url }}"
                             style="text-decoration: underline;">{!! $edit_values->embedded_url !!}</a>
                     </div>
-                    @isset($attachmentGroups['OTHER'])
-                        @foreach ($attachmentGroups['OTHER'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path . $attachment->name))
-                            @if ($attachment->sort_order == 1)
-                                <div class="col-md-12 mt-3">
-                                    <h5>Patient Consent form</h5>
-                                    <div class="row">
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{ storageUrl_h('images/file.png') }}"
-                                                title="{{ $attachment->name }}">
-                                            <a href="{{ $image }}" target="_blank"
-                                                download="{{ $image }}">Download <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="col-md-12 mt-3">
+                        <h5>Patient Consent form</h5>
+                        <div class="row">
+                            @isset($attachmentGroups['PATIENT_FORM'])
+                            @foreach ($attachmentGroups['PATIENT_FORM'] as $attachment)
+                            @php($image = storageUrl_h($attachment->path.$attachment->name))
+
+                            @if(strpos($image, 'pdf') !== false)
+                            <div class="col-md-3 text-center my-3">
+                                <img src="{{storageUrl_h('images/file.png')}}">
+                                <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+                            </div>
+                            @elseif((strpos($image, 'stl') !== false))
+                            <div class="col-md-3 text-center my-3">
+                                <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+
+                            </div>
+                            @else
+                            <div class="col-md-3 text-center my-3">
+                                <img src="{{$image}}">
+                                <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+
+                            </div>
                             @endif
-                            @if ($attachment->sort_order == 2)
-                                <div class="col-md-12 bordertop pt-3 mt-3">
-                                    <h5>Other files</h5>
-                                    <div class="row">
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{ storageUrl_h('images/file.png') }}"
-                                                title="{{ $attachment->name }}">
-                                            <a href="{{ $image }}" target="_blank"
-                                                download="{{ $image }}">Download <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            @endforeach
+                            @endisset
+                        </div>
+                    </div>
+                    <div class="col-md-12 bordertop pt-3 mt-3">
+                        <h5>Other files</h5>
+
+                        <div class="row">
+                            @isset($attachmentGroups['OTHER'])
+                            @foreach ($attachmentGroups['OTHER'] as $attachment)
+                            @php($image = storageUrl_h($attachment->path.$attachment->name))
+
+
+                            @if(strpos($image, 'pdf') !== false)
+                            <div class="col-md-3 text-center my-3">
+                                <img src="{{storageUrl_h('images/file.png')}}">
+                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
+                                    <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+
+                            </div>
+                            @elseif((strpos($image, 'stl') !== false))
+
+                            <div class="col-md-3 text-center my-3">
+                                <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
+                                    <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+
+                            </div>
+                            @else
+                            <div class="col-md-3 text-center my-3">
+                                <img src="{{ $image }}">
+                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
+                                    <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+                            </div>
+
                             @endif
-                        @endforeach
-                    @endisset
+                            @endforeach
+                            @endisset
+                            <!-- <div class="col-md-3 text-center my-3">
+                        <img src="images/t4.png">
+                                      <a>Download <img src="images/download.png" width="15" class="mx-2"></a>
+
+                        </div>    -->
+
+                        </div>
+                    </div>
                 </div>
             </div>
 

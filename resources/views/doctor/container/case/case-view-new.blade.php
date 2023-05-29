@@ -1118,14 +1118,14 @@
                                                                 <input type="file" name="OTHER"
                                                                        accept="image/*,application/pdf"
                                                                        class="hidden upload-attachment"
-                                                                       data-type="OTHER"
+                                                                       data-type="PATIENT_FORM"
                                                                        data-sort="1" hidden
                                                                        onchange="preViewImage(this)">
                                                                 <input type="hidden" value=""
                                                                        id="embedded_url_1" class="get_id">
                                                                 <img
                                                                     src="{{ asset('link/files/app-assets/images/case/upload.png') }}"
-                                                                    id="OTHER_1" alt="Image"
+                                                                    id="PATIENT_FORM_1" alt="Image"
                                                                     class="img-thumbnail" style="width: 35px;"/>
                                                             </label>
                                                         </div>
