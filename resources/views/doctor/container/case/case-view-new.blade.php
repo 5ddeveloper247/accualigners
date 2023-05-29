@@ -1053,7 +1053,7 @@
                                                                             id="select{{ $i }}"
                                                                             onchange="saveJawImage(this,'{{ $i }}')"
                                                                             class="form-select form-control">
-                                                                            <option selected=""
+                                                                            <option selected value=""
                                                                                     style="font-size: 10px;">Select Jaw
                                                                             </option>
                                                                             <option value="1"

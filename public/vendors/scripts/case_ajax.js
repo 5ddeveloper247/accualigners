@@ -538,6 +538,15 @@ function saveJawImage(select, i) {
     ($(select).val() == 1) ? (type = 'UPPER_JAW') : (type = 'LOWER_JAW');
     input = document.getElementById('jaw_' + i);
     var sort = $(input).data('sort');
+
+    var invertype = (i == 1) ? 'select'+2: 'select'+1;
+    var selectval = '<option selected="" value="" style="font-size: 10px;">Select Jaw</option>';
+     selectval += ($(select).val() == 1) ?
+         '<option value="2" style="font-size: 10px;">Lower</option>'
+         :
+         '<option value="1" style="font-size: 10px;">Upper</option>';
+    $('#'+invertype).html(selectval);
+
     //appending form
     var id = $("#ElementId").val();
     if ((typeof $('#jaw_' + i)[0].files[0] === 'undefined') && (id === 'undefined')) {
@@ -638,6 +647,16 @@ function validationOfCase() {
     //Image Attachment
     if ($('.image_attach').attr('src') == '') {
         toastr.error('Please attach Image atleast one image', 'Validation Error', {timeOut: 5000});
+        return false;
+    }
+    // Jaw Scan(Upper/Lower)
+    if ($('#select1').val() == '') {
+        toastr.error('Please Select Jaw Scan(Upper/Lower) Image at least one image', 'Validation Error', {timeOut: 5000});
+        return false;
+    }
+    // Jaw Scan(Upper/Lower)
+    if ($('#select2').val() == '') {
+        toastr.error('Please Select Image Jaw Scan(Upper/Lower) at least one image', 'Validation Error', {timeOut: 5000});
         return false;
     }
     return true;

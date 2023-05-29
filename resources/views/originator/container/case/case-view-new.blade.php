@@ -309,7 +309,7 @@
                                                 <th style="white-space:nowrap;">Treatment Plan</th>
                                                 <th>Aligners</th>
                                                 <th>Status</th>
-                                                <th>Assign Case</th>
+                                                <th>Link Doctor</th>
                                                 <th>View</th>
                                                 <th>Edit</th>
                                             </tr>
@@ -434,9 +434,10 @@
                                                 <th style="white-space:nowrap;">Treatment Plan</th>
                                                 <th>Aligners</th>
                                                 <th>Status</th>
-                                                <th>Case Payment</th>
+                                                <th>Link Doctor</th>
                                                 <th>View</th>
                                                 <th>Edit</th>
+                                                <th>Make Payment</th>
                                             </tr>
                                             </thead>
                                             <tbody class="tablerow">
@@ -1051,7 +1052,7 @@
                                                                             id="select{{ $i }}"
                                                                             onchange="saveJawImage(this,'{{ $i }}')"
                                                                             class="form-select form-control select_tag disable_input">
-                                                                            <option selected=""
+                                                                            <option selected value=""
                                                                                     style="font-size: 10px;">Select Jaw
                                                                             </option>
                                                                             <option value="1"
