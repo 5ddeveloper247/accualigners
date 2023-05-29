@@ -330,6 +330,7 @@ class CaseController extends Controller
         try {
             $case = CaseModel::find($id);
             $data['edit_values'] = $case;
+
             $ip = $request->ip(); // Get user's IP address from request object
             // Call the ipgeolocation API to get user's timezone based on their IP address
             $api_key = "4eb0722e7f464951aef4c772283952fb"; // replace with your actual API key
@@ -491,7 +492,7 @@ class CaseController extends Controller
 
     public function update_new(Request $request)
     {
-       
+
         $id = $request['ElementId'];
         try {
             DB::beginTransaction();
@@ -623,6 +624,7 @@ class CaseController extends Controller
                  $case = CaseModel::find($id);
                 if($case->forceDelete())
                 {
+                    Patient::
                     $arrRes['msg']  = "Data deleted successfully";
                     $arrRes['done'] = true;
                 }else{
@@ -897,7 +899,7 @@ class CaseController extends Controller
             $user_id = $request->user()->id;
             $sort_order = $request->sort_order;
             $attachment_type = $request->attachment_type;
-           
+
 
 
             foreach($request->file('attachment') as $file){

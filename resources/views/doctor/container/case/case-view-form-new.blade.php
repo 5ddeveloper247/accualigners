@@ -1,6 +1,6 @@
 <style>
     .number_val {
-        padding: 11px !important;
+        padding: 9px !important;
     }
 
     body {
@@ -82,7 +82,7 @@
 @extends('originator.root.dashboard_side_bar', ['title' => $title])
 @section('title', 'Case Details')
 @php
-    
+
     $viewRoute = route('doctor.case.index');
     //$currency = trans('siteConfig.default_currency');
     $setting = setting_h();
@@ -154,7 +154,7 @@
                         $api_url = "https://api.ipgeolocation.io/timezone?apiKey={$api_key}&ip={$ip}";
                         $api_response = json_decode(file_get_contents($api_url), true);
                         $user_timezone = new DateTimeZone($api_response['timezone']);
-                        
+
                         $created_at = new DateTime($edit_values->created_at, new DateTimeZone('UTC'));
                         $created_at->setTimezone($user_timezone);
                     @endphp
@@ -619,9 +619,9 @@
             {{-- <div class="col-md-12   p-0 px-3  pb-3">
                                     <label> Embeded URL</label>
                                     <input type="text" class="form-control" placeholder="Enter Here">
-                                </div> 
+                                </div>
                                 <div class="col-md-12   p-0 px-3  pb-3">
-                                        
+
                                 <a class="float-right" style="color:#00205C;text-decoration:underline;">Add More</a>
                                 </div> --}}
             <div class="col-md-12   p-0 px-3  pb-3">
@@ -2412,9 +2412,9 @@
                     $('#phone').text(response.data.edit_values.phone_no);
 
                     //  var formattedDate = $.datepicker.formatDate('d-m-y', date);
-                    //  var formattedTime = $.datepicker.formatTime('hh:mm:ss', {hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds()}); 
+                    //  var formattedTime = $.datepicker.formatTime('hh:mm:ss', {hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds()});
                     //  var formattedDateTime = formattedDate + ' ' + formattedTime;
-                    //  console.log(formattedDateTime); 
+                    //  console.log(formattedDateTime);
 
                     var date = new Date(response.data.edit_values.created_at);
                     var day = date.getDate();
@@ -2523,7 +2523,7 @@
                 //                            </div>
                 //                            <div class="col-md-9 p-0 ">
                 //                                <div class="textdo mx-2 p-3">
-                //                                    <p> 
+                //                                    <p>
                 //                                  ${responseCollection['data']['concern'].message}
                 //                                    </p>
                 //                                    <span style="font-size: 13px;color: #afafaf;">
@@ -2556,7 +2556,7 @@
                 //                             </div>
                 //                        </div>
                 //                    </div>`;
-                    //     }               
+                    //     }
                     //      $("#append").append($html);
                     refresh();
 
@@ -2643,7 +2643,7 @@
                            </div>
                            <div class="col-md-9 col-9 p-0 ">
                                <div class="textdo mx-2 p-3">
-                                   <p> 
+                                   <p>
                                  ${value.message}
                                    </p>
                                    <span style="font-size: 13px;color: #afafaf;">

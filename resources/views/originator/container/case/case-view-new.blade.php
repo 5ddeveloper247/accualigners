@@ -449,7 +449,7 @@
                                                             <input type="checkbox" id="b{{ $b++ }}"
                                                                    value="{{ $case->id }}">
                                                         </td>
-                                                        </td>
+
                                                         <td>{{ $case->id }}</td>
                                                         <td>{{ ucwords($case->name) }}</td>
                                                         <td>{{ $case->phone_no }}</td>

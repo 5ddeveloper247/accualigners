@@ -271,23 +271,30 @@ $default_currency = $setting->currency;
         <div class="row">
             <div class="col-md-12 c1data  p-0 {{($edit_values->pay_digital_scan)?'':'digital_scan'}}" onclick="{{($edit_values->pay_digital_scan)?'':'payDigitalScan()'}}">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="boxdozama2 py-3 px-3 m-2 ">
                             <h5 class="my-2 d-inline"> Digital model charges</h5>
                             @if ($edit_values->digital_scan_fee)
                             <a class="painbtn mx-3">Paid</a>
                             @else
-                            <a class="inprogressbtn mx-3">Pending</a>
+                            <a class="inprogressbtn mx-3">{{($edit_values->pay_digital_scan)?'Requested':'Pending'}}</a>
                             @endif
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="boxdozama2 mt-3">
-                            <p style="font-size:13px;color:grey;" class="d-inline">{{date('h:i a',
-                                                                strtotime($edit_values->created_at))}} | {{date('d M Y',
-                                                                strtotime($edit_values->created_at))}}
-                                <span style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
-                            </p>
+                    <div class="col-md-4">
+                        <div class="boxdozama2 mt-3 text-right">
+                            @if ($edit_values->digital_scan_fee && !empty($edit_values->aligner))
+                                <p style="font-size:13px;color:grey;" class="d-inline">{{date('h:i a',
+                                                                strtotime($edit_values->aligner->created_at))}} | {{date('d M Y',
+                                                                strtotime($edit_values->aligner->created_at))}}
+                                    <span style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
+                                </p>
+                            @else
+                                <p style="font-size:13px;color:grey;" class="d-inline">
+                                    <span style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
+                                </p>
+                            @endif
+
                         </div>
                     </div>
                 </div>
