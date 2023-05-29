@@ -38,14 +38,14 @@
 
 </style>
 @php
-$title = 'Case Details';
+    $title = 'Case Details';
 @endphp
 @extends('originator.root.dashboard_side_bar',['title' => $title])
 @section('title', "Doctor")
 @php
-$viewRoute = route('admin.case.index');
-$setting = setting_h();
-$default_currency = $setting->currency;
+    $viewRoute = route('admin.case.index');
+    $setting = setting_h();
+    $default_currency = $setting->currency;
 @endphp
 <style>
     * {
@@ -190,13 +190,19 @@ $default_currency = $setting->currency;
                         <div class="orderactive">
                             <h6 class="py-3 d-inline text-white">Order Status</h6>
                             @if(isset($order))
-                            <a class="mt-2 px-3 py-2">{{ $order->status }}</a>
+                                <a class="mt-2 px-3 py-2">{{ $order->status }}</a>
+
                             @endif
                         </div>
                     </div>
-                    <div class="col-xl-3 mt-2 ">
-                        <div class=" ViewDetails">
-                            <a class="text-white cursor float-right mx-3 py-2 px-3" @if(!(isset($order))) disabled @endif @if(isset($order))onclick="view('{{ $order->id }}') @endif">View Details</a>
+                    <div class="col-xl-3 mt-2 text-right">
+                        <div class=" @if (isset($order))ViewDetails @else orderactive   @endif">
+                            @if(isset($order))
+                                <a class="text-white cursor float-right mx-3 py-2 px-3"
+                                   onclick="view('{{ $order->id }}') ">View Details</a>
+                            @else
+                                <a class="mt-2 px-3 py-2">Pending</a>
+                            @endif
                         </div>
                     </div>
 
@@ -229,14 +235,14 @@ $default_currency = $setting->currency;
                 <div class="c1data p-3 m-2" style="height: 113px;">
                     <h5 class="mt-3"> Case Time</h5>
                     @php
-                    $ip = request()->ip();
-                    $api_key = "4eb0722e7f464951aef4c772283952fb"; // replace with your actual API key
-                    $api_url = "https://api.ipgeolocation.io/timezone?apiKey={$api_key}&ip={$ip}";
-                    $api_response = json_decode(file_get_contents($api_url), true);
-                    $user_timezone = new DateTimeZone($api_response['timezone']);
+                        $ip = request()->ip();
+                        $api_key = "4eb0722e7f464951aef4c772283952fb"; // replace with your actual API key
+                        $api_url = "https://api.ipgeolocation.io/timezone?apiKey={$api_key}&ip={$ip}";
+                        $api_response = json_decode(file_get_contents($api_url), true);
+                        $user_timezone = new DateTimeZone($api_response['timezone']);
 
-                    $created_at = new DateTime($edit_values->created_at, new DateTimeZone('UTC'));
-                    $created_at->setTimezone($user_timezone);
+                        $created_at = new DateTime($edit_values->created_at, new DateTimeZone('UTC'));
+                        $created_at->setTimezone($user_timezone);
                     @endphp
 
 
@@ -269,15 +275,16 @@ $default_currency = $setting->currency;
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 c1data  p-0 {{($edit_values->pay_digital_scan)?'':'digital_scan'}}" onclick="{{($edit_values->pay_digital_scan)?'':'payDigitalScan()'}}">
+            <div class="col-md-12 c1data  p-0 {{($edit_values->pay_digital_scan)?'':'digital_scan'}}"
+                 onclick="{{($edit_values->pay_digital_scan)?'':'payDigitalScan()'}}">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="boxdozama2 py-3 px-3 m-2 ">
                             <h5 class="my-2 d-inline"> Digital model charges</h5>
                             @if ($edit_values->digital_scan_fee)
-                            <a class="painbtn mx-3">Paid</a>
+                                <a class="painbtn mx-3">Paid</a>
                             @else
-                            <a class="inprogressbtn mx-3">{{($edit_values->pay_digital_scan)?'Requested':'Pending'}}</a>
+                                <a class="inprogressbtn mx-3">{{($edit_values->pay_digital_scan)?'Requested':'Pending'}}</a>
                             @endif
                         </div>
                     </div>
@@ -287,11 +294,13 @@ $default_currency = $setting->currency;
                                 <p style="font-size:13px;color:grey;" class="d-inline">{{date('h:i a',
                                                                 strtotime($edit_values->aligner->created_at))}} | {{date('d M Y',
                                                                 strtotime($edit_values->aligner->created_at))}}
-                                    <span style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
+                                    <span
+                                        style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
                                 </p>
                             @else
                                 <p style="font-size:13px;color:grey;" class="d-inline">
-                                    <span style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
+                                    <span
+                                        style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
                                 </p>
                             @endif
 
@@ -310,15 +319,16 @@ $default_currency = $setting->currency;
                                     <img src="{{ asset('vendors/images/logo.png') }}" width="40">
                                     <span style="font-size: 18px;font-weight:bold;">Chat with the Dentist</span>
                                     @if($edit_values->has_concern)
-                                    <div style="border: 2px solid red;padding: 6px;float:right;color: red;" class="badge badge-pill badge-border badge-glow border-danger danger badge-square">
-                                        Doctor has concern
-                                    </div>
+                                        <div style="border: 2px solid red;padding: 6px;float:right;color: red;"
+                                             class="badge badge-pill badge-border badge-glow border-danger danger badge-square">
+                                            Doctor has concern
+                                        </div>
                                     @endif
                                 </div>
                             </div>
                             <div id="append" style="height:580px;overflow-y:scroll;overflow-x:hidden;width:100%;"></div>
 
-                            <!-- @isset($edit_values->concerns)
+                        <!-- @isset($edit_values->concerns)
                             @foreach ($edit_values->concerns as $concern)
                                 @if( $concern->message_by == 'ADVISER')
                                     <div class="col-md-12">
@@ -383,13 +393,16 @@ $default_currency = $setting->currency;
                             <div class="col-md-12 classSentMessage">
                                 <div class="row mt-3 typehere m-2">
                                     <div class="col-md-12 dall  dalldo" style="margin-bottom: 9px !important;">
-                                        <input type="" class="form-control" name="advice_comment" id="advice_comment" placeholder="Type Something...">
+                                        <input type="" class="form-control" name="advice_comment" id="advice_comment"
+                                               placeholder="Type Something...">
                                         <div class="item">
-                                            <!-- <img src="{{ asset('vendors/images/i1.png') }}">
+                                        <!-- <img src="{{ asset('vendors/images/i1.png') }}">
                                                 <img src="{{ asset('vendors/images/i2.png') }}">
                                                 <img src="{{ asset('vendors/images/i3.png') }}">
                                                 <img src="{{ asset('vendors/images/Emoji-smile.png') }}"> -->
-                                            <a class="bgcolor text-white py-2 px-4 mt-5 mx-5" style="cursor:pointer;bottom: -28px ! important;" id="advice_comment_button">Send</a>
+                                            <a class="bgcolor text-white py-2 px-4 mt-5 mx-5"
+                                               style="cursor:pointer;bottom: -28px ! important;"
+                                               id="advice_comment_button">Send</a>
                                         </div>
                                     </div>
                                 </div>
@@ -403,8 +416,11 @@ $default_currency = $setting->currency;
                             <div class="col-md-12">
                                 <div class="addlinkdo mt-3">
                                     <h5 class="d-inline">Upload Video</h5>
-                                    <a class="px-3" style="padding:2% 2%; cursor:pointer;" data-toggle="modal" data-target="#video_modal">Add Link</a>
-                                    <span style="background:#00205C;padding:2% 2%;border-radius: 20px;color:white;cursor:pointer;" data-toggle="modal" data-target="#video_modal2">Add Video</span>
+                                    <a class="px-3" style="padding:2% 2%; cursor:pointer;" data-toggle="modal"
+                                       data-target="#video_modal">Add Link</a>
+                                    <span
+                                        style="background:#00205C;padding:2% 2%;border-radius: 20px;color:white;cursor:pointer;"
+                                        data-toggle="modal" data-target="#video_modal2">Add Video</span>
                                 </div>
                             </div>
                         </div>
@@ -426,34 +442,38 @@ $default_currency = $setting->currency;
                                 </div>
                             </div> -->
                             @if(!empty($edit_values->video_uploaded))
-                            <div class="col-12 videoPlayer video_uploaded">
-                                @if ($edit_values->video_uploaded_type == 'VIDEO')
-                                <video id="vid0" src="{{storageUrl_h($edit_values->video_uploaded)}}" controls="controls" crossorigin="anonymous" class="vid" style="width:100%;" playsinline autoplay muted loop></video>
-                                @else
-                                <img src="{{storageUrl_h($edit_values->video_uploaded)}}" class="img-fluid">
-                                @endif
-                            </div>
-                            <style>
-                                .btn-primary {
-                                    background-color: #00205C !important;
-                                    border-color: #00205C !important;
-                                }
+                                <div class="col-12 videoPlayer video_uploaded">
+                                    @if ($edit_values->video_uploaded_type == 'VIDEO')
+                                        <video id="vid0" src="{{storageUrl_h($edit_values->video_uploaded)}}"
+                                               controls="controls" crossorigin="anonymous" class="vid"
+                                               style="width:100%;" playsinline autoplay muted loop></video>
+                                    @else
+                                        <img src="{{storageUrl_h($edit_values->video_uploaded)}}" class="img-fluid">
+                                    @endif
+                                </div>
+                                <style>
+                                    .btn-primary {
+                                        background-color: #00205C !important;
+                                        border-color: #00205C !important;
+                                    }
 
-                                .btn-primary:hover {
-                                    background-color: #0a3078 !important;
-                                    border-color: #0a3078 !important;
-                                }
+                                    .btn-primary:hover {
+                                        background-color: #0a3078 !important;
+                                        border-color: #0a3078 !important;
+                                    }
 
-                                .bgcolor:hover {
-                                    background-color: #0a3078 !important;
-                                    border-color: #0a3078 !important;
-                                }
+                                    .bgcolor:hover {
+                                        background-color: #0a3078 !important;
+                                        border-color: #0a3078 !important;
+                                    }
 
-                            </style>
-                            <div class="col-12 video_uploaded">
-                                <button type="button" class="btn btn-block btn-primary" id="delete_video" style="margin-top: 2px !important;width: 100%; text-align:center;"><i class="ft-trash"></i> Remove
-                                </button>
-                            </div>
+                                </style>
+                                <div class="col-12 video_uploaded">
+                                    <button type="button" class="btn btn-block btn-primary" id="delete_video"
+                                            style="margin-top: 2px !important;width: 100%; text-align:center;"><i
+                                            class="ft-trash"></i> Remove
+                                    </button>
+                                </div>
                             @endif
                         </div>
                         <!--<div class="row mt-4 ">
@@ -492,8 +512,12 @@ $default_currency = $setting->currency;
                                 <!-- <a class="textcolor attachImg"  style="font-size: 15px;color:#00205C;text-decoration: underline; cursor:pointer;"> Browse</a> -->
                                 <!-- <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden> -->
                                 <label class="btn">
-                                    <input type="file" multiple name="attachment[]" class="hidden upload-attachment" data-type="TREATMENT-PLAN-PDF" data-sort="1" onchange="preViewImage(this)" hidden>
-                                    <img src="{{asset('link/files/app-assets/images/case/upload.png')}}" id="IMAGE_1" alt="Image" class="img-thumbnail" style="max-width:250% !important;float:right;">
+                                    <input type="file" multiple name="attachment[]" class="hidden upload-attachment"
+                                           data-type="TREATMENT-PLAN-PDF" data-sort="1" onchange="preViewImage(this)"
+                                           hidden>
+                                    <img src="{{asset('link/files/app-assets/images/case/upload.png')}}" id="IMAGE_1"
+                                         alt="Image" class="img-thumbnail"
+                                         style="max-width:250% !important;float:right;">
                                 </label>
                             </div>
                             </form>
@@ -506,20 +530,25 @@ $default_currency = $setting->currency;
 
                             <div class="col-md-12   p-0 px-3  pb-3">
                                 <label> Number of trays required*</label>
-                                <input type="number" min="1" class="form-control" value="{{ old('no_of_trays', isset($edit_values) ? $edit_values->no_of_trays + $edit_values->no_of_missing_trays  : NULL) }}" placeholder="Enter Here" name="no_of_trays" id="no_of_trays">
+                                <input type="number" min="1" class="form-control"
+                                       value="{{ old('no_of_trays', isset($edit_values) ? $edit_values->no_of_trays + $edit_values->no_of_missing_trays  : NULL) }}"
+                                       placeholder="Enter Here" name="no_of_trays" id="no_of_trays">
                             </div>
                             <div class="col-md-12   p-0 px-3  pb-3">
                                 <label> Number of hours to wear in a day</label>
-                                <input type="number" min="1" max="24" class="form-control" placeholder="Enter Here" name="no_of_days" id="no_of_days" value="{{ old('no_of_days', isset($edit_values) ? $edit_values->no_of_days : NULL) }}">
+                                <input type="number" min="1" max="24" class="form-control" placeholder="Enter Here"
+                                       name="no_of_days" id="no_of_days"
+                                       value="{{ old('no_of_days', isset($edit_values) ? $edit_values->no_of_days : NULL) }}">
 
                             </div>
                             <div class="col-md-12  py-3">
                                 @if(isset($edit_values->aligner->status) && strtoupper($edit_values->aligner->status) != "PENDING")
-                                <button class="bgcolor float-right px-3 py-2 text-white" id="missing_trays"> Update
-                                </button>
+                                    <button class="bgcolor float-right px-3 py-2 text-white" id="missing_trays"> Update
+                                    </button>
                                 @else
-                                <button class="bgcolor float-right px-3 py-2 text-white" id="no_of_days_button"> Submit
-                                </button>
+                                    <button class="bgcolor float-right px-3 py-2 text-white" id="no_of_days_button">
+                                        Submit
+                                    </button>
                                 @endif
 
                             </div>
@@ -547,7 +576,8 @@ $default_currency = $setting->currency;
                     <div class="col-md-2 p-0">
                         <div class="c1data px-3 py-3 m-2">
                             <p style="color: #4B5563;font-size:12px;" class="mt-2 m-0"> A-P Relation</p>
-                            <h5 class="pt-2" style="color: black;font-size:12px;">{{$edit_values->a_p_relationship}}</h5>
+                            <h5 class="pt-2"
+                                style="color: black;font-size:12px;">{{$edit_values->a_p_relationship}}</h5>
 
                         </div>
                     </div>
@@ -607,11 +637,12 @@ $default_currency = $setting->currency;
                     <div class="col-md-12 crowding">
                         <h5>Clinical Condition</h5>
                         @isset($edit_values->clinical_conditions)
-                        @foreach ($edit_values->clinical_conditions as $clinical_condition)
-                        <button class="mt-3"> {{ucwords($clinical_condition->clinical_condition->name)}}</button>
+                            @foreach ($edit_values->clinical_conditions as $clinical_condition)
+                                <button
+                                    class="mt-3"> {{ucwords($clinical_condition->clinical_condition->name)}}</button>
                         @endforeach
-                        @endisset
-                        <!-- <button class="mt-3"> Misshapen Teeth</button>
+                    @endisset
+                    <!-- <button class="mt-3"> Misshapen Teeth</button>
                             <button class="mt-3"> CrowFlared Teethding</button>
                             <button class="mt-3">Spacing</button>
                             <button class="mt-3">Open Bite</button>
@@ -620,8 +651,8 @@ $default_currency = $setting->currency;
                 </div>
             </div>
             @php
-            $attachmentGroups = collect($edit_values->attachments)->groupBy('attachment_type');
-            //dd($attachmentGroups['IMAGE']);
+                $attachmentGroups = collect($edit_values->attachments)->groupBy('attachment_type');
+                //dd($attachmentGroups['IMAGE']);
             @endphp
             <div class="col-md-12 ">
                 <div class="row py-3 border borderround m-2">
@@ -633,25 +664,31 @@ $default_currency = $setting->currency;
 
                         <div class="row">
                             @isset($attachmentGroups['IMAGE'])
-                            @foreach ($attachmentGroups['IMAGE'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path.$attachment->name))
-                            @if(strpos($image, 'pdf') !== false)
-                            <div class="col-md-3 text-center attachement my-3">
-                                <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @elseif((strpos($image, 'stl') !== false))
-                            <div class="col-md-3 text-center my-3 ">
-                                <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @else
-                            <div class="col-md-3 text-center  my-3">
-                                <img src="{{$image}}">
-                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @endif
-                            @endforeach
+                                @foreach ($attachmentGroups['IMAGE'] as $attachment)
+                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
+                                    @if(strpos($image, 'pdf') !== false)
+                                        <div class="col-md-3 text-center attachement my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                            <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @elseif((strpos($image, 'stl') !== false))
+                                        <div class="col-md-3 text-center my-3 ">
+                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                            <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @else
+                                        <div class="col-md-3 text-center  my-3">
+                                            <img src="{{$image}}">
+                                            <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endisset
                         </div>
                     </div>
@@ -667,25 +704,33 @@ $default_currency = $setting->currency;
                         <div class="row">
 
                             @isset($attachmentGroups['X_RAY'])
-                            @foreach ($attachmentGroups['X_RAY'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path.$attachment->name))
-                            @if(strpos($image, 'pdf') !== false)
-                            <div class="col-md-3 text-center my-3 ">
-                                <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}" class="attachement">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @elseif((strpos($image, 'stl') !== false))
-                            <div class="col-md-3 text-center my-3 ">
-                                <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}" class="attachement">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @else
-                            <div class="col-md-3 text-center my-3 ">
-                                <img src="{{ $image }}" class="attachement">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @endif
-                            @endforeach
+                                @foreach ($attachmentGroups['X_RAY'] as $attachment)
+                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
+                                    @if(strpos($image, 'pdf') !== false)
+                                        <div class="col-md-3 text-center my-3 ">
+                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}"
+                                                 class="attachement">
+                                            <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @elseif((strpos($image, 'stl') !== false))
+                                        <div class="col-md-3 text-center my-3 ">
+                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}"
+                                                 class="attachement">
+                                            <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @else
+                                        <div class="col-md-3 text-center my-3 ">
+                                            <img src="{{ $image }}" class="attachement">
+                                            <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endisset
                         </div>
                     </div>
@@ -700,47 +745,65 @@ $default_currency = $setting->currency;
                     <div class="col-md-12 ">
                         <div class="row">
                             @isset($attachmentGroups['UPPER_JAW'])
-                            @foreach ($attachmentGroups['UPPER_JAW'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path.$attachment->name))
-                            @if(strpos($image, 'pdf') !== false)
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">{{$attachment->attachment_type}} <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @elseif((strpos($image, 'stl') !== false))
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                <a href="{{ $image}}" target="_blank" download="{{ $image }}">{{$attachment->attachment_type}} <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @else
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{$image}}">
-                                <a href="{{ $image}}" target="_blank" download="{{ $image }}">{{$attachment->attachment_type}} <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @endif
-                            @endforeach
+                                @foreach ($attachmentGroups['UPPER_JAW'] as $attachment)
+                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
+                                    @if(strpos($image, 'pdf') !== false)
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                            <a href="{{$image}}" target="_blank"
+                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @elseif((strpos($image, 'stl') !== false))
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                            <a href="{{ $image}}" target="_blank"
+                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @else
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{$image}}">
+                                            <a href="{{ $image}}" target="_blank"
+                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endisset
 
                             @isset($attachmentGroups['LOWER_JAW'])
-                            @foreach ($attachmentGroups['LOWER_JAW'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path.$attachment->name))
-                            @if(strpos($image, 'pdf') !== false)
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
-                                <a href="{{$image}}" target="_blank" download="{{ $image }}">{{$attachment->attachment_type}} <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @elseif((strpos($image, 'stl') !== false))
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                <a href="{{ $image}}" target="_blank" download="{{ $image }}">{{$attachment->attachment_type}} <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @else
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{$image}}">
-                                <a href="{{ $image}}" target="_blank" download="{{ $image }}">{{$attachment->attachment_type}} <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @endif
-                            @endforeach
+                                @foreach ($attachmentGroups['LOWER_JAW'] as $attachment)
+                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
+                                    @if(strpos($image, 'pdf') !== false)
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                            <a href="{{$image}}" target="_blank"
+                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @elseif((strpos($image, 'stl') !== false))
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                            <a href="{{ $image}}" target="_blank"
+                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @else
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{$image}}">
+                                            <a href="{{ $image}}" target="_blank"
+                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endisset
 
                         </div>
@@ -750,38 +813,45 @@ $default_currency = $setting->currency;
             <div class="col-md-12 ">
                 <div class="row py-3 border borderround m-2">
                     @isset($edit_values->embedded_url)
-                    <div class="col-md-12 crowding borderbottom pb-3">
-                        <h5>Attach URL</h5>
-                        <a style="text-decoration: underline;" href="{{ $edit_values->embedded_url }}">{{ $edit_values->embedded_url }}</a>
-                    </div>
+                        <div class="col-md-12 crowding borderbottom pb-3">
+                            <h5>Attach URL</h5>
+                            <a style="text-decoration: underline;"
+                               href="{{ $edit_values->embedded_url }}">{{ $edit_values->embedded_url }}</a>
+                        </div>
                     @endisset
                     <div class="col-md-12 mt-3">
                         <h5>Patient Consent form</h5>
                         <div class="row">
                             @isset($attachmentGroups['PATIENT_FORM'])
-                            @foreach ($attachmentGroups['PATIENT_FORM'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path.$attachment->name))
+                                @foreach ($attachmentGroups['PATIENT_FORM'] as $attachment)
+                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
 
-                            @if(strpos($image, 'pdf') !== false)
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h('images/file.png')}}">
-                                <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
-                            @elseif((strpos($image, 'stl') !== false))
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
-                                <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+                                    @if(strpos($image, 'pdf') !== false)
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h('images/file.png')}}">
+                                            <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
+                                        </div>
+                                    @elseif((strpos($image, 'stl') !== false))
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                            <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
 
-                            </div>
-                            @else
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{$image}}">
-                                <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+                                        </div>
+                                    @else
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{$image}}">
+                                            <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img
+                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                    class="mx-2"></a>
 
-                            </div>
-                            @endif
+                                        </div>
+                                    @endif
 
-                            @endforeach
+                                @endforeach
                             @endisset
                         </div>
                     </div>
@@ -790,36 +860,39 @@ $default_currency = $setting->currency;
 
                         <div class="row">
                             @isset($attachmentGroups['OTHER'])
-                            @foreach ($attachmentGroups['OTHER'] as $attachment)
-                            @php($image = storageUrl_h($attachment->path.$attachment->name))
+                                @foreach ($attachmentGroups['OTHER'] as $attachment)
+                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
 
 
-                            @if(strpos($image, 'pdf') !== false)
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h('images/file.png')}}">
-                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
-                                    <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+                                    @if(strpos($image, 'pdf') !== false)
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h('images/file.png')}}">
+                                            <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
+                                                <img src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                     class="mx-2"></a>
 
-                            </div>
-                            @elseif((strpos($image, 'stl') !== false))
+                                        </div>
+                                    @elseif((strpos($image, 'stl') !== false))
 
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
-                                    <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                            <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
+                                                <img src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                     class="mx-2"></a>
 
-                            </div>
-                            @else
-                            <div class="col-md-3 text-center my-3">
-                                <img src="{{ $image }}">
-                                <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
-                                    <img src="{{ asset('vendors/images/download.png') }}" width="15" class="mx-2"></a>
-                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-md-3 text-center my-3">
+                                            <img src="{{ $image }}">
+                                            <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
+                                                <img src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                     class="mx-2"></a>
+                                        </div>
 
-                            @endif
+                                @endif
                             @endforeach
-                            @endisset
-                            <!-- <div class="col-md-3 text-center my-3">
+                        @endisset
+                        <!-- <div class="col-md-3 text-center my-3">
                         <img src="images/t4.png">
                                       <a>Download <img src="images/download.png" width="15" class="mx-2"></a>
 
@@ -844,10 +917,10 @@ $default_currency = $setting->currency;
                     $('.pop1').addClass('d-none');
                 }
 
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $("#example").DataTable();
                 });
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $("#example1").DataTable();
                 });
 
@@ -856,62 +929,71 @@ $default_currency = $setting->currency;
             </html>
 
             @if(isset($order))
-            <div class="pop1 d-none scrolldo" id="order_details">
-                <div class="row m-0">
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-9 bg-white popadd fixheight" style="height:800px;">
-                        <div class="page6box py-3 p-2">
+                <div class="pop1 d-none scrolldo" id="order_details">
+                    <div class="row m-0">
+                        <div class="col-md-3">
                         </div>
-                        <div class="row px-4 mb-5 ">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12 bold m-auto">
-                                        <h4 class="textcolor">Order Detials</h4>
-                                        <p class="greytext " style="font-size:12px;">Here is the order details</p>
-                                        <i class="fa-solid bandeka float-right cursor fa-xmark " onclick="bndka1()"></i>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 bold m-auto">
-                                        <div class="table-responsive">
-                                            <table class="table tabledozama">
-                                                <thead style="background-color: #f4f5f8;">
-                                                    <td style="font-size: 8px!important;">Case ID:</td>
-                                                    <th style="font-size: 10px!important;" class="case_empty" id="case_id">2
-                                                    </th>
-                                                    <td style="font-size: 8px!important;">Order ID:</td>
-                                                    <th style="font-size: 10px!important;" class="case_empty" id="order_id">1
-                                                    </th>
-                                                    <td style="font-size: 8px!important;">Dentist’s Name:</td>
-                                                    <th style="font-size: 10px!important;" class="case_empty" id="dentist_name">Mujtaba Fatih
-                                                    </th>
-                                                    <td style="font-size: 8px!important;">Number of trays:</td>
-                                                    <th style="font-size: 10px!important;" class="case_empty" id="no_of_tray">10
-                                                    </th>
-                                                    <td style="font-size: 8px!important;">Shipping Charges:</td>
-                                                    <th style="font-size: 10px!important;" class="case_empty" id="shipping_charges">0 AED
-                                                    </th>
-                                                </thead>
-                                            </table>
+                        <div class="col-md-9 bg-white popadd fixheight" style="height:800px;">
+                            <div class="page6box py-3 p-2">
+                            </div>
+                            <div class="row px-4 mb-5 ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 bold m-auto">
+                                            <h4 class="textcolor">Order Detials</h4>
+                                            <p class="greytext " style="font-size:12px;">Here is the order details</p>
+                                            <i class="fa-solid bandeka float-right cursor fa-xmark "
+                                               onclick="bndka1()"></i>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row m-0">
-                                    <div class="col-md-8 p-0 ">
-                                        <div class="row m-1 m-0 brdall py-4 p-3" style="padding-bottom: 7rem!important;">
-                                            <div class="col-md-12 p-0">
-                                                <form method="post" enctype="multipart/form-data" novalidate>
-                                                    {{csrf_field()}}
-                                                    @method('PUT')
-                                                    <h5 class="textcolor px-2">Order Status</h5>
+                                    <div class="row">
+                                        <div class="col-md-12 bold m-auto">
+                                            <div class="table-responsive">
+                                                <table class="table tabledozama">
+                                                    <thead style="background-color: #f4f5f8;">
+                                                    <td style="font-size: 8px!important;">Case ID:</td>
+                                                    <th style="font-size: 10px!important;" class="case_empty"
+                                                        id="case_id">2
+                                                    </th>
+                                                    <td style="font-size: 8px!important;">Order ID:</td>
+                                                    <th style="font-size: 10px!important;" class="case_empty"
+                                                        id="order_id">1
+                                                    </th>
+                                                    <td style="font-size: 8px!important;">Dentist’s Name:</td>
+                                                    <th style="font-size: 10px!important;" class="case_empty"
+                                                        id="dentist_name">Mujtaba Fatih
+                                                    </th>
+                                                    <td style="font-size: 8px!important;">Number of trays:</td>
+                                                    <th style="font-size: 10px!important;" class="case_empty"
+                                                        id="no_of_tray">10
+                                                    </th>
+                                                    <td style="font-size: 8px!important;">Shipping Charges:</td>
+                                                    <th style="font-size: 10px!important;" class="case_empty"
+                                                        id="shipping_charges">0 AED
+                                                    </th>
+                                                    </thead>
+                                                </table>
                                             </div>
-                                            <div class="col-md-12  mt-3 p-0 ">
-                                                <div class="maindo table-responsive">
-                                                    <table class="table">
-                                                        <thead class="bxtekdo brdall" style="background-color: #f4f5f8;">
+                                        </div>
+                                    </div>
+                                    <div class="row m-0">
+                                        <div class="col-md-8 p-0 ">
+                                            <div class="row m-1 m-0 brdall py-4 p-3"
+                                                 style="padding-bottom: 7rem!important;">
+                                                <div class="col-md-12 p-0">
+                                                    <form method="post" enctype="multipart/form-data" novalidate>
+                                                        {{csrf_field()}}
+                                                        @method('PUT')
+                                                        <h5 class="textcolor px-2">Order Status</h5>
+                                                </div>
+                                                <div class="col-md-12  mt-3 p-0 ">
+                                                    <div class="maindo table-responsive">
+                                                        <table class="table">
+                                                            <thead class="bxtekdo brdall"
+                                                                   style="background-color: #f4f5f8;">
                                                             <td>
-                                                                <img src="{{ asset('vendors/images/aligner.png')}}" width="50" height="20">
+                                                                <img src="{{ asset('vendors/images/aligner.png')}}"
+                                                                     width="50" height="20">
                                                             </td>
 
                                                             <!-- <th style="font-size: 8px!important;">
@@ -920,7 +1002,8 @@ $default_currency = $setting->currency;
                                                             </th> -->
                                                             <td style="font-size: 13px!important;">
 
-                                                                <br> <span style="font-size:13px;font-weight: 300;"> Quantity:</span><span class="case_empty" id="quantity">1</span>
+                                                                <br> <span style="font-size:13px;font-weight: 300;"> Quantity:</span><span
+                                                                    class="case_empty" id="quantity">1</span>
                                                             </td>
                                                             {{-- <th style="font-size: 8px!important;">
                                                                 <br> <span style="font-size:8px;font-weight: 300;">Shipping:</span><span class="case_empty" id="shipping2">10 AED<span>
@@ -932,154 +1015,165 @@ $default_currency = $setting->currency;
                                                             </td>
                                                             <td style="font-size: 13px!important;">
 
-                                                                <br> <span style="font-size:13px;font-weight: 300;"> Total Price:</span><span class="case_empty" id="total_price"> 99 AED </span>
+                                                                <br> <span style="font-size:13px;font-weight: 300;"> Total Price:</span><span
+                                                                    class="case_empty" id="total_price"> 99 AED </span>
 
                                                             </td>
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12  mt-3 p-0 ">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-4 bold ">
-                                                        <span>Status</span>
-                                                        <select name="status" class="form-select form-control" id="select_box">
-                                                            <option value="PENDING" id="pending">{{ucfirst(strtolower('PENDING'))}} </option>
-                                                            <option value="CONFIRMED" id="confirmed">{{ucfirst(strtolower('CONFIRMED'))}}</option>
-                                                            <option value="DISPATCHED" id="dispatch">{{ucfirst(strtolower('DISPATCHED'))}}</option>
-                                                            <option value="DELIVERED" id="delivred">{{ucfirst(strtolower('DELIVERED'))}}</option>
-                                                            <option value="CANCELED" id="canceled">{{ucfirst(strtolower('CANCELED'))}}</option>
-                                                        </select>
+                                                            </thead>
+                                                        </table>
                                                     </div>
-                                                    <div class="col-md-6 bold enterurl">
-                                                        <span>Enter URL</span>
-                                                        <input type="" name="order_url" class="form-control" placeholder="Link" id="url">
-                                                        <img src="{{ asset('vendors/images/link.png') }}" style="background-color:white;">
-                                                    </div>
-
                                                 </div>
-                                            </div>
-                                            <div class="col-md-12 p-0">
-                                                <a class="bgcolor float-right updateimg text-white py-2 px-3" id="update" style="cursor:pointer">Update <img src="{{ asset('vendors/images/update.png')}}" class="mt-1"></a>
-                                            </div>
 
+                                                <div class="col-md-12  mt-3 p-0 ">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-4 bold ">
+                                                            <span>Status</span>
+                                                            <select name="status" class="form-select form-control"
+                                                                    id="select_box">
+                                                                <option value="PENDING"
+                                                                        id="pending">{{ucfirst(strtolower('PENDING'))}} </option>
+                                                                <option value="CONFIRMED"
+                                                                        id="confirmed">{{ucfirst(strtolower('CONFIRMED'))}}</option>
+                                                                <option value="DISPATCHED"
+                                                                        id="dispatch">{{ucfirst(strtolower('DISPATCHED'))}}</option>
+                                                                <option value="DELIVERED"
+                                                                        id="delivred">{{ucfirst(strtolower('DELIVERED'))}}</option>
+                                                                <option value="CANCELED"
+                                                                        id="canceled">{{ucfirst(strtolower('CANCELED'))}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 bold enterurl">
+                                                            <span>Enter URL</span>
+                                                            <input type="" name="order_url" class="form-control"
+                                                                   placeholder="Link" id="url">
+                                                            <img src="{{ asset('vendors/images/link.png') }}"
+                                                                 style="background-color:white;">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 p-0">
+                                                    <a class="bgcolor float-right updateimg text-white py-2 px-3"
+                                                       id="update" style="cursor:pointer">Update <img
+                                                            src="{{ asset('vendors/images/update.png')}}" class="mt-1"></a>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4  ">
-                                        <div class="row  brdall pt-3 m-1">
-                                            <div class="col-md-12 ">
-                                                <div class="cont pb-2 borderbottom">
-                                                    <div class="row   ">
-                                                        <div class="col-md-4 p-0 p-2 Changing">
-                                                            <img src="{{ storageUrl_h('') }}" id="img">
-                                                        </div>
+                                        <div class="col-md-4  ">
+                                            <div class="row  brdall pt-3 m-1">
+                                                <div class="col-md-12 ">
+                                                    <div class="cont pb-2 borderbottom">
+                                                        <div class="row   ">
+                                                            <div class="col-md-4 p-0 p-2 Changing">
+                                                                <img src="{{ storageUrl_h('') }}" id="img">
+                                                            </div>
 
-                                                        <div class="col-md-6 p-0 pt-2 Changing">
-                                                            <p id="name" class="case_empty"> Changing Gibson
-                                                            </p>
-                                                            <br>
-                                                            <span class="case_empty" id="name_id"> ID:123664652
+                                                            <div class="col-md-6 p-0 pt-2 Changing">
+                                                                <p id="name" class="case_empty"> Changing Gibson
+                                                                </p>
+                                                                <br>
+                                                                <span class="case_empty" id="name_id"> ID:123664652
                                                             </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-12 mt-2">
+                                                <div class="col-md-12 mt-2">
                                                 <span style="color:black;font-weight: bold;">General Info
                                                 </span>
-                                            </div>
-                                            <div class="col-md-12 mt-1 addressdo">
-                                                <p style="display: inline;font-size: 12px; display: inline;color: #8c8d8d;">
-                                                    Email:
+                                                </div>
+                                                <div class="col-md-12 mt-1 addressdo">
+                                                    <p style="display: inline;font-size: 12px; display: inline;color: #8c8d8d;">
+                                                        Email:
 
-                                                </p>
-                                                <span id="email" class="case_empty">
+                                                    </p>
+                                                    <span id="email" class="case_empty">
                                                     Test@gmail.com
                                                 </span>
 
-                                            </div>
-                                            <div class="col-md-12 mt-1 addressdo ">
-                                                <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
-                                                    Phone:
-                                                </p>
-                                                <span id="phone" class="case_empty">
+                                                </div>
+                                                <div class="col-md-12 mt-1 addressdo ">
+                                                    <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
+                                                        Phone:
+                                                    </p>
+                                                    <span id="phone" class="case_empty">
                                                     +9236562356
                                                 </span>
 
-                                            </div>
-                                            <div class="col-md-12 mt-1 addressdo  my-2">
+                                                </div>
+                                                <div class="col-md-12 mt-1 addressdo  my-2">
 
-                                                <div class="">
-                                                    <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
-                                                        Order Date/Time:
-                                                    </p>
-                                                    <span id="date" class="case_empty">
+                                                    <div class="">
+                                                        <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
+                                                            Order Date/Time:
+                                                        </p>
+                                                        <span id="date" class="case_empty">
                                                         2/3/23 9:Am
                                                     </span>
 
-                                                </div>
+                                                    </div>
 
-                                                <div class="col borderbottom my-3">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 ">
+                                                    <div class="col borderbottom my-3">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 ">
                                                         <span style="color:black;font-weight: bold;font-size: 15px;">
                                                             Deliver Address
                                                         </span>
 
-                                                    </div>
-                                                    <div class="col-md-12 mt-1 addressdo">
-                                                        <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
-                                                            Country:</p>
-                                                        <span id="country" class="case_empty">
+                                                        </div>
+                                                        <div class="col-md-12 mt-1 addressdo">
+                                                            <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
+                                                                Country:</p>
+                                                            <span id="country" class="case_empty">
                                                             UAE
                                                         </span>
 
-                                                    </div>
-                                                    <div class="col-md-12 mt-1 addressdo">
-                                                        <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
-                                                            State:
-                                                        </p>
-                                                        <span id="state" class="case_empty">Fujairah
+                                                        </div>
+                                                        <div class="col-md-12 mt-1 addressdo">
+                                                            <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
+                                                                State:
+                                                            </p>
+                                                            <span id="state" class="case_empty">Fujairah
                                                         </span>
 
-                                                    </div>
-                                                    <div class="col-md-12 mt-1 addressdo ">
-                                                        <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
-                                                            City:
-                                                        </p>
-                                                        <span style="color:black;" id="city" class="case_empty">
+                                                        </div>
+                                                        <div class="col-md-12 mt-1 addressdo ">
+                                                            <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
+                                                                City:
+                                                            </p>
+                                                            <span style="color:black;" id="city" class="case_empty">
                                                             Dibba Al-Fujairah
                                                         </span>
 
-                                                    </div>
-                                                    <div class="col-md-12 mt-1 addressdo ">
-                                                        <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
-                                                            Address:
-                                                        </p>
-                                                        <span style="color:black;" id="address" class="case_empty">
+                                                        </div>
+                                                        <div class="col-md-12 mt-1 addressdo ">
+                                                            <p style="display: inline;font-size: 12px;     display: inline;color: #8c8d8d;">
+                                                                Address:
+                                                            </p>
+                                                            <span style="color:black;" id="address" class="case_empty">
                                                             Itaque est amet sit deserunt repudiandae velit in consectetur minus qui
                                                         </span>
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
 
             <script>
                 // var case_id=
                 var base_url = "{{url('admin/')}}";
-                $("body").on("click", "#no_of_days_button", function() {
+                $("body").on("click", "#no_of_days_button", function () {
                     var no_of_days = $("#no_of_days").val();
                     var no_of_trays = $('#no_of_trays').val();
                     if (no_of_days == "") {
@@ -1098,10 +1192,10 @@ $default_currency = $setting->currency;
                             , type: "POST"
                             , dataType: 'json'
                             , data: data
-                            , beforeSend: function() {
+                            , beforeSend: function () {
                                 ajaxLoader();
                             }
-                            , success: function(responseCollection) {
+                            , success: function (responseCollection) {
                                 toastr.success('Updated successfully', '', {
                                     timeOut: 2000
                                 });
@@ -1115,7 +1209,7 @@ $default_currency = $setting->currency;
 
 
                             }
-                            , error: function(e) {
+                            , error: function (e) {
                                 $('#loader').fadeOut();
                                 var responseCollection = e.responseJSON;
                                 console.log(e);
@@ -1151,7 +1245,7 @@ $default_currency = $setting->currency;
 
                     //preview image on front
                     var reader = new FileReader();
-                    reader.onload = function() {
+                    reader.onload = function () {
                         var output = document.getElementById('IMAGE_1');
                         output.src = reader.result;
                     };
@@ -1163,10 +1257,10 @@ $default_currency = $setting->currency;
                         , data: formData
                         , processData: false
                         , contentType: false
-                        , beforeSend: function() {
+                        , beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(responseCollection) {
+                        , success: function (responseCollection) {
 
                             // var id = data['data']['id']
                             $('#loader').fadeOut();
@@ -1178,7 +1272,7 @@ $default_currency = $setting->currency;
                             // var attachment_ids = attachment_ids_field.val();
                             // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
                         }
-                        , error: function(message, error) {
+                        , error: function (message, error) {
                             $('#loader').fadeOut();
 
                             toastr.error('Error Message', error, {
@@ -1203,9 +1297,10 @@ $default_currency = $setting->currency;
                         return;
                     }
                     var check = true;
-                    $('.video_link').each(function() {
+                    $('.video_link').each(function () {
                         var inputValue = $(this).val();
-                        if (inputValue.startsWith("https://") || inputValue.startsWith("http://")) {} else {
+                        if (inputValue.startsWith("https://") || inputValue.startsWith("http://")) {
+                        } else {
                             check = false;
                             return;
                         }
@@ -1239,10 +1334,10 @@ $default_currency = $setting->currency;
                             , type: "POST"
                             , dataType: 'json'
                             , data: data
-                            , beforeSend: function() {
+                            , beforeSend: function () {
                                 ajaxLoader();
                             }
-                            , success: function(response) {
+                            , success: function (response) {
                                 if (response.message == 'success') {
                                     $('#error').hide();
                                     $('#success').text('link successfully Added');
@@ -1260,12 +1355,12 @@ $default_currency = $setting->currency;
                                 //     containerId: "toast-bottom-left"
                                 // });
                                 $('#loader').fadeOut();
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
 
                             }
-                            , error: function(e) {
+                            , error: function (e) {
                                 // var responseCollection = e.responseJSON;
                                 console.log(e);
                                 $('#success').hide();
@@ -1320,21 +1415,21 @@ $default_currency = $setting->currency;
                                 , data: formData
                                 , processData: false
                                 , contentType: false
-                                , beforeSend: function() {
+                                , beforeSend: function () {
                                     ajaxLoader();
                                 }
-                                , success: function(message) {
+                                , success: function (message) {
                                     $('#success2').text('Video Uploaded Successfully');
                                     $('#success2').show();
                                     $("#video").val('');
                                     $('#error2').text('');
                                     $('#error2').hide();
                                     $('#loader').fadeOut();
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         location.reload(true)
                                     }, 1000);
                                 }
-                                , error: function(message) {
+                                , error: function (message) {
                                     console.log(message.errors);
                                     // console.log(responseCollection);
                                     $('#success2').hide();
@@ -1366,24 +1461,25 @@ $default_currency = $setting->currency;
                 }
 
                 //  Deleting video ajax
-                $("body").on("click", "#delete_video", function() {
+                $("body").on("click", "#delete_video", function () {
 
                     var val = $(this).val();
 
                     var data = {
                         _token: '{{csrf_token()}}'
                         , case_id: "{{$edit_values->id}}"
-                    , }
+                        ,
+                    }
 
                     $.ajax({
                         url: '{{route("admin.case.delete-video")}}'
                         , type: "POST"
                         , dataType: 'json'
                         , data: data
-                        , beforeSend: function() {
+                        , beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(responseCollection) {
+                        , success: function (responseCollection) {
 
                             toastr.success(responseCollection['message'], 'Video Removed Successfully', {
                                 timeOut: 2000
@@ -1392,7 +1488,7 @@ $default_currency = $setting->currency;
                             $('#loader').fadeOut();
 
                         }
-                        , error: function(e) {
+                        , error: function (e) {
                             var responseCollection = e.responseJSON;
                             toastr.error(responseCollection['message'], 'Error', {
                                 timeOut: 2000
@@ -1415,10 +1511,10 @@ $default_currency = $setting->currency;
                         url: base_url + '/order_edit/' + id_int
                         , method: "GET",
                         // data: json,
-                        beforeSend: function() {
+                        beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(response) {
+                        , success: function (response) {
                             // Handle successful response
                             console.log(response.data.edit_values.id);
                             console.log(response.data.edit_values.created_at)
@@ -1495,7 +1591,7 @@ $default_currency = $setting->currency;
                             //  $('shipping_charges').val('response.data.edit_values.case_id');
                             $('#loader').fadeOut();
                         }
-                        , error: function(xhr, status, error) {
+                        , error: function (xhr, status, error) {
                             // Handle errors
                             toastr.error('Something Went Wrong, Try Again', '', {
                                 timeOut: 2000
@@ -1506,7 +1602,7 @@ $default_currency = $setting->currency;
                     });
                 }
 
-                $(document).on('click', '#update', function(e) {
+                $(document).on('click', '#update', function (e) {
                     id = $('#order_id').val();
                     status = $('#select_box').val();
                     url = $('#url').val();
@@ -1517,16 +1613,17 @@ $default_currency = $setting->currency;
                             status: status
                             , order_url: url
                             , id: id
-                        , }
-                        , beforeSend: function() {
+                            ,
+                        }
+                        , beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(response) {
+                        , success: function (response) {
                             if (response.successMessage == 'success') {
                                 toastr.success('Order Updated Successfully', '', {
                                     timeOut: 2000
                                 });
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
                                 //  window.location.reload();
@@ -1534,18 +1631,18 @@ $default_currency = $setting->currency;
                                 toastr.error('Something went wrong please try again', '', {
                                     timeOut: 2000
                                 });
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
                                 console.log('error');
                             }
                             $('#loader').fadeOut();
                         }
-                        , error: function(xhr, status, error) {
+                        , error: function (xhr, status, error) {
                             toastr.error('Something went wrong please try again', '', {
                                 timeOut: 2000
                             });
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 location.reload(true)
                             }, 1000);
                             console.log('Request failed');
@@ -1553,7 +1650,7 @@ $default_currency = $setting->currency;
                         }
                     });
                 });
-                $("body").on("click", "#advice_comment_button", function() {
+                $("body").on("click", "#advice_comment_button", function () {
 
                     var advice_comment = $("#advice_comment").val();
 
@@ -1568,10 +1665,10 @@ $default_currency = $setting->currency;
                         , type: "POST"
                         , dataType: 'json'
                         , data: data
-                        , beforeSend: function() {
+                        , beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(responseCollection) {
+                        , success: function (responseCollection) {
                             $('#loader').fadeOut();
                             console.log(responseCollection);
                             toastr.success('Advice Added Successfully', '', {
@@ -1644,7 +1741,7 @@ $default_currency = $setting->currency;
                             $("#advice_comment").val('');
 
                         }
-                        , error: function(e) {
+                        , error: function (e) {
                             var responseCollection = e.responseJSON;
                             console.log(e);
                             $('#loader').fadeOut();
@@ -1673,24 +1770,25 @@ $default_currency = $setting->currency;
                 }
 
                 /*__________________updating missing trays________________*/
-                $("body").on("click", "#missing_trays", function() {
+                $("body").on("click", "#missing_trays", function () {
 
 
                     var data = {
                         _token: '{{csrf_token()}}'
                         , case_id: "{{$edit_values->id}}"
                         , missing_trays: $("#no_of_trays").val()
-                    , }
+                        ,
+                    }
 
                     $.ajax({
                         url: '{{route("admin.case.missing_aligners")}}'
                         , type: "POST"
                         , dataType: 'json'
                         , data: data
-                        , beforeSend: function() {
+                        , beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(data) {
+                        , success: function (data) {
 
                             if (data.done == true) {
                                 toastr.success(data['message'], 'Success', {
@@ -1704,7 +1802,7 @@ $default_currency = $setting->currency;
                             $('#loader').fadeOut();
 
                         }
-                        , error: function(e) {
+                        , error: function (e) {
                             var data = e.responseJSON;
                             toastr.error(data['message'], 'Error', {
                                 timeOut: 2000
@@ -1718,12 +1816,15 @@ $default_currency = $setting->currency;
                 });
 
             </script>
-            <div class="modal fade" id="video_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" style="position: absolute !important;right: 30% !important;">
+            <div class="modal fade" id="video_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document"
+                     style="position: absolute !important;right: 30% !important;">
                     <div class="modal-content" style="width:500px;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title">Video Add</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="onClose()">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="onClose()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -1738,26 +1839,31 @@ $default_currency = $setting->currency;
                                 $videos_embedded = !empty($edit_values->video_embedded) ? json_decode($edit_values->video_embedded) : [];
                                 ?>
                                 @forelse($videos_embedded as $key => $video_embedded)
-                                <div class="remove_{{ $key }}" style="display:flex;align-items:center;">
-                                    <input type="text" class="form-control digital-scan video_link" value="{{$video_embedded}}" name="link[]" aria-describedby="emailHelp" placeholder="Enter Link"><br>
-                                    @if($key == 0)
-                                    <i class="bi bi-plus" style="cursor:pointer;" onclick="append_video()"></i>
-                                    @else
-                                    <i class="bi bi-dash-lg" style="cursor:pointer;" onclick="video_remove('{{ $key }}')"></i>
-                                    @endif
-                                </div>
-                                <br>
+                                    <div class="remove_{{ $key }}" style="display:flex;align-items:center;">
+                                        <input type="text" class="form-control digital-scan video_link"
+                                               value="{{$video_embedded}}" name="link[]" aria-describedby="emailHelp"
+                                               placeholder="Enter Link"><br>
+                                        @if($key == 0)
+                                            <i class="bi bi-plus" style="cursor:pointer;" onclick="append_video()"></i>
+                                        @else
+                                            <i class="bi bi-dash-lg" style="cursor:pointer;"
+                                               onclick="video_remove('{{ $key }}')"></i>
+                                        @endif
+                                    </div>
+                                    <br>
                                 @empty
-                                <div class="" style="display:flex;align-items:center;">
-                                    <input type="text" class="form-control digital-scan video_link" name="link[]" aria-describedby="emailHelp" placeholder="Enter Link"><br>
-                                    <i class="bi bi-plus" style="cursor:pointer;" onclick="append_video()"></i>
-                                </div>
-                                <br>
+                                    <div class="" style="display:flex;align-items:center;">
+                                        <input type="text" class="form-control digital-scan video_link" name="link[]"
+                                               aria-describedby="emailHelp" placeholder="Enter Link"><br>
+                                        <i class="bi bi-plus" style="cursor:pointer;" onclick="append_video()"></i>
+                                    </div>
+                                    <br>
                                 @endforelse
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal" onclick="onClose()">Close
+                            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"
+                                    onclick="onClose()">Close
                             </button>
                             <button type="button" class="btn bgcolor" style="color:white;" onclick="addvideolink()">Save
                                 changes
@@ -1767,12 +1873,15 @@ $default_currency = $setting->currency;
                 </div>
             </div>
 
-            <div class="modal fade" id="video_modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" style="position: absolute !important;right: 30% !important;">
+            <div class="modal fade" id="video_modal2" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document"
+                     style="position: absolute !important;right: 30% !important;">
                     <div class="modal-content" style="width:500px;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title">Video Add</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="onClose()">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    onclick="onClose()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -1782,7 +1891,7 @@ $default_currency = $setting->currency;
 
                             <div class="form-group digital-scan">
                                 <label for="exampleInputEmail1 digital-scan">Upload Video</label>
-                                <!-- <label class="btn">
+                            <!-- <label class="btn">
              <input type="file" multiple  name="video" id="video_upload" class="hidden upload-attachment" data-type="TREATMENT-PLAN-PDF" data-sort="1" onchange="preViewImage(this)" hidden>
             <img src="{{asset('link/files/app-assets/images/case/upload.png')}}"  alt="Image" class="img-thumbnail" style="max-width:250% !important;float:right;">
             </label>   -->
@@ -1794,14 +1903,17 @@ $default_currency = $setting->currency;
                                         <form id="upload-attachment-form">
 
                                             <h5 style="font-size: 15px" class="mt-2"> Select a file to upload</h5>
-                                            <span style="font-size: 11px;">JPG, PNG or PDF, file size no more than 10MB</span>
+                                            <span
+                                                style="font-size: 11px;">JPG, PNG or PDF, file size no more than 10MB</span>
                                     </div>
                                     <div class="col-md-2 p-0">
                                         <!-- <a class="textcolor attachImg"  style="font-size: 15px;color:#00205C;text-decoration: underline; cursor:pointer;"> Browse</a> -->
                                         <!-- <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden> -->
                                         <label class="btn mt-3">
-                                            <input type="file" multiple name="video" id="video_upload" class="hidden upload-attachment" hidden>
-                                            <img src="{{asset('link/files/app-assets/images/case/upload.png')}}" id="IMAGE_1" alt="Image" class="img-thumbnail">
+                                            <input type="file" multiple name="video" id="video_upload"
+                                                   class="hidden upload-attachment" hidden>
+                                            <img src="{{asset('link/files/app-assets/images/case/upload.png')}}"
+                                                 id="IMAGE_1" alt="Image" class="img-thumbnail">
                                         </label>
 
                                     </div>
@@ -1810,7 +1922,8 @@ $default_currency = $setting->currency;
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal" onclick="onClose()">Close
+                            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"
+                                    onclick="onClose()">Close
                             </button>
                             <button type="button" class="btn bgcolor" style="color:white;" onclick="uploadvideo()">Save
                                 changes
@@ -1828,7 +1941,7 @@ $default_currency = $setting->currency;
                 }
 
                 /*_________change payment method__________*/
-                $(document).on('change', '#payment_change', function(e) {
+                $(document).on('change', '#payment_change', function (e) {
                     if ($(this).val() == 'stripe') {
                         $('.stripe-div').show();
                         $('#pay_now_invoice').addClass('d-none');
@@ -1839,7 +1952,7 @@ $default_currency = $setting->currency;
 
                 });
 
-                $(document).on('click', '#pay_now', function(e) {
+                $(document).on('click', '#pay_now', function (e) {
                     e.preventDefault();
                     var check = $('#check_payment').val();
                     var token = '';
@@ -1978,11 +2091,12 @@ $default_currency = $setting->currency;
                                             , 'amount': payment
                                             , 'currency': currency
                                             , 'stripeToken': token
-                                        , }
-                                        , beforeSend: function() {
+                                            ,
+                                        }
+                                        , beforeSend: function () {
                                             ajaxLoader();
                                         }
-                                        , success: function(data) {
+                                        , success: function (data) {
                                             if (data.data = 'success') {
                                                 $('.pop1').addClass('d-none');
                                                 $('#payment').removeClass('d-none');
@@ -1991,7 +2105,7 @@ $default_currency = $setting->currency;
                                                 toastr.success('Payment Successfull', '', {
                                                     timeOut: 2000
                                                 });
-                                                setTimeout(function() {
+                                                setTimeout(function () {
                                                     location.reload(true)
                                                 }, 1000);
                                             } else {
@@ -2001,9 +2115,9 @@ $default_currency = $setting->currency;
                                                 });
                                             }
                                         }
-                                        , error: function(message, error) {
+                                        , error: function (message, error) {
                                             $('#loader').fadeOut();
-                                            $.each(message['responseJSON'].errors, function(key, value) {
+                                            $.each(message['responseJSON'].errors, function (key, value) {
                                                 toastr.error(value, {
                                                     timeOut: 3000
                                                 });
@@ -2022,7 +2136,7 @@ $default_currency = $setting->currency;
                 });
 
                 /*  _____________________Invoice Payment Ajax_____________________   */
-                $(document).on('click', '#pay_now_invoice', function(e) {
+                $(document).on('click', '#pay_now_invoice', function (e) {
                     e.preventDefault();
                     var payment = '1000';
                     var currency = '{{$setting->currency}}';
@@ -2030,15 +2144,16 @@ $default_currency = $setting->currency;
                     $.ajax({
                         type: "POST"
                         , url: base_url + "/case/payment/invoice"
-                        , beforeSend: function() {
+                        , beforeSend: function () {
                             ajaxLoader();
                         }
                         , data: {
                             'id': "{{$edit_values->id}}"
                             , 'amount': payment
                             , 'currency': currency
-                        , }
-                        , success: function(data) {
+                            ,
+                        }
+                        , success: function (data) {
                             if (data.data = 'success') {
                                 $('#loader').fadeOut();
                                 $('.digital_scan').toastr.success('Invoice Added Successfully', '', {
@@ -2047,7 +2162,7 @@ $default_currency = $setting->currency;
                                 $('.pop1').addClass('d-none');
                                 $('#payment').removeClass('d-none');
                                 //  $('#order_payment').val(data.case.processing_fee_amount);
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
                             } else {
@@ -2057,9 +2172,9 @@ $default_currency = $setting->currency;
                                 });
                             }
                         }
-                        , error: function(message, error) {
+                        , error: function (message, error) {
                             $('#loader').fadeOut();
-                            $.each(message['responseJSON'].errors, function(key, value) {
+                            $.each(message['responseJSON'].errors, function (key, value) {
                                 toastr.error(value, {
                                     timeOut: 3000
                                 });
@@ -2077,10 +2192,10 @@ $default_currency = $setting->currency;
                         data: {
                             id: id
                         }, // the data variables that you want to send along with the request
-                        beforeSend: function() {
+                        beforeSend: function () {
                             ajaxLoader();
                         }
-                        , success: function(response) {
+                        , success: function (response) {
                             $('#loader').fadeOut();
                             if (response.done == true) {
                                 toastr.success('Dentist Will Pay Digital Scan Shortly..', 'Success', {
@@ -2091,11 +2206,11 @@ $default_currency = $setting->currency;
                                     timeOut: 3000
                                 });
                             }
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 location.reload();
                             }, 3000);
                         }
-                        , error: function(xhr) {
+                        , error: function (xhr) {
                             $('#loader').fadeOut();
                             // the function that is executed if the request fails
                             console.log(xhr.responseText);
@@ -2106,7 +2221,7 @@ $default_currency = $setting->currency;
 
             </script>
             <script>
-                setTimeout(function() {
+                setTimeout(function () {
                     refresh();
 
                 }, 5000);
@@ -2120,13 +2235,14 @@ $default_currency = $setting->currency;
                         , data: {
                             '_token': "{{ csrf_token() }}"
                             , 'case_id': "{{ $edit_values->id }}"
-                        , }
-                        , success: function(responseCollection) {
+                            ,
+                        }
+                        , success: function (responseCollection) {
                             $('#loader').fadeOut();
                             console.log(responseCollection);
                             $('.remove_ajax').remove();
 
-                            $.each(responseCollection.concern, function(key, value) {
+                            $.each(responseCollection.concern, function (key, value) {
                                 console.log(value.id);
                                 //    console.log(key + ": " + value);
                                 var date = new Date(value.created_at);
@@ -2189,7 +2305,7 @@ $default_currency = $setting->currency;
 
                             });
                         }
-                        , error: function(e) {
+                        , error: function (e) {
                             var responseCollection = e.responseJSON;
                             console.log(e);
                             $('#loader').fadeOut();
