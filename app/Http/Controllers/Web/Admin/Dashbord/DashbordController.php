@@ -35,15 +35,22 @@ class DashbordController extends Controller
     }
     public function index(Request   $request){
         
-         $pending_treatment_plans = CaseModel::where('video_embedded',NULL)->count();
+        //  $pending_treatment_plans = CaseModel::where('video_embedded',NULL)->count();
+         $pending_cases = CaseModel::where('payment_status','pending')->count();
           
-         $approved_treatment_plans = CaseModel::whereNotNull('aligner_kit_order_id')->count();
+        //  $approved_treatment_plans = CaseModel::whereNotNull('aligner_kit_order_id')->count();
+
+        $approved_cases = CaseModel::where('payment_status','treatment-plan')->count();
+ 
         
-         $aligners_production = Order::where('status','PENDING')->count();
+        $aligners_production = CaseModel::whereRelation('aligner','status','CONFIRMED')->count();
+ 
         
-         $ready_for_dispatch = Order::where('status','CONFIRMED')->count();
+         $ready_for_dispatch =  CaseModel::whereRelation('aligner','status','DISPATCHED')->count();
+    
+        /*total case ---*/
+         $total_cases = CaseModel::count();
         
-         $total_patients = Patient::count();
 
          $total_active_cases = CaseModel::where('status','CONFIRMED')->count();
 
@@ -81,8 +88,8 @@ class DashbordController extends Controller
           $doctors=User::where('role_id','=',2)->latest()->take(4)->get();
          // dd($total_revenue_this_month);
         
-         return view('originator.container.home_new', compact('pending_treatment_plans','approved_treatment_plans','aligners_production',
-         'ready_for_dispatch','total_patients','total_active_cases', 'total_revenue', 'total_revenue_this_month', 'active_cases',
+         return view('originator.container.home_new', compact('pending_cases','approved_cases','aligners_production',
+         'ready_for_dispatch','total_cases','total_active_cases', 'total_revenue', 'total_revenue_this_month', 'active_cases',
          'sliders','doctors','delivered_orders','percentage'));
     }
 }

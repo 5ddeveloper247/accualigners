@@ -373,7 +373,7 @@
                                                                             {{ ucfirst(strtolower('Order in production')) }}
                                                                         @endif
                                                                     @endif
-                                                                @endif
+                                                                @endif 
 
                                                             </a></td>
                                                         <td>

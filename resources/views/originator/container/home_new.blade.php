@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-md-3 col">
                             <div class="iconsdoo ">
-                                <h4>{{ $total_patients }}</h4>
+                                <h4>{{ $total_cases }}</h4>
                             </div>
                         </div>
                         <div class="col-md-1 col">
@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
-                                <span style="font-weight: bold;font-size: 10px">Total Patients</span>
+                                <span style="font-weight: bold;font-size: 10px">Total Cases</span>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@
                         </div>
                         <div class="col-md-3 col">
                             <div class="iconsdoo ">
-                                <h4>{{ $pending_treatment_plans }}</h4>
+                                <h4>{{ $pending_cases }}</h4>
                             </div>
                         </div>
                         <div class="col-md-1 col">
@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
-                                <span style="font-weight: bold;font-size: 10px">Pending Treatment Plans</span>
+                                <span style="font-weight: bold;font-size: 10px">Pending Cases</span>
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-md-3 col">
                             <div class="iconsdoo ">
-                                <h4>{{ $approved_treatment_plans }}</h4>
+                                <h4>{{ $approved_cases }}</h4>
                             </div>
                         </div>
                         <div class="col-md-1 col">
@@ -154,8 +154,7 @@
                             <div class="iconsdoo zamado rightarrow">
                                 <span style="
     font-weight: bold;
-    font-size: 10px">Approved Treatment
-                                    Plans</span>
+    font-size: 10px">Approved Cases</span>
                             </div>
                         </div>
 
