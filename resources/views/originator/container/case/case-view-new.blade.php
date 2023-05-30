@@ -373,7 +373,7 @@
                                                                             {{ ucfirst(strtolower('Order in production')) }}
                                                                         @endif
                                                                     @endif
-                                                                @endif 
+                                                                @endif
 
                                                             </a></td>
                                                         <td>
@@ -899,7 +899,7 @@
                                                                            data-type="IMAGE"
                                                                            data-sort="{{ $i }}"
                                                                            onchange="preViewImage2(this)"
-                                                                           hidden>
+                                                                           hidden multiple>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ 'IMAGE_' . $i }}" alt="Image"
                                                                          class="img-thumbnail image_attach">
@@ -1017,7 +1017,7 @@
                                                                            name="{{ $jaw_type . '_' . $i }}"
                                                                            class="hidden upload-attachment disable_input"
                                                                            data-type="{{ $jaw_type }}"
-                                                                           onchange="preViewJawImage(this)"multiple
+                                                                           onchange="preViewJawImage(this)" multiple
                                                                            data-sort="{{ $i }}" hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ $jaw_type . '_' . $i }}"

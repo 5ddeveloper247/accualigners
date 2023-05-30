@@ -481,6 +481,15 @@ function CopyToClipboard(value, showNotification, notificationText) {
                 }, 8000);
                 return false;
             }
+            else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test($("#contact_person_email").val())){
+                $('#msg2').text('Please Enter Correct Person Email');
+                $('.hide_msg2').fadeIn();
+                setTimeout(function() {
+                    $('#msg2').text('');
+                    $('.hide_msg2').hide();
+                }, 8000);
+                return false;
+            }
             else if($("#contact_person_email").val() == ''){
 
                 $('#msg2').text('Please Enter Contact Person Email');

@@ -86,7 +86,7 @@
                             <div class="row">
                                 <div class="col-xl-6 col ">
                                     <p class="tee mt-4" style="font-weight: bold;">Phone Number</p>
-                                    <input type="number" name="phone" value="{{ $doctor->phone }}" class="form-control"
+                                    <input type="text" name="phone" value="{{ $doctor->phone }}" class="form-control"
                                            placeholder="Enter Phone Number" readonly>
                                 </div>
                                 <div class="col-xl-2  col mb-30 pendo pendo_new">
@@ -314,7 +314,7 @@
 
                 $('.pendo_new').on('click', function (e) {
                     e.preventDefault();
-                    input = $(this).prev('div').find('>:eq(1)');
+                    var input = $(this).prev('div').find('>:eq(1)');
 
                     if (input.prop('readonly')) {
                         input.prop('readonly', false)

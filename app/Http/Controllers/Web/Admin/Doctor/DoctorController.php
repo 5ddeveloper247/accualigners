@@ -20,7 +20,7 @@ use App\Traits\EmailTrait;
 class DoctorController extends Controller
 {
     use EmailTrait;
-    
+
     //new index
     public function index(Request $request)
     {
@@ -36,7 +36,7 @@ class DoctorController extends Controller
                 });
             }
 
-            $doctors = $doctors->paginate(15);
+            $doctors = $doctors->orderBy('created_at','DESC')->paginate(15);
 
             return view('originator.container.doctor.doctor-view-new', compact('doctors'));
 
@@ -44,7 +44,7 @@ class DoctorController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-    
+
     // public function prev_index(Request $request)
     // {
     //     try{
@@ -79,10 +79,10 @@ class DoctorController extends Controller
 
     //new store
     public function store(DoctorStoreRequest $request)
-    {        
+    {
         try {
             DB::beginTransaction();
-        
+
              $inputs = $request->only(['name', 'email', 'password']);
              if ($request->hasFile('picture')) {
                  $media = $request->file('picture');
@@ -101,15 +101,15 @@ class DoctorController extends Controller
               //  $user=User::create($inputs);
             //  dd($user);
 
-             if($user)         
-                {   
+             if($user)
+                {
                     DB::commit();
                     $to = $request->email;
                     $subject = "Welcome To Accualigners";
                     $data['username'] = $request->name;
                     $html = view('emails.welcomeDoctor',$data)->render();
                     $check = $this->sendMailViaPostMark($html, $to, $subject);
-                   
+
                     //Admin
                     $to = "info@accualigners.com";
                     $subject = "New Doctor Created";
@@ -149,7 +149,7 @@ class DoctorController extends Controller
      //         }
      //         $inputs['user_type'] = 'doctor';
      //         $inputs['role_id'] = 2;
-            
+
      //         $to = $request->email;
      //         $subject = "Welcome To Accualigners";
      //         $data['username'] = $request->name;
@@ -167,7 +167,7 @@ class DoctorController extends Controller
 
     public function show($id)
     {
-        
+
     }
 
     //new edit
@@ -181,7 +181,7 @@ class DoctorController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-    
+
     // public function prev_edit(DoctorEditRequest $request, $id)
     // {
     //     try{
@@ -191,7 +191,7 @@ class DoctorController extends Controller
     //         return redirect()->back()->withErrors($e->getMessage());
     //     }
     // }
-    
+
     //new update
     public function update_new(Request $request)
     {
@@ -209,7 +209,7 @@ class DoctorController extends Controller
                     unset($inputs['password']);
 
                 $user = User::find($id);
-                if($user->update($inputs))         
+                if($user->update($inputs))
                 {
                     $arrRes['msg']  = "Data updated successfully";
                     $arrRes['done'] = true;
@@ -258,7 +258,7 @@ class DoctorController extends Controller
             foreach($recordIds as $id)
             {
                 $doctor = User::find($id);
-                if($doctor->forceDelete())         
+                if($doctor->forceDelete())
                 {
                     $arrRes['msg']  = "Data Deleted successfully";
                     $arrRes['done'] = true;

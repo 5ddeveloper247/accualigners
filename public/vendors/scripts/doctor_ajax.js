@@ -137,7 +137,7 @@ function editFunction(id = '') {
                 $("#txtname").val(data['edit_values']['name']);
                 $("#txtemail").val(data['edit_values']['email']);
                 $("#ElementId").val(data['edit_values']['id']);
-                $("#output").attr("src", data['edit_values']['picture']);
+                $("#output").attr("src",data['edit_values']['picture']);
                 // $('.pop1').removeClass('d-none');
                 $('.pop1').fadeIn('slow');
 

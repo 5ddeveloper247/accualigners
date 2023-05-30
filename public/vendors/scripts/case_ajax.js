@@ -647,20 +647,22 @@ function validationOfCase() {
     } else {
         $('#prescription_msg').text('');
     }
-    //Image Attachment
-    if ($('.image_attach').attr('src') == '') {
-        toastr.error('Please attach Image atleast one image', 'Validation Error', {timeOut: 5000});
-        return false;
-    }
-    // Jaw Scan(Upper/Lower)
-    if ($('#select1').val() == '') {
-        toastr.error('Please Select Jaw Scan(Upper/Lower) Image at least one image', 'Validation Error', {timeOut: 5000});
-        return false;
-    }
-    // Jaw Scan(Upper/Lower)
-    if ($('#select2').val() == '') {
-        toastr.error('Please Select Image Jaw Scan(Upper/Lower) at least one image', 'Validation Error', {timeOut: 5000});
-        return false;
+    if($("#ElementId").val() == '') {
+        //Image Attachment
+        if ($('.image_attach').attr('src') == '') {
+            toastr.error('Please attach Image atleast one image', 'Validation Error', {timeOut: 5000});
+            return false;
+        }
+        // Jaw Scan(Upper/Lower)
+        if ($('#select1').val() == '') {
+            toastr.error('Please Select Jaw Scan(Upper/Lower) Image at least one image', 'Validation Error', {timeOut: 5000});
+            return false;
+        }
+        // Jaw Scan(Upper/Lower)
+        if ($('#select2').val() == '') {
+            toastr.error('Please Select Image Jaw Scan(Upper/Lower) at least one image', 'Validation Error', {timeOut: 5000});
+            return false;
+        }
     }
     return true;
 }
