@@ -421,7 +421,7 @@
                                                         <td>{{ ucwords($case->name) }}</td>
                                                         <td>{{ isset($case->email) ? ucwords($case->email) : 'N/A' }}
                                                         </td>
-                                                        <td>{{ isset($case->phone) ? $case->phone_no : 'N/A' }}
+                                                        <td>{{ isset($case->phone_no) ? $case->phone_no : 'N/A' }}
                                                         </td>
                                                         <td>{{ isset($case->gender) ? ucfirst($case->gender) : 'N/A' }}
                                                         </td>
