@@ -18,6 +18,12 @@
         height: 100vh;
         z-index: 999999;
     }
+    .cardwidth {
+        float: left;
+        margin: 5px;
+        width: 39px;
+    }
+
 
     .deleteform {
         top: -3px !important;
@@ -1310,7 +1316,7 @@
                                          style="padding:20px !important;">
                                         <label class="text-dark address">Clinic Address<span
                                                 class="required">*</span></label>
-                                        <select selected class="select2 form-control address" id="address_id"
+                                        <select  class="select2 form-control address" id="address_id"
                                                 name="address_id" required>
                                             <option value="SelectAddress">Select Address</option>
                                             @foreach ($ClinicDoctors as $ClinicDoctor)
@@ -1329,7 +1335,7 @@
                                             Payment Details
                                         </h6>
                                         <p>Select Payment Method</p>
-                                        <select selected class="form-select form-control" id="payment_change">
+                                        <select  class="form-select form-control" id="payment_change">
                                             <option value="stripe">Card Payment</option>
                                             <option value="invoice">Cheque/Cash</option>
                                         </select>
@@ -1344,7 +1350,7 @@
 
                                                     <div class="cardwidth" style="width:35px;">
                                                         <input type="text" maxlength="1" name="1" id="c_1"
-                                                               value="" class="form-control number_val" placeholder="-">
+                                                               value="" class="form-control number_val inputfield" placeholder="-">
                                                     </div>
                                                     <div class="cardwidth" style="width:35px;">
                                                         <input type="text" maxlength="1" name="2" id="c_2"
@@ -1431,14 +1437,14 @@
                                         <h6 class="t text-dark mt-3">
                                             MM/YY
                                         </h6>
-                                        <input type="" placeholder="MM/YY" class="form-control" id="month_year"
+                                        <input type="text" placeholder="MM/YY" class="form-control" maxlength="5" id="month_year"
                                                name="month_payment">
                                     </div>
                                     <div class="col-md-6 p-2 p-0 aresure   bold m-auto stripe-div">
                                         <h6 class="t text-dark mt-3">
                                             CSV
                                         </h6>
-                                        <input type="" maxlength="4" placeholder="CSV" class="form-control"
+                                        <input type="text" maxlength="4" placeholder="CSV" class="form-control"
                                                id="csv" name="csv_payment">
                                     </div>
                                 </div>
@@ -1472,7 +1478,6 @@
                 var base_url = "{{ url('doctor') }}";
                 var adminBase_url = "{{ url('admin/') }}";
                 /*  _____________________Stripe Payment Ajax_____________________ */
-
 
                 $(document).on('click', '#pay_now', function (e) {
 

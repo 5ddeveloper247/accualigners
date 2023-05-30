@@ -1349,7 +1349,7 @@
 
                                         <div class="cardwidth">
                                             <input type="text" maxlength="1" name="1" id="c_1"
-                                                   value="" class="form-control number_val" placeholder="-">
+                                                   value="" class="form-control number_val " placeholder="-">
                                         </div>
                                         <div class="cardwidth">
                                             <input type="text" maxlength="1" name="2" id="c_2"

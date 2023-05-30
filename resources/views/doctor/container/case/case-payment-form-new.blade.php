@@ -33,17 +33,18 @@ if(Request()->route('case')){
 @endphp
 
 <link rel="stylesheet" href="{{asset('vendors/css/case-style.css')}}"/>
-<style> 
+<style>
 .deleteform {
     position: relative;
     top: 20px;
     height: auto;
     height: 750px;
-    
+
 }
 .cardwidth{
     float: left;
     margin:5px;
+
 }
 .relative{
     position: relative;
@@ -56,7 +57,7 @@ if(Request()->route('case')){
 @media(max-width:500px){
     .deleteform {
 padding-bottom: 12rem;
-    
+
 }
 }
 
@@ -89,16 +90,16 @@ padding-bottom: 12rem;
 
                     <div class="col-xl-4 fourdo mb-30">
                         <div class="carx2 input">
-                       
+
                  <form action="{{url('admin/case_new')}}" id="filter-form" method="get">
                              <input type="text" class="form-control" name="filter" placeholder="Search...">
                              <div class="searchicons">
-                             <button type="submit" style="background: none;border:none;">   
+                             <button type="submit" style="background: none;border:none;">
                              <i class="bi bi-search" style="margin-right:12px;"></i>|
                              </button>|
                              <a href="{{ Request()->has('filter') ? url(Request()->path()) : 'JavaScript:void(0);'}}">
                                 <i class="bi bi-sliders"></i>
-                             </a>    
+                             </a>
                         </div>
                  </form>
 
@@ -150,10 +151,10 @@ padding-bottom: 12rem;
                                             <tbody class="tablerow">
                                                 @php($a = 1)
                                                 @foreach($cases as $case)
-                                                
+
                                                 <tr data-aeshaz-select-id="{{$case->id}}">
                                                     <td class=" checkboxbandka" style="display: none;">
-                                                        
+
                                                 <input type="checkbox" id="a{{$a++}}" value="{{$case->id}}"></td>
                                                     </td>
                                                     <td>{{$case->id}}</td>
@@ -169,42 +170,42 @@ padding-bottom: 12rem;
                                                         @if (isset($case->aligner->payment_name) && !empty($case->aligner->payment_name)) Paid @else UnPaid @endif </a></td>
 
                                                     <td class="maindo"><a class="inprogressbtn" style="padding: 8px 0px;">
-                                                          
+
                                                            @if ($case->status == "CANCELED")
                                                             {{ucfirst(strtolower($case->status))}}
-                                                          
+
                                                             @elseif ($case->status == "PENDING")
                                                             {{ucfirst(strtolower($case->status))}}
 
                                                             @else
-                                                            
+
                                                             @if((empty($case->video_uploaded) && empty($edit_values->video_embedded)))
                                                             {{ucfirst(strtolower("Acculigners Lab"))}}
-                                                            
+
                                                             @elseif ((!empty($case->video_uploaded) ||
                                                             !empty($edit_values->video_embedded)) && !$case->has_concern &&
                                                             empty($case->aligner_kit_order_id))
                                                             {{ucfirst(strtolower("Review to dentist"))}}
-                                                            
+
                                                             @elseif ($case->has_concern)
                                                             {{ucfirst(strtolower("Review to you"))}}
-                                                            
+
                                                             @elseif (!empty($case->aligner_kit_order_id) &&
                                                             isset($case->aligner->status))
-                                                            
+
                                                             @if ($case->aligner->status == "DELIVERED")
                                                             {{ucfirst(strtolower($case->aligner->status))}}
-                                                            
+
                                                             @elseif ($case->aligner->status == "CANCELED")
                                                             {{ucfirst(strtolower($case->aligner->status))}}
-                                                            
+
                                                             @else
                                                             {{ucfirst(strtolower("Order in production"))}}
                                                             @endif
-                                                            
+
                                                             @endif
                                                             @endif
-                                
+
                                                         </a></td>
                                                         <td class="align-middle" style="width: 45px;font-size:9px !important;">
                                                         <a  href="{{url(Request()->path().'/'.$case->id)}}" data-toggle="tooltip" data-original-title="View Case">View Details</a>
@@ -214,8 +215,8 @@ padding-bottom: 12rem;
                                                 <a class="btn btn-sm btn-danger delete-confirm-alert RolePermissionDelete" href="javascript:void(0)" data-id="{{$case->id}}" data-toggle="tooltip" data-original-title="Delete Case">Delete</a>
                                             </div> -->
                                         </td>
-                                                    
-                                                <td><a  class="btn_edit" onclick="editFunction({{$case->id}})"><i class="bi bi-pencil-square"></i></a></td> 
+
+                                                <td><a  class="btn_edit" onclick="editFunction({{$case->id}})"><i class="bi bi-pencil-square"></i></a></td>
                                                 <!-- <td>
                                                     <i class="bi bi-three-dots-vertical dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer"></i>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -226,7 +227,7 @@ padding-bottom: 12rem;
                                                 </tr>
 
                                                 @endforeach
-                                           
+
 
                                             </tbody>
                                         </table>
@@ -274,7 +275,7 @@ padding-bottom: 12rem;
                                                     </td>
                                                 </tr>
                                                 @endif
-                                              
+
 
                                             </tbody>
                                         </table>
@@ -324,16 +325,16 @@ padding-bottom: 12rem;
                 {
                 recordId[a] = $("#a"+i).val();
                 a++;
-                } 
+                }
             }
         if(recordId.length != 0)
         {
-         $(".pop2").removeClass("d-none");   
+         $(".pop2").removeClass("d-none");
         }
     });
       $('.cleardo').click(function() {
         $('.checkboxbandka').addClass('d-none');
-        
+
     });
 
     $(document).ready(function() {
@@ -545,7 +546,7 @@ padding-bottom: 12rem;
                                                             <label class="btn">
                                                                 <input type="file" id="image_attach" name="IMAGE_[]" class="hidden upload-attachment {{'IMAGE_'.$i}}" data-type="IMAGE" data-sort="{{$i}}" onchange="preViewImage2(this)" multiple hidden>
                                                                 <img src="{{$media}}" id="{{'IMAGE_'.$i}}" alt="Image" class="img-thumbnail">
-                                                            </label>  
+                                                            </label>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="row  pb-4">
@@ -587,8 +588,8 @@ padding-bottom: 12rem;
                                     <label class="btn">
                                         <input type="file" id="upload_attach" name="X_RAY_[]" class="hidden upload-attachment" data-type="X_RAY" data-sort="{{$i}}" onchange="preViewImage3(this)" multiple hidden>
                                         <img src="{{$media}}" id="{{'X_RAY_'.$i}}" alt="Image" class="img-thumbnail">
-                                    </label>    
-                                    
+                                    </label>
+
                                     </div>
                                     </div>
                                         <!-- <div class="row  pb-4">
@@ -658,7 +659,7 @@ padding-bottom: 12rem;
                                                         </div>
                                                     </div>
 
-                                                </div>           
+                                                </div>
                                                 @endfor
                                             </div>
                                         </div>
@@ -681,7 +682,7 @@ padding-bottom: 12rem;
                     <div class="col-md-12 p-0 px-2 pb-3">
                         <div class="row">
                         <div class="col-md-12">
-                            <span>Patient Consent form</span> <span class="float-right"></span> 
+                            <span>Patient Consent form</span> <span class="float-right"></span>
                             <!-- Download Form <i class="bi bi-download"></i> -->
                         </div>
                         </div>
@@ -703,7 +704,7 @@ padding-bottom: 12rem;
                         </div>
                         <div class="row">
                             <div class="col-md-12 mt-3">
-                                <span>Other files</span> 
+                                <span>Other files</span>
                             </div>
                             </div>
                         <div class="row py-2 m-1" style="border: 1px dashed black;border-radius: 5px;">
@@ -727,7 +728,7 @@ padding-bottom: 12rem;
                 </div>
               </div>
           </div>
-          
+
 
           <input type="hidden" name="attachment_ids" id="attachment_ids">
                                 </div>
@@ -735,7 +736,7 @@ padding-bottom: 12rem;
                                 <div class="main mb-5" style="width:100%;">
                                 <button type="submit"class="btn bgcolor text-white casebtn float-right" id="btn_submit">Submit</button>
                         <a class="btn bgcolorborder mx-2 mb-5 float-right" style="font-size:22px;" onclick="bndka();">Cancel</a>
-                    
+
                     </div>
                             </div>
                         </div>
@@ -796,7 +797,7 @@ padding-bottom: 12rem;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- Prev code implementation -->
 <script>
-    
+
     var base_url = "{{url('doctor')}}";
     var case_id = '{{isset($edit_values->id) ? $edit_values->id : ""}}';
     var records = "{{$a}}";
@@ -812,7 +813,7 @@ padding-bottom: 12rem;
             readURL(this, type, sort);
 
         });
-          
+
          // url:'{{route("admin.case.destroy-attachment")}}',
 </script>
 <script src="{{asset('vendors/scripts/case_ajax.js')}} "></script>
@@ -859,7 +860,7 @@ padding-bottom: 12rem;
                   </div>
                     <div class="row " style="background-color: #f6f6f6;
                     border: 1px solid #d0d0d0;border-radius:8px;">
-                
+
                         <div class="col-md-6 p-2 p-0 aresure  bold m-auto">
 
                                 <p class="mt-3 d-inline">
@@ -868,12 +869,12 @@ padding-bottom: 12rem;
                         </div>
                         <div class="col-md-6 px-2 p-0 aresure  bold m-auto">
                             <h6 class="t text-dark ">
-                         
+
                                 <p class="mt-3 d-inline float-right">
                                     Total Price: <span style="font-weight:bold;font-size: 15px;"> 1980 AED</span></p>
                         </div>
-                  
-                        
+
+
                     </div>
                     <div class="row mt-4 bordertop " >
                         <div class="col-md-12 p-2 p-0 aresure bold m-auto">
@@ -974,7 +975,7 @@ padding-bottom: 12rem;
                         </div>
                     </div>
                 </div>
-               
+
 
                 <div class="col-md-12 delebtn">
                     <button type="submit" class="btn  text-white bgcolor float-right ">Pay Now</button>

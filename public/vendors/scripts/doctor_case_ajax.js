@@ -580,7 +580,7 @@ function preViewJawImage(input) {
 function saveJawImage(select, i, is) {
 
     ($(select).val() == 1) ? (type = 'UPPER_JAW') : (type = 'LOWER_JAW');
-    input = document.getElementById('jaw_' + i);
+    var input = document.getElementById('jaw_' + i);
     var sort = $(input).data('sort');
 
     if (is) {

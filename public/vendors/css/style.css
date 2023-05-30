@@ -540,7 +540,7 @@ input:checked+.slider:before {
 
 .delebtn a {
     font-size: 12px;
-    padding: 10px 16px;
+    /*padding: 10px 16px;*/
     margin: 2%;
     border-radius: 8px;
 }
@@ -1148,7 +1148,7 @@ input:checked+.slider:before {
 }
 
 
-/*     
+/*
     .chalo {
         position: absolute;
         left: 78.7%;
@@ -1350,7 +1350,7 @@ input:checked+.slider:before {
 }
 
 
-/*     
+/*
     .chalo {
         position: absolute;
         left: 78.7%;
@@ -3938,7 +3938,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
 .sidebar-menu .submenu li a.active,
 .sidebar-menu .submenu li a:hover {
     color: #fff;
-    /* background-color: 
+    /* background-color:
     rgba(0, 0, 0, .4) */
 }
 
