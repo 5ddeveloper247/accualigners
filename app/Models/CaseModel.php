@@ -29,6 +29,7 @@ class CaseModel extends Model
         'overbite',
         'midline',
         'prescription_comment',
+        'additional_comment',
         'comment',
         'digital_scan_fee',
         'digital_scan_amount',

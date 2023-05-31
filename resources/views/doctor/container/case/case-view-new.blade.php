@@ -800,6 +800,16 @@
                                                               name="prescription_comment" required
                                                               data-validation-required-message="Prescription Comment is required"></textarea>
 
+                                                
+                                                    <p style="line-height: px;" class="mt-2">Additional comments*
+                                                        <span id="additional_msg"
+                                                                style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
+                                                    </p>
+                                                    <textarea id="additional_comment" name="additional_comment"
+                                                                class="form-control" placeholder="Type Here..."
+                                                                style="height:80px!important;" required
+                                                                data-validation-required-message="Additional Comment is required"></textarea>  
+
                                                 </div>
                                             </div>
                                             <!-- <div class="row  pb-4">

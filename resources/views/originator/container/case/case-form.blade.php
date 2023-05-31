@@ -307,6 +307,22 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 <?php if ($errors->has('prescription_comment')) echo 'error'; ?>">
+                                                        <label>Additional Comment <span class="required">*</span></label>
+                                                        <div class="controls">
+                                                            <textarea type="text" name="additional_comment" class="form-control" required
+                                                                   data-validation-required-message="Additional Comment is required">{{old('additional_comment', (isset($edit_values->additional_comment) ? $edit_values->additional_comment : ''))}}</textarea>
+                                                            @if($errors->has('prescription_comment'))
+                                                                <div class="help-block text-danger prescription_comment-shopwoo-error">
+                                                                    <ul role="alert">
+                                                                        <li>{{$errors->first('additional_comment')}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+
                                                     <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 <?php if ($errors->has('comment')) echo 'error'; ?>">
                                                         <label>Comment <span class="required">*</span></label>
                                                         <div class="controls">
