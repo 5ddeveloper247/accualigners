@@ -73,7 +73,7 @@
         });
 
         window.addEventListener("keyup", (e) => {
-            if (inputCount <= input.length && inputCount >= 0) {
+            if (inputCount < input.length && inputCount >= 0) {
                 if (e.key == "Backspace") {
                     updateInputConfig(input[inputCount-1], false);
                     input[inputCount-1].value = "";
