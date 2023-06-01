@@ -176,6 +176,11 @@
         white-space: nowrap !important;
     }
 
+    .border-dotted-grey {
+  border: 3px dotted rgb(226, 217, 217);
+  border-radius: 10px;
+}
+
 </style>
 
 
@@ -411,22 +416,32 @@
                         <!-- </div> -->
                     </div>
 
-                    <div class="col-md-4 borderleft ">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="addlinkdo mt-3">
+                    <div class="col-md-4 borderleft m-0 p-0 ">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-md-6">
+                                <div class="addlinkdo mt-3 p-3">
+
                                     <h5 class="d-inline">Upload Video</h5>
-                                    <a class="px-3" style="padding:2% 2%; cursor:pointer;" data-toggle="modal"
-                                       data-target="#video_modal">Add Link</a>
-                                    <span
-                                        style="background:#00205C;padding:2% 2%;border-radius: 20px;color:white;cursor:pointer;"
-                                        data-toggle="modal" data-target="#video_modal2">Add Video</span>
+                                    
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-primary float-right" style="background:#00205C;border-radius: 20px;color:white;cursor:pointer;"
+                                     data-toggle="modal" data-target="#video_modal2">Add Link</button>
+                                <button class="btn float-right mx-2" style="border-radius: 20px;border:1px solid grey" data-toggle="modal"
+                                data-target="#video_modal">Add Video</button>
+                                {{-- <div class="float-right">
+                                    <a class="px-3" style="padding:2% 2%; cursor:pointer;" data-toggle="modal"
+                                    data-target="#video_modal">Add Link</a>
+                                   <a type="button"
+                                     style="background:#00205C;padding:2% 2%;border-radius: 20px;color:white;cursor:pointer;"
+                                     data-toggle="modal" data-target="#video_modal2">Add Video</a>
+                                 </div> --}}
                             </div>
                         </div>
                         <!-- <div class="row mt-4"> -->
-
-                        <div class="row mt-4 m-0">
+                            <hr />
+                        <div class="row mt-4 m-lg-1">
                             <!-- <div class="col-md-12 p-0 px-2  fullheight borderbottom pb-3">
                                 <div class="row py-2 m-1 dashedborder" >
                                      <div class="col-md-2 p-0 ">
@@ -494,18 +509,18 @@
                             </div>
                         </div> -->
                         <!-- <div class="row py-2 m-1 attachImg" style="border: 1px dashed black;border-radius: 5px;"> -->
-                        <div class="row mt-4 ">
-                            <div class="col-md-12  p-0 px-2  pb-3">
-                                <h5 class="px-2 pb-2">Upload Treatment Plan PDF</h5>
+                        <div class="row mt-4 p-5">
+                            <div class="col-md-12  p-0 pb-3">
+                                <h5 class="pb-2">Upload Treatment Plan PDF</h5>
                             </div>
-
+                    <div class="border-dotted-grey row pause p-2 pr-5">
                             <div class="col-md-2 p-0 ">
                                 <img src="{{asset('vendors/images/drag.png')}}" width="40" class="mx-2 mt-4">
                             </div>
                             <div class="col-md-8 p-3">
                                 <form id="upload-attachment-form">
 
-                                    <h5 style="font-size: 15px" class="mt-2"> Select a file to upload</h5>
+                                    <h5 style="font-size: 15px" class="mt-2 m-2"> Select a file to upload</h5>
                                     <span style="font-size: 11px;">JPG, PNG or PDF, file size no more than 10MB</span>
                             </div>
                             <div class="col-md-2 mt-2 p-0 pt-2">
@@ -519,11 +534,12 @@
                                          alt="Image" class="img-thumbnail"
                                          style="max-width:250% !important;float:right;">
                                 </label>
+                    </div>
                             </div>
                             </form>
                         </div>
-                        <div class="row mt-4 ">
-
+                        <hr/>
+                        <div class="row mt-4 p-4 ">
                             <div class="col-md-12   p-0 px-2  pb-3">
                                 <h5 class="px-2 pb-2">Treatment Instructions</h5>
                             </div>
