@@ -55,17 +55,17 @@
         input.forEach((element) => {
             element.addEventListener("keyup", (e) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                let { value } = e.target;
+                let {value} = e.target;
                 console.log(e.target)
                 if (value.length == 1) {
                     updateInputConfig(input[inputCount], true);
                     if (inputCount <= input.length && e.key != "Backspace") {
                         if (inputCount < input.length) {
-                            updateInputConfig(input[inputCount+1], false);
+                            updateInputConfig(input[inputCount + 1], false);
                         }
                     }
                     inputCount += 1;
-                }else if (value.length > 1) {
+                } else if (value.length > 1) {
                     input[inputCount].value = value.split("")[0];
                 }
 
@@ -75,8 +75,8 @@
         window.addEventListener("keyup", (e) => {
             if (inputCount < input.length && inputCount >= 0) {
                 if (e.key == "Backspace") {
-                    updateInputConfig(input[inputCount-1], false);
-                    input[inputCount-1].value = "";
+                    updateInputConfig(input[inputCount - 1], false);
+                    input[inputCount - 1].value = "";
                     inputCount -= 1;
                 }
                 console.log(inputCount)
@@ -135,6 +135,7 @@
             const preloaderPercent = document.querySelector(".preloader-percent");
             preloaderBar.style.display = "block";
             preloader.style.display = "block";
+            preloaderPercent.style.display = "block";
             let percent = 0;
             let interval = setInterval(function () {
                 percent++;
@@ -142,30 +143,59 @@
                 preloaderPercent.innerHTML = percent + "%";
                 if (percent >= 100) {
                     clearInterval(interval);
-                    preloaderBar.style.display = "none";
-                    preloader.style.display = "none";
+                    setTimeout(function () {
+                        $('#loader').fadeOut();
+                        console.log(percent);
+                    }, 500)
                 }
-            }, 40);
+            }, 30);
         });
 
         //on ajax request
         function ajaxLoaderprograss(percent) {
-            const preloader = document.querySelector(".preloader");
             const preloaderBar = document.querySelector("#loader");
             const preloaderPercent = document.querySelector(".preloader-percent");
             $('#loader').show();
             $(".preloader-percent").css("top", "50%");
             $('.preloader').show();
             $('.preloader-percent').show();
-                preloaderBar.style.width = "100%";
-                console.log(percent + "%");
+            preloaderBar.style.width = "100%";
+            console.log(percent + "%");
+            setTimeout(function () {
                 preloaderPercent.innerHTML = percent + "%";
                 if (percent >= 100) {
-                    $('#loader').fadeOut();
-                    preloader.style.display = "none";
+                    setTimeout(function () {
+                        $('#loader').fadeOut();
+                        console.log(percent);
+                    }, 250)
                 }
+            },250);
 
         }
+
+        function ajaxLoadercount() {
+            const preloader = document.querySelector(".preloader");
+            const preloaderBar = document.querySelector("#loader");
+            const preloaderPercent = document.querySelector(".preloader-percent");
+            preloaderBar.style.display = "block";
+            preloader.style.display = "block";
+            preloaderPercent.style.display = "block";
+            let percent = 0;
+            let interval = setInterval(function () {
+                percent += 25;
+                preloaderBar.style.width = "100%";
+                preloaderPercent.innerHTML = percent + "%";
+                if (percent >= 100) {
+                    clearInterval(interval);
+                    setTimeout(function () {
+                        $('#loader').fadeOut();
+                        console.log(percent);
+                    }, 500)
+                }
+            }, 100);
+
+        }
+
         function ajaxLoader() {
             const preloaderBar = document.querySelector("#loader");
             const preloaderPercent = document.querySelector(".preloader-percent");

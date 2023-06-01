@@ -29,20 +29,21 @@ $("#frmcase").submit(function (event) {
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
                 xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
                 }, false);
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     $('.pop1').fadeOut('slow');
                     setTimeout(function () {
+                        $('#loader').fadeOut();
                         location.reload(true)
                     }, 1000);
                 } else {
@@ -71,16 +72,16 @@ $("#frmcase").submit(function (event) {
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
                 xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
                 }, false);
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     // $('.pop1').addClass('d-none');
@@ -129,6 +130,9 @@ function editFunction(id = '') {
         type: 'GET',
         url: base_url + "/case/" + id + "/edit",
         data: {},
+        beforeSend: function(){
+            ajaxLoadercount();
+        },
         success: function (data) {
 
 
@@ -272,6 +276,7 @@ function editFunction(id = '') {
 
         },
         error: function (data) {
+            $('#loader').fadeOut();
             toastr.error('Something Went Wrong', 'Error');
         }
     });
@@ -303,27 +308,16 @@ $(".deletebtn").click(function (event) {
             type: 'DELETE',
             url: base_url + "/case/" + recordId,
             data: {},
-            beforeSend: function () {
-                ajaxLoader();
-            },
-            xhr: function () {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
+            beforeSend: function(){
+                ajaxLoadercount();
             },
             success: function (data) {
-                $('#loader').fadeOut();
                 if (data) {
                     if (data.done == true) {
                         $(".pop2").addClass("d-none");
                         toastr.success('Success Message', data.msg, {timeOut: 2000});
                         setTimeout(function () {
+                            $('#loader').fadeOut();
                             location.reload(true)
                         }, 1000);
                     } else {
@@ -392,16 +386,16 @@ function preViewImage(input) {
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+
             }, false);
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
             var id = data['data']['id']
             toastr.success('Success Message', 'File Uploaded Successfully', {timeOut: 2000});
             var attachment_ids_field = $('#attachment_ids');
@@ -473,16 +467,17 @@ function preViewImage2(input) {
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
+                    if (evt.lengthComputable) {
+                        console.log(evt)
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
             }, false);
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
+
             $.each(data['data'], function (key, value) {
                 Attachment_Ids.push(value.id);
             });
@@ -546,16 +541,21 @@ function preViewImage3(input) {
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
+                if(evt.total > '1500000'){
+                    if (evt.lengthComputable) {
+                        console.log(evt)
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }else {
+                    ajaxLoadercount();
                 }
+
             }, false);
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
             var id = data['data']['id']
             toastr.success('Success Message', 'Picture Uploaded Successfully', {timeOut: 2000});
             var attachment_ids_field = $('#attachment_ids');
@@ -651,16 +651,17 @@ function jawImageAJAX(formData, id = '') {
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
+                    if (evt.lengthComputable) {
+                        console.log(evt)
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+
             }, false);
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
             $.each(data['data'], function (key, value) {
                 Attachment_Ids.push(value.id);
             });
@@ -849,16 +850,18 @@ $(".remove_image").click(function () {
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
                 xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+
                 }, false);
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
                 if (data.done == true) {
                     toastr.success(data.message, '', {timeOut: 2000});
                 } else {

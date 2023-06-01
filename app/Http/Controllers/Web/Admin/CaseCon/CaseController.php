@@ -617,14 +617,14 @@ class CaseController extends Controller
     public function destroy($id)
     {
         $recordIds = explode(",",$id);
+
         try{
             foreach($recordIds as $id)
             {
 
-                 $case = CaseModel::find($id);
+                 $case = CaseModel::find((int)$id);
                 if($case->forceDelete())
                 {
-                    Patient::
                     $arrRes['msg']  = "Data deleted successfully";
                     $arrRes['done'] = true;
                 }else{

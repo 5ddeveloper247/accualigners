@@ -159,6 +159,21 @@ function editFunction(id = '') {
         type: 'GET',
         url: base_url + "/case/" + id + "/edit",
         data: {},
+        beforeSend: function(){
+            ajaxLoader();
+        },
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                console.log(evt)
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
 
 
@@ -312,13 +327,16 @@ function editFunction(id = '') {
                     }
                 }
                 // $('.pop1').removeClass('d-none');
+                $('#loader').fadeOut();
                 $('.pop1').fadeIn('slow');
             } else {
+                $('#loader').fadeOut();
                 toastr.error('some error', 'Error');
             }
 
         },
         error: function (data) {
+            $('#loader').fadeOut();
             toastr.error('Something Went Wrong', 'Error');
         }
     });
@@ -672,8 +690,6 @@ function saveJawImage(select, i, is) {
         toastr.error('Error MEssage', 'Please Upload Image First', {timeOut: 3000});
 
     }
-
-
 
         formData = new FormData();
         formData.append("_token", '{{csrf_token()}}');
