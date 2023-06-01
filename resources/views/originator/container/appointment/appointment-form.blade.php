@@ -116,7 +116,10 @@
                     //url: '{{url("admin/clinic-doctors")}}/'+val,
                     type: "GET",
                     dataType: 'json',
-                    data: data,
+                    data: data,                   
+                    beforeSend: function(){
+                    ajaxLoadercount();
+        },
                     success: function (responseCollection) {
                         var doctor_id = $('#doctor_id');
                         doctor_id.empty();

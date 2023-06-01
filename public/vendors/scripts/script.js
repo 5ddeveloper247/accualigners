@@ -406,6 +406,7 @@ function CopyToClipboard(value, showNotification, notificationText) {
                     $('.hide_msg').hide();
                 }, 8000);
                 return false;
+				// $("#phone").attr('maxlength', '14');
             }
 			else if($("#website_name").val() == ''){
 				$('#msg').text('Please Enter Website');

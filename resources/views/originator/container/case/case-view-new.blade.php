@@ -1423,12 +1423,27 @@
                 'id': id,
                 'check': check
             },
+            // beforeSend: function () {
+            //     ajaxLoader();
+            // },
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                }, false);
+                return xhr;
+            },
+
             success: function (data) {
                 if (data.msg == "success1") {
-                    $('#loader').fadeOut();
                     toastr.success('Treatment Plan Status Set to Paid', '', {
                         timeOut: 2000
                     });
@@ -1437,7 +1452,7 @@
                     }, 1000);
 
                 } else if (data.msg == "success2") {
-                    $('#loader').fadeOut();
+                  
                     toastr.success('Treatment Plan Status Set to Unpaid', '', {
                         timeOut: 2000
                     });
@@ -1446,7 +1461,6 @@
                     }, 1000);
 
                 } else {
-                    $('#loader').fadeOut();
                     toastr.error('Something Went Wrong, Try again', '', {
                         timeOut: 2000
                     });
@@ -1485,12 +1499,28 @@
                 'id': caseId,
                 'doctor_id': doctor_id
             },
+            // beforeSend: function () {
+            //     ajaxLoader();
+            // },
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                }, false);
+                return xhr;
+            },
+
             success: function (data) {
                 if (data.done == true) {
-                    $('#loader').fadeOut();
+                  
                     toastr.success('Case assigned Successfully', 'Case Assigned', {
                         timeOut: 2000
                     });
@@ -1499,7 +1529,7 @@
                     }, 1000);
 
                 } else if (data.done == false) {
-                    $('#loader').fadeOut();
+                   
                     toastr.success('Error in assigning case', 'Error', {
                         timeOut: 2000
                     });
@@ -1508,7 +1538,7 @@
                     }, 1000);
 
                 } else {
-                    $('#loader').fadeOut();
+                  
                     toastr.error('Something Went Wrong, Try again', '', {
                         timeOut: 2000
                     });

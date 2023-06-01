@@ -35,8 +35,20 @@ $("#frmuser").submit(function (event) {
             contentType: false,
             beforeSend: function () {
                 ajaxLoader();
-
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                }, false);
+                return xhr;
+            },
+
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
                 xhr.upload.addEventListener("progress", function (evt) {
@@ -49,7 +61,6 @@ $("#frmuser").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     $('.pop1').fadeOut('slow');
@@ -91,7 +102,6 @@ $("#frmuser").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     // $('.pop1').addClass('d-none');
@@ -182,7 +192,7 @@ $(".deletebtn").click(function (event) {
                 ajaxLoadercount();
             },
             success: function (data) {
-              
+
                 if (data) {
                     if (data.done == true) {
                         $(".pop2").addClass("d-none");

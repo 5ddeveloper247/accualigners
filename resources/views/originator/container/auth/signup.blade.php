@@ -140,8 +140,7 @@
                                     <div class="col-md-6">
                                         <div class="inputdokanaza ">
                                             <label>Phone Number* </label>
-                                            <input type="text" name="phone" id="phone" maxlength="14" class="form-control"
-                                                placeholder="Enter here" value="{{ old('phone') }}">
+                                            <input type="text" name="phone" id="phone" maxlength="14" class="form-control" placeholder="Enter here" value="{{ old('phone') }}">
 
                                         </div>
                                     </div>

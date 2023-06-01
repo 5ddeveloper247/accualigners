@@ -927,6 +927,22 @@ function delete_detail_row(id){
                         type: "POST",
                         dataType: 'json',
                         data: data,
+                        beforeSend: function () {
+                         ajaxLoader();
+                                    },
+                            xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+
                         success: function (responseCollection) {
                             
                             toastr.success('Updated successfully', "Success!", {
@@ -964,6 +980,22 @@ function delete_detail_row(id){
                     type: "POST",
                     dataType: 'json',
                     data: data,
+                    beforeSend: function () {
+                    ajaxLoader();
+                },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                        }, false);
+                        return xhr;
+                    },
+
                     success: function (responseCollection) {
                         
                         toastr.success('Updated successfully', "Success!", {
@@ -1006,6 +1038,22 @@ function delete_detail_row(id){
                     type: "POST",
                     dataType: 'json',
                     data: data,
+                    beforeSend: function () {
+                    ajaxLoader();
+                    },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                        }, false);
+                        return xhr;
+                    },
+
                     success: function (responseCollection) {
                         
                         toastr.success('Updated successfully', "Success!", {
@@ -1047,6 +1095,22 @@ function delete_detail_row(id){
                     type: "POST",
                     dataType: 'json',
                     data: data,
+                    beforeSend: function () {
+                    ajaxLoader();
+                },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                        }, false);
+                        return xhr;
+                    },
+
                     success: function (responseCollection) {
                         
                         toastr.success('Updated successfully', "Success!", {
@@ -1081,6 +1145,22 @@ function delete_detail_row(id){
                     type: "POST",
                     dataType: 'json',
                     data: data,
+                    beforeSend: function () {
+                    ajaxLoader();
+                },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                        }, false);
+                        return xhr;
+                    },
+
                     success: function (responseCollection) {
                             toastr.success('Updated successfully', "Success!", {
                             positionClass: "toast-bottom-left",
@@ -1112,6 +1192,22 @@ function delete_detail_row(id){
                     type: "POST",
                     dataType: 'json',
                     data: data,
+                    beforeSend: function () {
+                    ajaxLoader();
+                },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                        }, false);
+                        return xhr;
+                    },
+
                     success: function (responseCollection) {
                         console.log(responseCollection);
                         toastr.success('Updated successfully', "Success!", {
@@ -1148,7 +1244,10 @@ function delete_detail_row(id){
                     //url: '{{url("admin/clinic-doctors")}}/'+val,
                      type: "GET",
                      dataType: 'json',
-                     data: data,
+                     data: data,                   
+                    beforeSend: function(){
+                     ajaxLoadercount();
+                   },
                      success: function (responseCollection) {
                         var doctor_id = $('#doctor_id');
                         doctor_id.empty();
@@ -1195,6 +1294,22 @@ function delete_detail_row(id){
                     type: "POST",
                     dataType: 'json',
                     data: data,
+                    beforeSend: function () {
+                    ajaxLoader();
+                },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                        }, false);
+                        return xhr;
+                    },
+
                     success: function (responseCollection) {
                         
                         toastr.success('Removed successfully', "Success!", {
@@ -1278,6 +1393,22 @@ function delete_detail_row(id){
                 data: formData,
                 processData: false,
                 contentType: false,
+                beforeSend: function () {
+                ajaxLoader();
+                },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                console.log(evt)
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                    }, false);
+                    return xhr;
+                },
+
                 success:function(responseCollection){
                     toastr.success(responseCollection['message'], "Success!", {positionClass: "toast-bottom-left", containerId: "toast-bottom-left"});
                 },error:function(e){
