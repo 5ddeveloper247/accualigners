@@ -1651,6 +1651,17 @@
                                             beforeSend: function () {
                                                 ajaxLoader();
                                             },
+                                            xhr: function() {
+                                                var xhr = new window.XMLHttpRequest();
+                                                xhr.upload.addEventListener("progress", function(evt) {
+                                                    if (evt.lengthComputable) {
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        ajaxLoaderprograss(percentComplete);
+                                                    }
+                                                }, false);
+                                                return xhr;
+                                            },
                                             success: function (data) {
                                                 console.log(data);
                                                 if (data.success == 'Payment') {
@@ -1704,6 +1715,17 @@
                                             beforeSend: function () {
                                                 ajaxLoader();
                                             },
+                                            xhr: function() {
+                                                var xhr = new window.XMLHttpRequest();
+                                                xhr.upload.addEventListener("progress", function(evt) {
+                                                    if (evt.lengthComputable) {
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        ajaxLoaderprograss(percentComplete);
+                                                    }
+                                                }, false);
+                                                return xhr;
+                                            },
                                             success: function (data) {
                                                 if (data.success == 'Payment') {
                                                     $('.pop1').addClass('d-none');
@@ -1739,6 +1761,17 @@
                                             url: base_url + "/case/order-missing-tray/stripe-store_new",
                                             beforeSend: function () {
                                                 ajaxLoader();
+                                            },
+                                            xhr: function() {
+                                                var xhr = new window.XMLHttpRequest();
+                                                xhr.upload.addEventListener("progress", function(evt) {
+                                                    if (evt.lengthComputable) {
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        ajaxLoaderprograss(percentComplete);
+                                                    }
+                                                }, false);
+                                                return xhr;
                                             },
                                             data: {
                                                 '_token': '{{ csrf_token() }}',
@@ -1794,6 +1827,17 @@
                                             beforeSend: function () {
                                                 ajaxLoader();
                                             },
+                                            xhr: function() {
+                                                var xhr = new window.XMLHttpRequest();
+                                                xhr.upload.addEventListener("progress", function(evt) {
+                                                    if (evt.lengthComputable) {
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        ajaxLoaderprograss(percentComplete);
+                                                    }
+                                                }, false);
+                                                return xhr;
+                                            },
                                             success: function (data) {
                                                 if (data.data = 'success') {
                                                     $('.pop1').addClass('d-none');
@@ -1835,6 +1879,17 @@
                                             },
                                             beforeSend: function () {
                                                 ajaxLoader();
+                                            },
+                                            xhr: function() {
+                                                var xhr = new window.XMLHttpRequest();
+                                                xhr.upload.addEventListener("progress", function(evt) {
+                                                    if (evt.lengthComputable) {
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        ajaxLoaderprograss(percentComplete);
+                                                    }
+                                                }, false);
+                                                return xhr;
                                             },
                                             success: function (data) {
                                                 if (data.data = 'success') {
@@ -1903,6 +1958,17 @@
                             beforeSend: function () {
                                 ajaxLoader();
                             },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
                             data: {
                                 '_token': '{{ csrf_token() }}',
                                 'id': "{{ $edit_values->id }}",
@@ -1947,6 +2013,17 @@
                             beforeSend: function () {
                                 ajaxLoader();
                             },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
                             data: {
                                 '_token': '{{ csrf_token() }}',
                                 'id': "{{ $edit_values->id }}",
@@ -1990,6 +2067,17 @@
                             url: base_url + "/case/order-missing-tray/invoice-store-new",
                             beforeSend: function () {
                                 ajaxLoader();
+                            },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
                             },
                             data: {
                                 '_token': '{{ csrf_token() }}',
@@ -2036,6 +2124,17 @@
                             beforeSend: function () {
                                 ajaxLoader();
                             },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
                             data: {
                                 'id': "{{ $edit_values->id }}",
                             },
@@ -2074,6 +2173,17 @@
                             url: base_url + "/case/payment/invoice_digitalScan",
                             beforeSend: function () {
                                 ajaxLoader();
+                            },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
                             },
                             data: {
                                 'id': "{{ $edit_values->id }}",
@@ -2138,52 +2248,16 @@
                             beforeSend: function () {
                                 ajaxLoader();
                             },
-                            success: function (responseCollection) {
-                                $('#loader').fadeOut();
-                                console.log(responseCollection);
-                                var currency = responseCollection['settings'].currency;
-                                var aligner_kit_price = responseCollection['settings'].aligner_kit_price;
-                                var case_fee = responseCollection['settings'].case_fee;
-                                var complete_treatment_plan = responseCollection['settings'].complete_treatment_plan;
-                                var installment_amount = (complete_treatment_plan - case_fee);
-                                var payment_order = (installment_amount / 2) + ' ' + currency;
-                                var payment = (installment_amount / 2);
-
-                                responseCollection['ClinicDoctors']
-                                $('#payment_price').text(payment_order);
-                                $('#order_payment').val(' ');
-                                $('#order_payment').val(payment);
-                                $('#aligner_kit_price').val(' ');
-                                $('#aligner_kit_price').val(aligner_kit_price);
-
-                                $('#order_currency').val(' ');
-                                $('#order_currency').val(currency);
-
-                                $('.pop3').removeClass('d-none');
-                            },
-                            error: function (e) {
-                                var responseCollection = e.responseJSON;
-                                console.log(e);
-                                $('#loader').fadeOut();
-                                toastr.error(responseCollection['message'], "Error!", {
-                                    positionClass: "toast-bottom-left",
-                                    containerId: "toast-bottom-left"
-                                });
-
-                            }
-                        });
-                    } else if (val == 'second') {
-                        $('#check_payment').val('second');
-                        $.ajax({
-                            url: '{{ route('doctor.case.order-aligner.indexSecondInstallment.new') }}',
-                            type: "POST",
-                            dataType: 'json',
-                            data: {
-                                '_token': '{{ csrf_token() }}',
-                                'id': "{{ $edit_values->id }}"
-                            },
-                            beforeSend: function () {
-                                ajaxLoader();
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
                             },
                             success: function (responseCollection) {
                                 $('#loader').fadeOut();
@@ -2231,6 +2305,75 @@
                             },
                             beforeSend: function () {
                                 ajaxLoader();
+                            },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
+                            success: function (responseCollection) {
+                                $('#loader').fadeOut();
+                                console.log(responseCollection);
+                                var currency = responseCollection['settings'].currency;
+                                var aligner_kit_price = responseCollection['settings'].aligner_kit_price;
+                                var case_fee = responseCollection['settings'].case_fee;
+                                var complete_treatment_plan = responseCollection['settings'].complete_treatment_plan;
+                                var installment_amount = (complete_treatment_plan - case_fee);
+                                var payment_order = (installment_amount / 2) + ' ' + currency;
+                                var payment = (installment_amount / 2);
+
+                                responseCollection['ClinicDoctors']
+                                $('#payment_price').text(payment_order);
+                                $('#order_payment').val(' ');
+                                $('#order_payment').val(payment);
+                                $('#aligner_kit_price').val(' ');
+                                $('#aligner_kit_price').val(aligner_kit_price);
+
+                                $('#order_currency').val(' ');
+                                $('#order_currency').val(currency);
+
+                                $('.pop3').removeClass('d-none');
+                            },
+                            error: function (e) {
+                                var responseCollection = e.responseJSON;
+                                console.log(e);
+                                $('#loader').fadeOut();
+                                toastr.error(responseCollection['message'], "Error!", {
+                                    positionClass: "toast-bottom-left",
+                                    containerId: "toast-bottom-left"
+                                });
+
+                            }
+                        });
+                    } else if (val == 'second') {
+                        $('#check_payment').val('second');
+                        $.ajax({
+                            url: '{{ route('doctor.case.order-aligner.indexSecondInstallment.new') }}',
+                            type: "POST",
+                            dataType: 'json',
+                            data: {
+                                '_token': '{{ csrf_token() }}',
+                                'id': "{{ $edit_values->id }}"
+                            },
+                            beforeSend: function () {
+                                ajaxLoader();
+                            },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
                             },
                             success: function (responseCollection) {
                                 $('#loader').fadeOut();
@@ -2279,6 +2422,17 @@
                             },
                             beforeSend: function () {
                                 ajaxLoader();
+                            },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
                             },
                             success: function (responseCollection) {
                                 $('#loader').fadeOut();
@@ -2331,6 +2485,17 @@
                             beforeSend: function () {
                                 ajaxLoader();
                             },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
                             success: function (responseCollection) {
                                 $('#loader').fadeOut();
                                 console.log(responseCollection);
@@ -2371,6 +2536,17 @@
                             },
                             beforeSend: function () {
                                 ajaxLoader();
+                            },
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
                             },
                             success: function (responseCollection) {
                                 $('#loader').fadeOut();
@@ -2449,6 +2625,17 @@
                         // data: json,
                         beforeSend: function () {
                             ajaxLoader();
+                        },
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
                         },
                         success: function (response) {
                             // Handle successful response
@@ -2562,6 +2749,17 @@
                         data: data,
                         beforeSend: function () {
                             ajaxLoader();
+                        },
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
                         },
                         success: function (responseCollection) {
                             $('#loader').fadeOut();

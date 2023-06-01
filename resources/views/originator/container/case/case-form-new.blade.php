@@ -295,10 +295,10 @@
                     </div>
                     <div class="col-md-4">
                         <div class="boxdozama2 mt-3 text-right">
-                            @if ($edit_values->digital_scan_fee && !empty($edit_values->aligner))
+                            @if ($edit_values->digital_scan_fee)
                                 <p style="font-size:13px;color:grey;" class="d-inline">{{date('h:i a',
-                                                                strtotime($edit_values->aligner->created_at))}} | {{date('d M Y',
-                                                                strtotime($edit_values->aligner->created_at))}}
+                                                                strtotime($edit_values->updated_at))}} | {{date('d M Y',
+                                                                strtotime($edit_values->updated_at))}}
                                     <span
                                         style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
                                 </p>

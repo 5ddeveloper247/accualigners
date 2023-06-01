@@ -26,12 +26,24 @@ $("#frmcase").submit(function (event) {
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                }, false);
+                return xhr;
+            },
             success: function (data) {
-                $('#loader').fadeOut();
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     $('.pop1').fadeOut('slow');
                     setTimeout(function () {
+                        $('#loader').fadeOut();
                         location.reload(true)
                     }, 1000);
                 } else {
@@ -57,8 +69,19 @@ $("#frmcase").submit(function (event) {
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                }, false);
+                return xhr;
+            },
             success: function (data) {
-                $('#loader').fadeOut();
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     // $('.pop1').addClass('d-none');
@@ -107,6 +130,9 @@ function editFunction(id = '') {
         type: 'GET',
         url: base_url + "/case/" + id + "/edit",
         data: {},
+        beforeSend: function(){
+            ajaxLoadercount();
+        },
         success: function (data) {
 
 
@@ -250,6 +276,7 @@ function editFunction(id = '') {
 
         },
         error: function (data) {
+            $('#loader').fadeOut();
             toastr.error('Something Went Wrong', 'Error');
         }
     });
@@ -281,16 +308,16 @@ $(".deletebtn").click(function (event) {
             type: 'DELETE',
             url: base_url + "/case/" + recordId,
             data: {},
-            beforeSend: function () {
-                ajaxLoader();
+            beforeSend: function(){
+                ajaxLoadercount();
             },
             success: function (data) {
-                $('#loader').fadeOut();
                 if (data) {
                     if (data.done == true) {
                         $(".pop2").addClass("d-none");
                         toastr.success('Success Message', data.msg, {timeOut: 2000});
                         setTimeout(function () {
+                            $('#loader').fadeOut();
                             location.reload(true)
                         }, 1000);
                     } else {
@@ -356,8 +383,19 @@ function preViewImage(input) {
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+
+            }, false);
+            return xhr;
+        },
         success: function (data) {
-            $('#loader').fadeOut();
             var id = data['data']['id']
             toastr.success('Success Message', 'File Uploaded Successfully', {timeOut: 2000});
             var attachment_ids_field = $('#attachment_ids');
@@ -426,8 +464,20 @@ function preViewImage2(input) {
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        console.log(evt)
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
-            $('#loader').fadeOut();
+
             $.each(data['data'], function (key, value) {
                 Attachment_Ids.push(value.id);
             });
@@ -488,8 +538,24 @@ function preViewImage3(input) {
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if(evt.total > '1500000'){
+                    if (evt.lengthComputable) {
+                        console.log(evt)
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }else {
+                    ajaxLoadercount();
+                }
+
+            }, false);
+            return xhr;
+        },
         success: function (data) {
-            $('#loader').fadeOut();
             var id = data['data']['id']
             toastr.success('Success Message', 'Picture Uploaded Successfully', {timeOut: 2000});
             var attachment_ids_field = $('#attachment_ids');
@@ -534,7 +600,7 @@ function preViewJawImage(input) {
 }
 
 //onchange select
-function saveJawImage(select, i,is) {
+function saveJawImage(select, i, is) {
 
     ($(select).val() == 1) ? (type = 'UPPER_JAW') : (type = 'LOWER_JAW');
     var input = document.getElementById('jaw_' + i);
@@ -557,38 +623,53 @@ function saveJawImage(select, i,is) {
         toastr.error('Error MEssage', 'Please Upload Image First', {timeOut: 3000});
 
     }
+
+
+    formData = new FormData();
+    formData.append("_token", '{{csrf_token()}}');
+    formData.append("case_id", case_id);
     for (var j = 0; j < $('#jaw_' + i)[0].files.length; j++) {
-
-
-        formData = new FormData();
-        formData.append("_token", '{{csrf_token()}}');
-        formData.append("case_id", case_id);
-        formData.append("attachment", $('#jaw_' + i)[0].files[j]);
-        formData.append("sort_order", sort);
-        formData.append("attachment_type", type);
-        formData.append("case_id", id);
-        jawImageAJAX(formData, id);
+        formData.append("attachment[]", $('#jaw_' + i)[0].files[j]);
     }
+    formData.append("sort_order", sort);
+    formData.append("attachment_type", type);
+    formData.append("case_id", id);
+    jawImageAJAX(formData, id);
 
 }
 
 function jawImageAJAX(formData, id = '') {
     $.ajax({
         type: "POST",
-        url: base_url + "/case/upload-attachment",
+        url: base_url + "/case/upload-attachment2",
         data: formData,
         processData: false,
         contentType: false,
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        console.log(evt)
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+
+            }, false);
+            return xhr;
+        },
         success: function (data) {
-            $('#loader').fadeOut();
-            var id = data['data']['id']
+            $.each(data['data'], function (key, value) {
+                Attachment_Ids.push(value.id);
+            });
+            // var id = data['data']['id']
             toastr.success('Success Message', 'Picture Uploaded Successfully', {timeOut: 2000});
-            var attachment_ids_field = $('#attachment_ids');
-            var attachment_ids = attachment_ids_field.val();
-            attachment_ids_field.val((attachment_ids != "" ? attachment_ids + ',' + id : id));
+            // var attachment_ids_field = $('#attachment_ids');
+            // var attachment_ids = attachment_ids_field.val();
+            // attachment_ids_field.val((attachment_ids != "" ? attachment_ids + ',' + id : id));
         },
         error: function (message, error) {
             $('#loader').fadeOut();
@@ -766,8 +847,21 @@ $(".remove_image").click(function () {
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            console.log(evt)
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+
+                }, false);
+                return xhr;
+            },
             success: function (data) {
-                $('#loader').fadeOut();
+
                 if (data.done == true) {
                     toastr.success(data.message, '', {timeOut: 2000});
                 } else {

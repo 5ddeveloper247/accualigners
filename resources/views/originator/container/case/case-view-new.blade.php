@@ -232,12 +232,12 @@
                         <div class="">
                             <div class="widget-data">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item removeka activecase " onclick="changeClass(1)">
+                                    <li class="nav-item removeka  {{ Request()->has('draftview')?  '':'activecase' }} " onclick="changeClass(1)">
                                         <a class="nav-link textcolor " id="home-tab" data-toggle="tab" href="#home"
                                            role="tab" aria-controls="home" aria-selected="true"
                                            style="">Active</a>
                                     </li>
-                                    <li class="nav-item addka changecolor " onclick="changeClass(2)">
+                                    <li class="nav-item addka changecolor {{ Request()->has('draftview')?  'activecase':'' }} " onclick="changeClass(2)">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
                                            role="tab" aria-controls="profile" aria-selected="false">Draft</a>
                                     </li>
@@ -289,7 +289,7 @@
                 </div>
 
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade {{ Request()->has('draftview')?  '':'show active' }}" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="tabdata">
@@ -418,7 +418,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade {{ Request()->has('draftview')?  'show active':'' }}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                         <div class="row">
                             <div class="col-md-12">

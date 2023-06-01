@@ -31,7 +31,7 @@ body{
 
         gtag('config', 'UA-119386393-1');
      </script> -->
-     @php  
+     @php
      $postRoute = route('admin.appointmentStore');
      @endphp
      <style>
@@ -46,7 +46,7 @@ table th{
     white-space:nowrap!important;
 }
 </style>
-    
+
 
 <div class="mobile-menu-overlay"></div>
     <!-- saadullah -->
@@ -109,8 +109,8 @@ table th{
                                                         <td>{{ $i++ }}</td>
                                                         <td>{{ucwords($appointment->patient_name)}}</td>
                                                         <td>{{ucfirst($appointment->difficulties)}}</td>
-                                                        <td>{{$appointment->appointment_time}}:00 
-                                                
+                                                        <td>{{$appointment->appointment_time}}:00
+
                                                         </td>
                                                         <td>{{$appointment->appointment_date}}</td>
                                                         <!-- <td>{{$appointment->status_title}}</td> -->
@@ -155,7 +155,7 @@ table th{
                                                         </td>
                                                         <td><img src="images/dots.png"></td>
                                                     </tr>
-                                              
+
 
                                                 </tbody>
                                             </table>
@@ -229,11 +229,11 @@ table th{
                 {
                 recordId[a] = $("#a"+i).val();
                 a++;
-                } 
+                }
             }
         if(recordId.length != 0)
         {
-         $(".pop2").removeClass("d-none");   
+         $(".pop2").removeClass("d-none");
         }
     });
 
@@ -255,7 +255,7 @@ table th{
 				}
 				chkboxes = 0;
 			}
-					
+
 		});
 
         $('.cleardo').click(function() {
@@ -271,9 +271,9 @@ table th{
         $('.fourdo').addClass('col-xl-4');
         $('.onedo').removeClass('col-xl-4');
         $('.onedo').addClass('col-xl-5');
-        
+
     });
-      
+
 /*_________________________Edit show ajax________________________*/
 function edit(value) {
       $('#create').removeClass('d-none');
@@ -288,6 +288,17 @@ function edit(value) {
           beforeSend: function(){
                   ajaxLoader();
                 },
+          xhr: function() {
+              var xhr = new window.XMLHttpRequest();
+              xhr.upload.addEventListener("progress", function(evt) {
+                  if (evt.lengthComputable) {
+                      var percentComplete = evt.loaded / evt.total;
+                      percentComplete = parseInt(percentComplete * 100);
+                      ajaxLoaderprograss(percentComplete);
+                  }
+              }, false);
+              return xhr;
+          },
           success: function (response) {
                    $('#loader').fadeOut();
      if(response){
@@ -295,9 +306,9 @@ function edit(value) {
              $("#client_id").val(response.clinic_id);
              var doctor_id = $('#doctor_id').empty();
              // $("#doctor_id").val();
-             doctor_id.append($('<option>', { 
+             doctor_id.append($('<option>', {
                         value: response.doctor.id,
-                        text : response.doctor.name 
+                        text : response.doctor.name
                     }));
              // $('#doctor_id').prepend
              $("#date_appointment").val(response.data.appointment_date);
@@ -338,6 +349,17 @@ error: function (data) {
             beforeSend: function(){
                   ajaxLoader();
                 },
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
             success: function (responseCollection) {
                 // var client_id=$('#client_id');
                  $('#loader').fadeOut();
@@ -346,9 +368,9 @@ error: function (data) {
                 $.each(responseCollection['data'], function (i, item) {
                     // console.log(item.id,item.doctor.name);
                     // $("#client_id option:selected").attr("value", item.id);
-                    doctor_id.append($('<option>', { 
+                    doctor_id.append($('<option>', {
                         value: item.doctor_id,
-                        text : item.doctor.name 
+                        text : item.doctor.name
                     }));
                     //$('#doctor_id').empty().append('<option value="'+item.id+'">'+item.doctor.name+'</option>')
                 });
@@ -403,7 +425,7 @@ error: function (data) {
                     <div class="row  ">
                            <h5 class="textcolor px-2">Appointment's Detail</h5>
                     </div>
-        
+
                     <div class="row  pt-4">
                                <div class="col-md-6  ">
                               <span>Patient Name</span>
@@ -423,25 +445,25 @@ error: function (data) {
                                  @if(isset($clinics) && !empty($clinics) && $clinics->count()>0)
                                        @foreach($clinics as $clinic)
                                         <option name="clinic"  value="{{$clinic->id}}">{{$clinic->name}}</option>
-                                         @endforeach  
-                                    @endif                             
+                                         @endforeach
+                                    @endif
                             </select>
-                        </div>    
+                        </div>
                         <div class="col-md-6 mb-4  ">
                             <span>Select Doctor</span>
                              <select id="doctor_id" name="doctor_id"class="form-select form-control" selected required>
                                        <option value="select">Select Doctor</option>
                             </select>
-                        </div>    
+                        </div>
                          <div class="col-md-6 mb-4  ">
                             Appointment Date
                            <input type="date" name="appointment_date" value="" class="form-control" id="date_appointment" placeholder="Enter Here" required>
-                         </div> 
+                         </div>
 
                          <div class="col-md-12 mb-4  ">
                             Appointment Time
                            <input type="time" name="appointment_time" class="form-control" value="" id="time_appointment" placeholder="Enter Here" required>
-                         </div>  
+                         </div>
 
                          <div class="col-md-12 b-4  ">
                             Treatment plan*
@@ -460,8 +482,8 @@ error: function (data) {
                     </div>
                  </div>
              </div>
-        </div>     
-    </form>           
+        </div>
+    </form>
 
 <div class="pop2 d-none">
     <div class="row ">
@@ -494,12 +516,12 @@ error: function (data) {
         </div>
     </div>
 </div>
-<script> 
+<script>
 /*_________________________Update and save ajax_________________________*/
 $("#frmuser").submit(function (event) {
-    
+
          event.preventDefault();
-     
+
          if( $('#patient').val() === '' || $('#patient').val() == 'select'){
             toastr.error('Patient is required', 'error', {timeOut: 2000});
             return;
@@ -524,13 +546,13 @@ $("#frmuser").submit(function (event) {
             toastr.error('Treatment Plan is required', 'error', {timeOut: 2000});
             return;
          }
-               
-     
+
+
      var data = new FormData(frmuser);
      var id = $("#ElementId").val();
 /*_________________________Update ajax_________________________*/
     if(id != ''){
-     
+
      $.ajax({
      type: "POST",
      url: base_url+"/appointment_update/"+id,
@@ -540,6 +562,17 @@ $("#frmuser").submit(function (event) {
      beforeSend: function(){
                   ajaxLoader();
                 },
+         xhr: function() {
+             var xhr = new window.XMLHttpRequest();
+             xhr.upload.addEventListener("progress", function(evt) {
+                 if (evt.lengthComputable) {
+                     var percentComplete = evt.loaded / evt.total;
+                     percentComplete = parseInt(percentComplete * 100);
+                     ajaxLoaderprograss(percentComplete);
+                 }
+             }, false);
+             return xhr;
+         },
      success: function (data) {
         $('#loader').fadeOut();
         if(data.successMessage == 'Success')
@@ -554,7 +587,7 @@ $("#frmuser").submit(function (event) {
                 toastr.error('something Went Wrong PLease Try Again', '', {timeOut: 2000});
             }
      },
-     error: function(message, error) 
+     error: function(message, error)
      {
         $('#loader').fadeOut();
         toastr.error('Something Went Wrong, Try Again', '', {timeOut: 2000});
@@ -564,7 +597,7 @@ $("#frmuser").submit(function (event) {
         //     });
          }
      });
-    }else{    
+    }else{
 
 /*_________________________Save ajax_________________________*/
     $.ajax({
@@ -576,6 +609,17 @@ $("#frmuser").submit(function (event) {
         beforeSend: function(){
                   ajaxLoader();
                 },
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
             $('#loader').fadeOut();
             if(data.successMessage == 'Success')
@@ -589,7 +633,7 @@ $("#frmuser").submit(function (event) {
                 toastr.error('Something Went Wrong, Try Again', '', {timeOut: 2000});
             }
          },
-         error: function(message, error) 
+         error: function(message, error)
          {
             $('#loader').fadeOut();
             toastr.error('Something Went Wrong, Try Again', '', {timeOut: 2000});
@@ -605,7 +649,7 @@ $("#frmuser").submit(function (event) {
  /*_________________________Delete data ajax_________________________*/
  $(".deletebtn").click(function (event) {
 			event.preventDefault();
-           
+
             var recordId = [];
             var a = 0;
                 for(i=1;i<records;i++)
@@ -614,7 +658,7 @@ $("#frmuser").submit(function (event) {
                     {
                     recordId[a] = $("#a"+i).val();
                     a++;
-                    } 
+                    }
                 }
 
             if(recordId.length != 0)
@@ -627,12 +671,23 @@ $("#frmuser").submit(function (event) {
                  beforeSend: function(){
                   ajaxLoader();
                  },
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                        }, false);
+                        return xhr;
+                    },
 				success: function (data) {
                     $('#loader').fadeOut();
 					if(data){
 							if(data.done == true)
 							{
-								$(".pop2").addClass("d-none");  
+								$(".pop2").addClass("d-none");
 								toastr.success(data.msg, '', {timeOut: 2000});
 								setTimeout(function () {location.reload(true)}, 1000);
 							}else{
