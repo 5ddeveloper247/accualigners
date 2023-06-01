@@ -48,7 +48,7 @@ $("#frmuser").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+               
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -95,7 +95,7 @@ $("#frmuser").submit(function (event) {
             },
             success: function (data) {
 
-                $('#loader').fadeOut();
+               
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     // $('.pop1').addClass('d-none');
@@ -150,20 +150,9 @@ function editFunction(id = '') {
         url: base_url + "/doctor/" + id + "/edit",
         data: {},
         beforeSend: function () {
-            ajaxLoader();
+            ajaxLoadercount();
         },
-        xhr: function() {
-            var xhr = new XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = (evt.loaded / evt.total) * 100;
-                    percentComplete = parseInt(percentComplete);
-                    ajaxLoaderprograss(percentComplete);
-                    console.info(percentComplete);
-                }
-            }, false);
-            return xhr;
-        },
+        
         success: function (data) {
             $('#loader').fadeOut();
             console.log(id)
@@ -206,20 +195,10 @@ $(".deletebtn").click(function (event) {
             url: base_url + "/doctor/" + recordId,
             data: {},
             beforeSend: function () {
-                ajaxLoader();
+                ajaxLoadercount();
 
             },
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
-            },
+          
             success: function (data) {
                 $('#loader').fadeOut();
 

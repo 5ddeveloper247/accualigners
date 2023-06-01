@@ -300,7 +300,7 @@ function edit(value) {
               return xhr;
           },
           success: function (response) {
-                   $('#loader').fadeOut();
+             
      if(response){
              $("#patient").val(response.data.patient_id);
              $("#client_id").val(response.clinic_id);
@@ -345,21 +345,10 @@ error: function (data) {
             //url: '{{url("admin/clinic-doctors")}}/'+val,
             type: "GET",
             dataType: 'json',
-            data: data,
+            data: data,         
             beforeSend: function(){
-                  ajaxLoader();
-                },
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
-            },
+            ajaxLoadercount();
+        },
             success: function (responseCollection) {
                 // var client_id=$('#client_id');
                  $('#loader').fadeOut();
@@ -574,7 +563,7 @@ $("#frmuser").submit(function (event) {
              return xhr;
          },
      success: function (data) {
-        $('#loader').fadeOut();
+       
         if(data.successMessage == 'Success')
             {
                 $("#ElementId").val(' ');
@@ -621,7 +610,7 @@ $("#frmuser").submit(function (event) {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
+           
             if(data.successMessage == 'Success')
             {
                 toastr.success('Data Created Successfully', '', {timeOut: 2000});
@@ -667,21 +656,10 @@ $("#frmuser").submit(function (event) {
 				type: 'DELETE',
 				url: base_url+"/appointment_delete/"+recordId,
 				data: {
-				},
-                 beforeSend: function(){
-                  ajaxLoader();
-                 },
-                    xhr: function() {
-                        var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function(evt) {
-                            if (evt.lengthComputable) {
-                                var percentComplete = evt.loaded / evt.total;
-                                percentComplete = parseInt(percentComplete * 100);
-                                ajaxLoaderprograss(percentComplete);
-                            }
-                        }, false);
-                        return xhr;
-                    },
+				},                         
+                beforeSend: function(){
+                ajaxLoadercount();
+        },
 				success: function (data) {
                     $('#loader').fadeOut();
 					if(data){

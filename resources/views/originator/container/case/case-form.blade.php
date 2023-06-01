@@ -553,6 +553,22 @@
                 data: formData,
                 processData: false,
                 contentType: false,
+                beforeSend: function () {
+                ajaxLoader();
+            },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                console.log(evt)
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                    }, false);
+                    return xhr;
+                },
+
                 success:function(responseCollection){
 
                     var full_path = responseCollection['data']['full_path'];
@@ -619,6 +635,22 @@
                 type: "POST",
                 dataType: 'json',
                 data:data,
+                beforeSend: function () {
+                ajaxLoader();
+            },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                console.log(evt)
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                    }, false);
+                    return xhr;
+                },
+
                 success:function(responseCollection){
                     $("#destroy_attachment_"+id).remove();
                     toastr.success(responseCollection['message'], "Success!", {positionClass: "toast-bottom-left", containerId: "toast-bottom-left"});
@@ -680,6 +712,22 @@
                 type: "POST",
                 dataType: 'json',
                 data:data,
+                beforeSend: function () {
+                ajaxLoader();
+            },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                console.log(evt)
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                    }, false);
+                    return xhr;
+                },
+
                 success:function(responseCollection){
                     if(responseCollection['data'].length > 0){
                         $.each(responseCollection['data'], function (key, value) {
@@ -745,6 +793,22 @@
                 type: "POST",
                 dataType: 'json',
                 data:data,
+                beforeSend: function () {
+                ajaxLoader();
+            },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                console.log(evt)
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                    }, false);
+                    return xhr;
+                },
+
                 success:function(responseCollection){
                     var data = responseCollection['data'];
                     console.log(data);

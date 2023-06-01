@@ -268,7 +268,10 @@
             $('#order_details').removeClass('d-none');
             $.ajax({
                 url: base_url + '/order_edit/' + id_int,
-                method: "GET",
+                method: "GET",              
+                beforeSend: function(){
+                ajaxLoadercount();
+                        },
                 // data: json,
                 success: function (response) {
                     // Handle successful response

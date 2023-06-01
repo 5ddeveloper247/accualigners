@@ -425,7 +425,7 @@
                                     
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                                 <button class="btn btn-primary float-right" style="background:#00205C;border-radius: 20px;color:white;cursor:pointer;"
                                      data-toggle="modal" data-target="#video_modal2">Add Link</button>
                                 <button class="btn float-right mx-2" style="border-radius: 20px;border:1px solid grey" data-toggle="modal"
@@ -1207,11 +1207,24 @@
                             url: '{{route("admin.case.no-of-days-update")}}'
                             , type: "POST"
                             , dataType: 'json'
-                            , data: data
-                            , beforeSend: function () {
-                                ajaxLoader();
-                            }
-                            , success: function (responseCollection) {
+                            , data: data,
+                            beforeSend: function () {
+                            ajaxLoader();
+                            },
+                            xhr: function () {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                        if (evt.lengthComputable) {
+                                            console.log(evt)
+                                            var percentComplete = evt.loaded / evt.total;
+                                            percentComplete = parseInt(percentComplete * 100);
+                                            ajaxLoaderprograss(percentComplete);
+                                        }
+                                }, false);
+                                return xhr;
+                            },
+
+                             success: function (responseCollection) {
                                 toastr.success('Updated successfully', '', {
                                     timeOut: 2000
                                 });
@@ -1221,7 +1234,7 @@
                                 // });
                                 // $("#no_of_days").val(' ');
                                 // $('#no_of_trays').val(' ');
-                                $('#loader').fadeOut();
+                              
 
 
                             }
@@ -1272,14 +1285,28 @@
                         , url: '{{route("admin.case.upload-attachments")}}'
                         , data: formData
                         , processData: false
-                        , contentType: false
-                        , beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , success: function (responseCollection) {
+                        , contentType: false,
+                        beforeSend: function () {
+                         ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+
+                        
+                         success: function (responseCollection) {
 
                             // var id = data['data']['id']
-                            $('#loader').fadeOut();
+                           
 
                             toastr.success(responseCollection['message'], 'Picture Uploaded Successfully', {
                                 timeOut: 2000
@@ -1349,11 +1376,24 @@
                             url: "{{route('admin.case.embedded-video')}}"
                             , type: "POST"
                             , dataType: 'json'
-                            , data: data
-                            , beforeSend: function () {
-                                ajaxLoader();
-                            }
-                            , success: function (response) {
+                            , data: data,
+                            beforeSend: function () {
+                            ajaxLoader();
+                        },
+                            xhr: function () {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                        if (evt.lengthComputable) {
+                                            console.log(evt)
+                                            var percentComplete = evt.loaded / evt.total;
+                                            percentComplete = parseInt(percentComplete * 100);
+                                            ajaxLoaderprograss(percentComplete);
+                                        }
+                                }, false);
+                                return xhr;
+                            },
+
+                             success: function (response) {
                                 if (response.message == 'success') {
                                     $('#error').hide();
                                     $('#success').text('link successfully Added');
@@ -1370,7 +1410,7 @@
                                 //     positionClass: "toast-bottom-left",
                                 //     containerId: "toast-bottom-left"
                                 // });
-                                $('#loader').fadeOut();
+                                
                                 setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
@@ -1430,17 +1470,29 @@
                                 , url: '{{route("admin.case.upload-video")}}'
                                 , data: formData
                                 , processData: false
-                                , contentType: false
-                                , beforeSend: function () {
-                                    ajaxLoader();
-                                }
-                                , success: function (message) {
+                                , contentType: false,
+                                beforeSend: function () {
+                                ajaxLoader();
+                                },
+                                    xhr: function () {
+                                        var xhr = new window.XMLHttpRequest();
+                                        xhr.upload.addEventListener("progress", function (evt) {
+                                                if (evt.lengthComputable) {
+                                                    console.log(evt)
+                                                    var percentComplete = evt.loaded / evt.total;
+                                                    percentComplete = parseInt(percentComplete * 100);
+                                                    ajaxLoaderprograss(percentComplete);
+                                                }
+                                        }, false);
+                                        return xhr;
+                                    },
+
+                                 success: function (message) {
                                     $('#success2').text('Video Uploaded Successfully');
                                     $('#success2').show();
                                     $("#video").val('');
                                     $('#error2').text('');
                                     $('#error2').hide();
-                                    $('#loader').fadeOut();
                                     setTimeout(function () {
                                         location.reload(true)
                                     }, 1000);
@@ -1491,11 +1543,24 @@
                         url: '{{route("admin.case.delete-video")}}'
                         , type: "POST"
                         , dataType: 'json'
-                        , data: data
-                        , beforeSend: function () {
+                        , data: data,
+                        beforeSend: function () {
                             ajaxLoader();
-                        }
-                        , success: function (responseCollection) {
+                                    },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+
+                         success: function (responseCollection) {
 
                             toastr.success(responseCollection['message'], 'Video Removed Successfully', {
                                 timeOut: 2000
@@ -1527,10 +1592,11 @@
                         url: base_url + '/order_edit/' + id_int
                         , method: "GET",
                         // data: json,
-                        beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , success: function (response) {
+                                                
+                        beforeSend: function(){
+                                    ajaxLoadercount();
+                                },
+                        success: function (response) {
                             // Handle successful response
                             console.log(response.data.edit_values.id);
                             console.log(response.data.edit_values.created_at)
@@ -1631,10 +1697,23 @@
                             , id: id
                             ,
                         }
-                        , beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , success: function (response) {
+                        beforeSend: function () {
+                        ajaxLoader();
+                    },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+   
+                         success: function (response) {
                             if (response.successMessage == 'success') {
                                 toastr.success('Order Updated Successfully', '', {
                                     timeOut: 2000
@@ -1680,12 +1759,25 @@
                         url: '{{route("admin.case.add-advice")}}'
                         , type: "POST"
                         , dataType: 'json'
-                        , data: data
-                        , beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , success: function (responseCollection) {
-                            $('#loader').fadeOut();
+                        , data: data,
+                        beforeSend: function () {
+                        ajaxLoader();
+                    },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+ 
+                         success: function (responseCollection) {
+                        
                             console.log(responseCollection);
                             toastr.success('Advice Added Successfully', '', {
                                 timeOut: 2000
@@ -1801,10 +1893,23 @@
                         , type: "POST"
                         , dataType: 'json'
                         , data: data
-                        , beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , success: function (data) {
+                        beforeSend: function () {
+                        ajaxLoader();
+                        },
+                            xhr: function () {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                        if (evt.lengthComputable) {
+                                            console.log(evt)
+                                            var percentComplete = evt.loaded / evt.total;
+                                            percentComplete = parseInt(percentComplete * 100);
+                                            ajaxLoaderprograss(percentComplete);
+                                        }
+                                }, false);
+                                return xhr;
+                            },
+
+                         success: function (data) {
 
                             if (data.done == true) {
                                 toastr.success(data['message'], 'Success', {
@@ -2108,11 +2213,24 @@
                                             , 'currency': currency
                                             , 'stripeToken': token
                                             ,
-                                        }
-                                        , beforeSend: function () {
-                                            ajaxLoader();
-                                        }
-                                        , success: function (data) {
+                                        },
+                                        beforeSend: function () {
+                                        ajaxLoader();
+                                    },
+                                    xhr: function () {
+                                        var xhr = new window.XMLHttpRequest();
+                                        xhr.upload.addEventListener("progress", function (evt) {
+                                                if (evt.lengthComputable) {
+                                                    console.log(evt)
+                                                    var percentComplete = evt.loaded / evt.total;
+                                                    percentComplete = parseInt(percentComplete * 100);
+                                                    ajaxLoaderprograss(percentComplete);
+                                                }
+                                        }, false);
+                                        return xhr;
+                                    },
+
+                                         success: function (data) {
                                             if (data.data = 'success') {
                                                 $('.pop1').addClass('d-none');
                                                 $('#payment').removeClass('d-none');
@@ -2159,11 +2277,24 @@
 
                     $.ajax({
                         type: "POST"
-                        , url: base_url + "/case/payment/invoice"
-                        , beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , data: {
+                        , url: base_url + "/case/payment/invoice",
+                        beforeSend: function () {
+                        ajaxLoader();
+                                    },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+
+                         data: {
                             'id': "{{$edit_values->id}}"
                             , 'amount': payment
                             , 'currency': currency
@@ -2209,10 +2340,23 @@
                             id: id
                         }, // the data variables that you want to send along with the request
                         beforeSend: function () {
-                            ajaxLoader();
-                        }
-                        , success: function (response) {
-                            $('#loader').fadeOut();
+                        ajaxLoader();
+                    },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);
+                            return xhr;
+                        },
+
+                         success: function (response) {
+                          
                             if (response.done == true) {
                                 toastr.success('Dentist Will Pay Digital Scan Shortly..', 'Success', {
                                     timeOut: 3000
@@ -2253,8 +2397,24 @@
                             , 'case_id': "{{ $edit_values->id }}"
                             ,
                         }
-                        , success: function (responseCollection) {
-                            $('#loader').fadeOut();
+                        beforeSend: function () {
+                        ajaxLoader();
+                    },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                            }, false);  
+                            return xhr;
+                        },
+
+                         success: function (responseCollection) {
+                       
                             console.log(responseCollection);
                             $('.remove_ajax').remove();
 
