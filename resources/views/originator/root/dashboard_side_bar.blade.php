@@ -97,9 +97,10 @@
     </script>
     <script>
         document.onreadystatechange = function (e) {
+
             if (document.readyState === 'complete') {
                 // alert('hello');
-                $('#loader').fadeOut(3000);
+                // $('#loader').fadeOut();
                 $('body').show();
 
                 $('.toggle-on,.toggle-off').css('padding-right', '0');
@@ -128,10 +129,12 @@
                 $('#midline').siblings().find('.toggle-off').text('<- Improve');
             }
         };
-        window.addEventListener("load", function () {
+        document.addEventListener("DOMContentLoaded", function () {
             const preloader = document.querySelector(".preloader");
             const preloaderBar = document.querySelector("#loader");
             const preloaderPercent = document.querySelector(".preloader-percent");
+            preloaderBar.style.display = "block";
+            preloader.style.display = "block";
             let percent = 0;
             let interval = setInterval(function () {
                 percent++;
@@ -139,13 +142,14 @@
                 preloaderPercent.innerHTML = percent + "%";
                 if (percent >= 100) {
                     clearInterval(interval);
+                    preloaderBar.style.display = "none";
                     preloader.style.display = "none";
                 }
-            }, 12);
+            }, 40);
         });
 
         //on ajax request
-        function ajaxLoader() {
+        function ajaxLoaderprograss(percent) {
             const preloader = document.querySelector(".preloader");
             const preloaderBar = document.querySelector("#loader");
             const preloaderPercent = document.querySelector(".preloader-percent");
@@ -153,16 +157,25 @@
             $(".preloader-percent").css("top", "50%");
             $('.preloader').show();
             $('.preloader-percent').show();
-            let percent = 0;
-            let interval = setInterval(function () {
-                percent++;
                 preloaderBar.style.width = "100%";
+                console.log(percent + "%");
                 preloaderPercent.innerHTML = percent + "%";
                 if (percent >= 100) {
-                    clearInterval(interval);
+                    $('#loader').fadeOut();
                     preloader.style.display = "none";
                 }
-            }, 130);
+
+        }
+        function ajaxLoader() {
+            const preloaderBar = document.querySelector("#loader");
+            const preloaderPercent = document.querySelector(".preloader-percent");
+            $('#loader').show();
+            $(".preloader-percent").css("top", "50%");
+            $('.preloader').show();
+            $('.preloader-percent').show();
+            preloaderBar.style.width = "100%";
+            preloaderPercent.innerHTML = "0%";
+
         }
     </script>
     <style>
@@ -210,7 +223,7 @@
 
 </head>
 
-<div id="loader">
+<div id="loader" style="display: none;">
     <div class="preloader">
         <div class="preloader-percent">0%</div>
     </div>

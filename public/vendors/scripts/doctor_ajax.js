@@ -36,6 +36,17 @@ $("#frmuser").submit(function (event) {
                 ajaxLoader();
 
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
             success: function (data) {
                 $('#loader').fadeOut();
 
@@ -70,7 +81,17 @@ $("#frmuser").submit(function (event) {
             contentType: false,
             beforeSend: function () {
                 ajaxLoader();
-
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
             },
             success: function (data) {
 
@@ -123,6 +144,7 @@ function editFunction(id = '') {
         $("#output").attr("src", img_asset + "/gallery.png");
         return;
     }
+
     $.ajax({
         type: 'GET',
         url: base_url + "/doctor/" + id + "/edit",
@@ -130,14 +152,26 @@ function editFunction(id = '') {
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function() {
+            var xhr = new XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = (evt.loaded / evt.total) * 100;
+                    percentComplete = parseInt(percentComplete);
+                    ajaxLoaderprograss(percentComplete);
+                    console.info(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
             $('#loader').fadeOut();
-
+            console.log(id)
             if (data) {
                 $("#txtname").val(data['edit_values']['name']);
                 $("#txtemail").val(data['edit_values']['email']);
                 $("#ElementId").val(data['edit_values']['id']);
-                $("#output").attr("src",data['edit_values']['picture']);
+                $("#output").attr("src", data['edit_values']['picture']);
                 // $('.pop1').removeClass('d-none');
                 $('.pop1').fadeIn('slow');
 
@@ -174,6 +208,17 @@ $(".deletebtn").click(function (event) {
             beforeSend: function () {
                 ajaxLoader();
 
+            },
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
             },
             success: function (data) {
                 $('#loader').fadeOut();

@@ -8,7 +8,7 @@
          }
          @media(max-width:500px){
           .abtn{
-            
+
     font-size: 12px!important;
     margin: 2rem!important;
 
@@ -48,24 +48,24 @@ $title = 'Price Settings';
                            <h5>Currency</h5>
                            <!-- <div class="alert alert-danger"></div> -->
 
-                             <div class=" py-4 px-4 mt-3 borderdobx" id="currency_con">  
+                             <div class=" py-4 px-4 mt-3 borderdobx" id="currency_con">
                                 @foreach($currency as $c)
-                                <a class="m-1" id="currency_{{ $c->id }}">{{ $c->name }}<i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('currency','{{ $c->id }}')"></i></a> 
+                                <a class="m-1" id="currency_{{ $c->id }}">{{ $c->name }}<i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('currency','{{ $c->id }}')"></i></a>
                                 @endforeach
                                 <!-- <a class="m-1"> AED <img src="images/crosseka.png" class="mt-1"></a>    -->
-                                <!-- <a class="m-1">Dollar<img src="images/crosseka.png" class="m-1"></a>   
+                                <!-- <a class="m-1">Dollar<img src="images/crosseka.png" class="m-1"></a>
                                 <a class="m-1"> Pkr<img src="images/crosseka.png" class="m-1"></a> -->
                                 <a class="m-1 text-white bgcolor" data-toggle="modal" data-target="#currency_modal" style="cursor:pointer;">Add More</a>
                              </div>
-                        </div>     
+                        </div>
 
-                        
+
                         <div class="col-xl-12 mb-30  dollar">
                         <h5>Digital Scan</h5>
                            <div class=" py-4 px-4 mt-3  borderdobx" id="digital_con">
                              @foreach($setting as $s)
                              @if($s->digital_scan !== null && $s->currency != null && $s->currency_id != 'null')
-                                <a class="m-1" id="digital_{{ $s->currency_id }}">{{ $s->digital_scan }} {{ $s->currency }}<i class="bi bi-x-circle m-2" onclick="delete2('digital','{{ $s->currency_id }}')" style="cursor:pointer;"></i></a>   
+                                <a class="m-1" id="digital_{{ $s->currency_id }}">{{ $s->digital_scan }} {{ $s->currency }}<i class="bi bi-x-circle m-2" onclick="delete2('digital','{{ $s->currency_id }}')" style="cursor:pointer;"></i></a>
                               @endif
                                 @endforeach
                                 <!-- <a class="m-1">3000 PKR<img src="images/crosseka.png" class="m-1"></a> -->
@@ -73,54 +73,54 @@ $title = 'Price Settings';
                                </a>
                             </div>
                         </div>
-                        
+
                         <div class="col-xl-12 mb-30  dollar">
                            <h5>International Courier Charges</h5>
                            <div class=" py-4 px-4 mt-3  borderdobx" id="international_con">
                            @foreach($setting as $s)
                            @if($s->international_courier_charges !== null && $s->currency != null && $s->currency_id != 'null')
-                           <a class="m-1" id="international_{{ $s->currency_id }}"> {{$s->international_courier_charges }} {{ $s->currency }} <i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('international','{{ $s->currency_id }}')" ></i></a>   
+                           <a class="m-1" id="international_{{ $s->currency_id }}"> {{$s->international_courier_charges }} {{ $s->currency }} <i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('international','{{ $s->currency_id }}')" ></i></a>
                            @endif
-  
-                           @endforeach  
+
+                           @endforeach
                                 <!-- <a class="m-1">10000 PKR<img src="images/crosseka.png" class="m-1"></a>    -->
                                <a class="m-1 text-white bgcolor"  onclick="Add('international')" data-toggle="modal" data-target="#additional" style="cursor:pointer;">Add More
                                </a>
                             </div>
                         </div>
-                        
+
                         <div class="col-xl-12 mb-30  dollar">
                            <h5>Clear Aligners Production Charges</h5>
                            <div class=" py-4 px-4 mt-3  borderdobx" id="aligners_con">
                             @foreach($setting as $s)
                             @if($s->aligner_kit_price !== null && $s->currency != null && $s->currency_id != 'null')
-                               <a class="m-1" id="aligners_{{ $s->currency_id }}"> {{$s->aligner_kit_price }} {{ $s->currency }} <i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('aligners','{{ $s->currency_id }}')"></i></a>   
+                               <a class="m-1" id="aligners_{{ $s->currency_id }}"> {{$s->aligner_kit_price }} {{ $s->currency }} <i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('aligners','{{ $s->currency_id }}')"></i></a>
                                @endif
                                @endforeach
                                 <!-- <a class="m-1">10000 PKR<img src="images/crosseka.png" class="m-1"></a>    -->
-                            
+
                                <a class="m-1 text-white bgcolor"  onclick="Add('aligners')" data-toggle="modal" data-target="#additional" style="cursor:pointer;">Add More
                                </a>
                             </div>
-                        </div> 
-                        
+                        </div>
+
                         <div class="col-xl-12 mb-30  dollar">
                              <h5>Treatment Plan</h5>
                              <div class=" py-4 px-4 mt-3  borderdobx" id="treatment_con">
                              @foreach($setting as $s)
                               @if($s->complete_treatment_plan !== null && $s->currency != null && $s->currency_id != 'null')
-                                <a class="m-1 abtn" id="treatment_{{ $s->currency_id }}"> {{$s->complete_treatment_plan }} {{ $s->currency }}<i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('treatment','{{ $s->currency_id }}')"></i></a>   
-                              @endif     
+                                <a class="m-1 abtn" id="treatment_{{ $s->currency_id }}"> {{$s->complete_treatment_plan }} {{ $s->currency }}<i class="bi bi-x-circle m-2" style="cursor:pointer;" onclick="delete2('treatment','{{ $s->currency_id }}')"></i></a>
+                              @endif
                            @endforeach
 
                                 <!-- <a class="m-1">120000 PKR<img src="images/crosseka.png" class="m-1"></a>    -->
-                            
+
                                <a class="m-1 text-white bgcolor abtn"  onclick="Add('treatment-plan')" data-toggle="modal" data-target="#additional" style="cursor:pointer;" style="">Add More
                                </a>
                             </div>
                         </div>
                         </div>
-          
+
                                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
             </div>
         </div>
@@ -153,7 +153,7 @@ $title = 'Price Settings';
 
         $(document).ready(function() {
             $("#example").DataTable();
-            
+
         });
 
         function Add(value) {
@@ -186,6 +186,17 @@ $title = 'Price Settings';
                 beforeSend: function(){
                   $('#loader').show();
                 },
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                ajaxLoaderprograss(percentComplete);
+                            }
+                        }, false);
+                        return xhr;
+                    },
                success: function(response) {
                   // Handle successful response
                     console.log(response);
@@ -221,7 +232,7 @@ $title = 'Price Settings';
                url: "{{ url('admin/currencies_get') }}",
                method: "GET",
                 success: function(response) {
-                 
+
                 // Do something with the response data
                 $('.option').remove();
                 $('#currency_select').append(response);
@@ -275,6 +286,17 @@ $title = 'Price Settings';
                 beforeSend: function(){
                   $('#loader').show();
                 },
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
                success: function(response) {
                   // Handle successful response
                     console.log(response);
@@ -362,7 +384,7 @@ $title = 'Price Settings';
              });
         }
     }
- 
+
 
 function onClose(){
          $('error_add').hide();
@@ -371,7 +393,7 @@ function onClose(){
          $('#success').hide();
 }
     </script>
-    <script>  
+    <script>
            function delete2(check,id){
             // alert(check);
             // alert(id);
@@ -384,6 +406,17 @@ function onClose(){
                     },
                     beforeSend: function(){
                   $('#loader').show();
+                },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                    }, false);
+                    return xhr;
                 },
                    success: function(response) {
                            // Handle successful response
@@ -441,7 +474,7 @@ function onClose(){
 <div class="modal fade" id="additional" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-     
+
       <div class="modal-header">
         <h5 class="modal-title" id="title"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -449,7 +482,7 @@ function onClose(){
         </button>
       </div>
       <div class="modal-body">
-    
+
       <div class="form-group">
 
       <div class="alert alert-danger" id="error_add" style="display:none;"></div>
@@ -457,29 +490,29 @@ function onClose(){
          <select selected class="form-control" name="currency" id="currency_select">
           <option>Default select</option>
          </select>
-    
+
         </div>
 
       <div class="form-group digital-scan">
             <label for="exampleInputEmail1 digital-scan">Digital Scan</label>
              <input type="number"  min="0" class="form-control digital-scan" id="digital_scan" aria-describedby="emailHelp" placeholder="Enter Digital_scan amount">
       </div>
-     
+
       <div class="form-group international">
             <label for="exampleInputEmail1  international">International Courier Charges</label>
              <input type="number"  min="0" class="form-control  international" id="International" aria-describedby="emailHelp" placeholder="International Courier Charges">
      </div>
-     
+
      <div class="form-group aligners">
             <label for="exampleInputEmail1  aligners">Clear Aligners Production Charges</label>
              <input type="number"  min="0" class="form-control aligners" id="Aligners" aria-describedby="emailHelp" placeholder="Enter Clear Aligners Production Charges">
      </div>
-     
+
      <div class="form-group treatment-plan">
             <label for="exampleInputEmail1 treatment-plan">Treatment Plan</label>
              <input type="number" min="0" class="form-control treatment-plan" id="Treatment" aria-describedby="emailHelp" placeholder="Enter Treatment Plan">
      </div>
- 
+
 </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="onClose()">Close</button>
@@ -492,7 +525,7 @@ function onClose(){
 <div class="modal fade" id="currency_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-     
+
       <div class="modal-header">
         <h5 class="modal-title" id="title"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -507,7 +540,7 @@ function onClose(){
             <label for="exampleInputEmail1 digital-scan">Currency</label>
              <input type="text" class="form-control digital-scan" id="currency_id" name="currency_value"  aria-describedby="emailHelp" placeholder="Enter currency">
       </div>
-    
+
 </div>
 
       <div class="modal-footer">
@@ -547,7 +580,7 @@ function onClose(){
 
 </body>
 
-      
+
 
 </html>
 <div class="pop1 d-none scrolldo">
@@ -575,30 +608,30 @@ function onClose(){
                     </div>
                     <div class="row m-0  py-4 mt-3" style="border:1px dashed #e3e3e3;border-radius: 8px;">
                         <div class="col-md-3 bold ">
-                       
+
                             <img src="images/gallery.png" style="width:80px;height: 80px;">
-                          
+
                         </div>
                         <div class="col-md-6 bold ">
                                   <h6 class="textcolor pt-3" style="font-size: 14px;">Upload Profile Picture</h6>
                             <span style="font-size: 12px;">Select a file or drag and drop here</span>
-                          
-                        </div> 
+
+                        </div>
                         <div class="col-md-3 px-4 bold pt-4">
                             <a href="" class="textcolor" >Browse</a>
-                          
+
                         </div>
-            
+
                     </div>
-                             
+
                     <div class="row  pt-4">
                                <div class="col-md-12 bold ">
                             <span>Sort order*</span>
                             <input type="" name="" class="form-control" placeholder="Enter Here">
                         </div>
                     </div>
-              
-                   
+
+
                 </div>
                     </div>
              <div class="row mt-3 ">

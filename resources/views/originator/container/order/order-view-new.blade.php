@@ -368,6 +368,17 @@
                 beforeSend: function () {
                     $('#loader').show();
                 },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                    }, false);
+                    return xhr;
+                },
                 success: function (response) {
                     if (response.successMessage == 'success') {
                         toastr.success('Order Updated Successfully', '', {timeOut: 2000});
@@ -409,6 +420,17 @@
                 },
                 beforeSend: function () {
                     $('#loader').show();
+                },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            ajaxLoaderprograss(percentComplete);
+                        }
+                    }, false);
+                    return xhr;
                 },
                 success: function (data) {
                     if (data.message == 'success') {

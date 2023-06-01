@@ -27,6 +27,17 @@ $("#frmcase2").submit(function (event) {
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
             success: function (data) {
                 $('#loader').fadeOut();
                 if (data.done == true) {
@@ -74,6 +85,17 @@ $("#frmcase2").submit(function (event) {
             contentType: false,
             beforeSend: function () {
                 ajaxLoader();
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
             },
             success: function (data) {
 
@@ -127,7 +149,7 @@ function editFunction(id = '') {
         $("#txtemail").val('');
         $("#ElementId").val('');
         $("#additional_msg").text('');
-       
+
         // $('.pop1').removeClass('d-none');
         $('.pop1').fadeIn('slow');
         $("#output").attr("src", img_asset + "/gallery.png");
@@ -331,6 +353,17 @@ $(".deletebtn").click(function (event) {
             beforeSend: function () {
                 ajaxLoader();
             },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
             success: function (data) {
                 $('#loader').fadeOut();
                 if (data) {
@@ -405,6 +438,17 @@ function preViewImage(input) {
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
             $('#loader').fadeOut();
             var id = data['data']['id']
@@ -475,6 +519,17 @@ function preViewImage2(input) {
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
             $('#loader').fadeOut();
             $.each(data['data'], function (key, value) {
@@ -536,6 +591,17 @@ function preViewImage3(input) {
         contentType: false,
         beforeSend: function () {
             ajaxLoader();
+        },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
         },
         success: function (data) {
             $('#loader').fadeOut();
@@ -606,38 +672,54 @@ function saveJawImage(select, i, is) {
         toastr.error('Error MEssage', 'Please Upload Image First', {timeOut: 3000});
 
     }
-    for (var j = 0; j < $('#jaw_' + i)[0].files.length; j++) {
+
 
 
         formData = new FormData();
         formData.append("_token", '{{csrf_token()}}');
         formData.append("case_id", case_id);
-        formData.append("attachment", $('#jaw_' + i)[0].files[j]);
+        for (var j = 0; j < $('#jaw_' + i)[0].files.length; j++) {
+            formData.append("attachment[]", $('#jaw_' + i)[0].files[j]);
+        }
         formData.append("sort_order", sort);
         formData.append("attachment_type", type);
         formData.append("case_id", id);
         jawImageAJAX(formData, id);
-    }
+
 
 }
 
 function jawImageAJAX(formData, id = '') {
     $.ajax({
         type: "POST",
-        url: base_url + "/case/upload-attachment",
+        url: base_url + "/case/upload-attachment2",
         data: formData,
         processData: false,
         contentType: false,
         beforeSend: function () {
             ajaxLoader();
         },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
         success: function (data) {
             $('#loader').fadeOut();
-            var id = data['data']['id']
+            $.each(data['data'], function (key, value) {
+                Attachment_Ids.push(value.id);
+            });
+            // var id = data['data']['id']
             toastr.success('Success Message', 'Picture Uploaded Successfully', {timeOut: 2000});
-            var attachment_ids_field = $('#attachment_ids');
-            var attachment_ids = attachment_ids_field.val();
-            attachment_ids_field.val((attachment_ids != "" ? attachment_ids + ',' + id : id));
+            // var attachment_ids_field = $('#attachment_ids');
+            // var attachment_ids = attachment_ids_field.val();
+            // attachment_ids_field.val((attachment_ids != "" ? attachment_ids + ',' + id : id));
         },
         error: function (message, error) {
             $('#loader').fadeOut();
@@ -695,6 +777,17 @@ $(document).on('click', '#pay_now_invoice', function (e) {
         url: base_url + "/case/payment/invoice",
         beforeSend: function () {
             ajaxLoader();
+        },
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    ajaxLoaderprograss(percentComplete);
+                }
+            }, false);
+            return xhr;
         },
         data: {
             'id': id,
@@ -924,6 +1017,17 @@ $(".remove_image").click(function () {
             data: data,
             beforeSend: function () {
                 ajaxLoader();
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
             },
             success: function (data) {
                 $('#loader').fadeOut();

@@ -464,6 +464,17 @@ $("#frmuser").submit(function (event) {
                 ajaxLoader();
 
             },
+             xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        ajaxLoaderprograss(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
             success: function (data) {
                 $('#loader').fadeOut();
                 //    return;
