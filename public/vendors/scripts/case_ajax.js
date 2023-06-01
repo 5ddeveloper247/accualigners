@@ -89,7 +89,7 @@ function editFunction(id = '') {
         $('#conidion' + x).prop('disabled', true);
     }
     $('#dob , #address , #email , #phone_no , #name').prop('readonly', true);
-    $('.disable_input , #prescription_comment , #clinical_comment , #midline , #overbite , #overjet , #a_p_relationship , #arch_to_treat , #select1 , #select2').prop('disabled', true);
+    $('.disable_input , #prescription_comment , #additional_comment, #clinical_comment , #midline , #overbite , #overjet , #a_p_relationship , #arch_to_treat , #select1 , #select2').prop('disabled', true);
     $('.add_image , .remove_image').hide();
 
     var Attach_Img = $("#Attach_Img");
@@ -159,6 +159,7 @@ function editFunction(id = '') {
 
                 $("#clinical_comment").val(data['edit_values']['clinical_comment']);
                 $("#prescription_comment").val(data['edit_values']['prescription_comment']);
+                $("#additional_comment").val(data['edit_values']['additional_comment']);
                 /*____clinical conditions____*/
                 if (data['caseClinicalConditions']) {
                     for (numberOfImages = 0; numberOfImages < data['caseClinicalConditions'].length; numberOfImages++) {
@@ -647,6 +648,15 @@ function validationOfCase() {
     } else {
         $('#prescription_msg').text('');
     }
+     //Additional Comment
+     if ($('#additional_comment').val() == '') {
+        $('#additional_msg').text('Additional comment cannot be left blank!');
+        toastr.error('Additional comment not given!', 'Validation Error', {timeOut: 5000});
+        return false;
+    } else {
+        $('#additional_msg').text('');
+    }
+
     if($("#ElementId").val() == '') {
         //Image Attachment
         if ($('.image_attach').attr('src') == '') {

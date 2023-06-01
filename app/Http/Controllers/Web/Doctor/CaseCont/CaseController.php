@@ -185,7 +185,7 @@ class CaseController extends Controller
            $arrRes['msg']  = "Data saved successfully";
            $arrRes['done'] = true;
            
-           $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'comment', 'processing_fee_amount','address','impression_kit_order_id', 'created_by', 'embedded_url'));
+           $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount','address','impression_kit_order_id', 'created_by', 'embedded_url'));
            if ($Case) {
                 $user = User::find($doctor_id);
                 $data['case'] = $Case;
@@ -324,7 +324,7 @@ class CaseController extends Controller
             $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
             $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
 
-            $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'comment', 'processing_fee_amount','address', 'impression_kit_order_id', 'created_by', 'embedded_url'));
+            $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment','additional_comment', 'comment', 'processing_fee_amount','address', 'impression_kit_order_id', 'created_by', 'embedded_url'));
 
             if ($Case) {
                 $user = User::find($doctor_id);
@@ -557,7 +557,7 @@ class CaseController extends Controller
             $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
 
             $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
-            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'comment', 'processing_fee_amount', 'impression_kit_order_id', 'created_by'));
+            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment','additional_comment', 'comment', 'processing_fee_amount', 'impression_kit_order_id', 'created_by'));
 
             if ($Case) {
                 $case_id = $id;
@@ -649,7 +649,7 @@ class CaseController extends Controller
             $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
 
             $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
-            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'comment', 'processing_fee_amount','address', 'impression_kit_order_id', 'created_by','embedded_url'));
+            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount','address', 'impression_kit_order_id', 'created_by','embedded_url'));
 
             if ($Case) {
 
