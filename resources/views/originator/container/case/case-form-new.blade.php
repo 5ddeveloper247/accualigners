@@ -418,7 +418,7 @@
 
                     <div class="col-md-4 borderleft m-0 p-0 ">
                         <div class="row d-flex justify-content-center align-items-center">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6">
                                 <div class="addlinkdo mt-3 p-3">
 
                                     <h5 class="d-inline">Upload Video</h5>
@@ -536,7 +536,7 @@
                                 </label>
                     </div>
                             </div>
-                            </form>
+                            </form>Upload Video
                         </div>
                         <hr/>
                         <div class="row mt-4 p-4 ">
