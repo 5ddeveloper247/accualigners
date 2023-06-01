@@ -155,7 +155,7 @@ jQuery(document).ready(function(){
 	});
 
 
-	// click to copy icon
+	// click to copy iconR$
 	$(".fa-hover").click(function (event) {
 		event.preventDefault();
 		var $html = $(this).find('.icon-copy').first();

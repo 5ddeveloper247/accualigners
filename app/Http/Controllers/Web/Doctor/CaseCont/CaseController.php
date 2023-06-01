@@ -64,7 +64,7 @@ class CaseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
+    {
          try {
             $ClinicalConditions = ClinicalCondition::all();
             $ClinicDoctors = ClinicDoctor::all();
@@ -80,7 +80,7 @@ class CaseController extends Controller
                         ->orWhere('email', 'like', "%" . $filter . "%");
                 });
             }
-              $cases = $cases->orderBy('id', 'desc')->get();
+                    $cases = $cases->orderBy('id', 'desc')->get();
                    return view('doctor.container.case.case-view-new', compact('cases','ClinicalConditions','ClinicDoctors'));
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -123,7 +123,7 @@ class CaseController extends Controller
      */
     public function create(Request $request)
     {
-        
+
         try {
             $ClinicalConditions = ClinicalCondition::all();
             $ClinicDoctors = ClinicDoctor::where('doctor_id', $request->user()->id)->get();
@@ -155,10 +155,10 @@ class CaseController extends Controller
            } else {
                if($request->email){
                    $patientData['email'] = $request->email;
-                   $user = User::create($patientData);    
+                   $user = User::create($patientData);
                    $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
                    $otp = rand(10000, 99999);
-   
+
                    $PasswordReset = new PasswordReset();
                    $PasswordReset->email = $request->email;
                    $PasswordReset->token = $token;
@@ -166,12 +166,12 @@ class CaseController extends Controller
                    if ($PasswordReset->save()) {
                        // $user->notify(new NewPatientFromWeb($PasswordReset));
                    }
-                   
+
                    $request->request->add(['patient_id' => $user->id]);
                    Patient::firstOrCreate(['user_id' => $user->id, 'doctor_id' => $doctor_id], ['user_id' => $user->id, 'doctor_id' => $doctor_id]);
              }
            }
-           
+
            $Setting = Setting::first();
            $request->request->add(['doctor_id' => $doctor_id]);
            $request->request->add(['arch_to_treat' => $request->has('arch_to_treat') ? 'UPPER' : 'LOWER']);
@@ -184,7 +184,7 @@ class CaseController extends Controller
            $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
            $arrRes['msg']  = "Data saved successfully";
            $arrRes['done'] = true;
-           
+
            $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount','address','impression_kit_order_id', 'created_by', 'embedded_url'));
            if ($Case) {
                 $user = User::find($doctor_id);
@@ -199,7 +199,7 @@ class CaseController extends Controller
                $html = view('emails.caseRegistered', $data)->render();
                $check = $this->sendMailViaPostMark($html, $to, $subject);
 
-               
+
                $to = "info@accualigners.com";
                $html = view('emails.caseRegisteredAdmin', $data)->render();
                $check = $this->sendMailViaPostMark($html, $to, $subject);
@@ -226,14 +226,14 @@ class CaseController extends Controller
                        'case_id' => $case_id
                    ]);
                }
-              
+
                  //Image attachment update
-                 if (!empty($request->image_attachment_ids)) 
+                 if (!empty($request->image_attachment_ids))
                  {
                      foreach ($request->image_attachment_ids as $id) {
                      if($id != 0){
                                  CaseAttachment::where('id', $id)->update(['case_id' => $case_id]);
-                                 
+
                                  }
                              }
                  }
@@ -241,10 +241,10 @@ class CaseController extends Controller
 
                DB::commit();
 
-                 $data['settings'] = $Setting;  
+                 $data['settings'] = $Setting;
                  $data['msg']  = "Data saved successfully";
-                 $data['done'] = true;            
-                  
+                 $data['done'] = true;
+
                   return response()->json($data);
 
                //  return redirect(route('doctor.case.payment.index', ['case' => $case_id]))->with(['successMessage' => 'Created successfully']);
@@ -273,7 +273,7 @@ class CaseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CaseStoreRequest $request)
-    {    
+    {
         dd('hello2');
         try {
 
@@ -296,10 +296,10 @@ class CaseController extends Controller
             } else {
                 if($request->email){
                     $patientData['email'] = $request->email;
-                    $user = User::create($patientData);    
+                    $user = User::create($patientData);
                     $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
                     $otp = rand(10000, 99999);
-    
+
                     $PasswordReset = new PasswordReset();
                     $PasswordReset->email = $request->email;
                     $PasswordReset->token = $token;
@@ -307,12 +307,12 @@ class CaseController extends Controller
                     if ($PasswordReset->save()) {
                         // $user->notify(new NewPatientFromWeb($PasswordReset));
                     }
-                    
+
                     $request->request->add(['patient_id' => $user->id]);
                     Patient::firstOrCreate(['user_id' => $user->id, 'doctor_id' => $doctor_id], ['user_id' => $user->id, 'doctor_id' => $doctor_id]);
               }
             }
-            
+
             $Setting = Setting::first();
             $request->request->add(['doctor_id' => $doctor_id]);
             $request->request->add(['arch_to_treat' => $request->has('arch_to_treat') ? 'UPPER' : 'LOWER']);
@@ -340,10 +340,10 @@ class CaseController extends Controller
                 $check = $this->sendMailViaPostMark($html, $to, $subject);
                 //admin
                 $to = "info@accualigners.com";
-                
+
                 $html = view('emails.caseRegisteredAdmin', $data)->render();
                 $check = $this->sendMailViaPostMark($html, $to, $subject);
-                
+
                 if (!empty($request->impression_kit_order_id))
                     Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
 
@@ -368,12 +368,12 @@ class CaseController extends Controller
 
 
                  //Image attachment update
-                 if (!empty($request->image_attachment_ids)) 
+                 if (!empty($request->image_attachment_ids))
                  {
                      foreach ($request->image_attachment_ids as $id) {
                      if($id != 0){
                                  CaseAttachment::where('id', $id)->update(['case_id' => $case_id]);
-                                 
+
                                  }
                              }
                  }
@@ -402,7 +402,7 @@ class CaseController extends Controller
      */
     // public function show(CaseEditRequest $request, $id)
     // {
-       
+
     //     try {
     //         $case = CaseModel::where('id', $id)->where('doctor_id', $request->user()->id)->first();
     //         $data['edit_values'] = $case;
@@ -418,11 +418,11 @@ class CaseController extends Controller
     //         return redirect()->back()->withErrors($e->getMessage());
     //     }
     // }
-   
+
         /*_____________new show function_____________*/
     public function show(CaseEditRequest $request, $id)
     {
-       
+
         try {
             $case = CaseModel::where('id', $id)->where('doctor_id', $request->user()->id)->first();
             $data['edit_values'] = $case;
@@ -445,18 +445,18 @@ class CaseController extends Controller
             $data['edit_values'] = $case;
 
             $ip = $request->ip(); // Get user's IP address from request object
-            
+
             // Call the ipgeolocation API to get user's timezone based on their IP address
             $api_key = "4eb0722e7f464951aef4c772283952fb"; // replace with your actual API key
             $api_url = "https://api.ipgeolocation.io/timezone?apiKey={$api_key}&ip={$ip}";
             $api_response = json_decode(file_get_contents($api_url), true);
             $user_timezone = new DateTimeZone($api_response['timezone']);
-            
+
             $data['user_timezone'] = $user_timezone->getName(); // Set user's timezone
-        
+
             $order= Order::where('case_id','=',$id)->first();
             $data['order']=$order;
-        
+
             $selfies = $case->selfies->where('tray_no', 1);
             $time_logs = $case->time_logs->where('tray_no', 1);
             $data['settings'] = Setting::first();
@@ -527,10 +527,10 @@ class CaseController extends Controller
             } else {
                 if($request->email){
                     $patientData['email'] = $request->email;
-                    $user = User::create($patientData);    
+                    $user = User::create($patientData);
                     $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
                     $otp = rand(10000, 99999);
-    
+
                     $PasswordReset = new PasswordReset();
                     $PasswordReset->email = $request->email;
                     $PasswordReset->token = $token;
@@ -538,7 +538,7 @@ class CaseController extends Controller
                     if ($PasswordReset->save()) {
                         // $user->notify(new NewPatientFromWeb($PasswordReset));
                     }
-                    
+
                     $request->request->add(['patient_id' => $user->id]);
                     Patient::updateOrCreate(['user_id' => $user->id, 'user_id' => $user->id], ['clinic_doctor_id' => $request->doctor_id, 'doctor_id' => $request->doctor_id, 'user_id' => $user->id]);
               }
@@ -617,7 +617,7 @@ class CaseController extends Controller
 
                 if($request->email){
                     $patientData['email'] = $request->email;
-                    $user = User::create($patientData);    
+                    $user = User::create($patientData);
                     $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
                     $otp = rand(10000, 99999);
 
@@ -628,7 +628,7 @@ class CaseController extends Controller
                     if ($PasswordReset->save()) {
                         // $user->notify(new NewPatientFromWeb($PasswordReset));
                     }
-                    
+
                     $request->request->add(['patient_id' => $user->id]);
                     Patient::updateOrCreate(['user_id' => $user->id, 'user_id' => $user->id], ['clinic_doctor_id' => $request->doctor_id, 'doctor_id' => $request->doctor_id, 'user_id' => $user->id]);
               }
@@ -697,7 +697,7 @@ class CaseController extends Controller
 
             DB::rollBack();
             // return redirect()->back()->withErrors('Something went wrong');
-            
+
             $arrRes['done'] = false;
             $arrRes['msg'] = 'Error in updating';
             return response()->json($arrRes);
@@ -722,10 +722,10 @@ class CaseController extends Controller
         try{
             foreach($recordIds as $id)
             {
-                    
-               
+
+
                 $case = CaseModel::find($id);
-                if($case->forceDelete())         
+                if($case->forceDelete())
                 {
                     $arrRes['msg']  = "Data deleted successfully";
                     $arrRes['done'] = true;
@@ -736,7 +736,7 @@ class CaseController extends Controller
             }
             return response()->json($arrRes);
             }
-            
+
         catch (Exception $e) {
             $arrRes['done'] = false;
             $arrRes['msg'] = 'Error in deleting Data';
@@ -888,7 +888,7 @@ class CaseController extends Controller
     }
     // CaseUploadAttachmentRequest
     public function uploadAttachment2(Request $request)
-    {  
+    {
         try {
         $user_id = $request->user()->id;
         $sort_order = $request->sort_order;
@@ -926,7 +926,7 @@ class CaseController extends Controller
                 'created_by' => $user_id
             ]);
         }
-        
+
         $CaseAttachment = new CaseAttachmentResource($CaseAttachment);
         if ($mimeType == 'application/octet-stream') {
             $CaseAttachment->name = 'stl.jpg';
@@ -963,7 +963,7 @@ class CaseController extends Controller
                 }else{
                     return successJsonResponse_h('Error while updating');
                 }
-                
+
             }
            else if ($attachment_type != "OTHER" && $request->has('case_id') && !empty($request->case_id)) {
                 $CaseAttachment = CaseAttachment::updateOrCreate(
@@ -1242,7 +1242,7 @@ class CaseController extends Controller
 
      public function updateAttachment(Request $request)
      {
-        
+
         if(CaseAttachment::where($request->id)->update())
         {
             $data['done'] = true;
@@ -1257,7 +1257,7 @@ class CaseController extends Controller
       public function getallAdvicesDoctor(Request $request){
 
          $concern = CaseConcern::where('case_id' ,'=', $request->case_id)->orderBy('id','desc')->get();
-          
+
          if($concern->count() > 0){
             return response()->json(['done' => true , 'concern' => $concern]);
 

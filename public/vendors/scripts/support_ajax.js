@@ -21,7 +21,7 @@ function showMessage(id) {
             return xhr;
         },
         success: function (response) {
-            $('#loader').fadeOut();
+
             div_concern.empty();
             $('#btnSend').data('id', id);
             $.each(response, function (index, message) {
@@ -77,7 +77,7 @@ function sendMessage(btn) {
             return xhr;
         },
         success: function (response) {
-            $('#loader').fadeOut();
+
             div_concern.empty();
             if (response[1].done == true) {
 
@@ -135,7 +135,7 @@ function sendNotification() {
             },
             success: function (response) {
 
-                $('#loader').fadeOut();
+
                 if (response.done == true) {
                     toastr.success(response.msg, 'Success', {timeOut: 2000});
                 } else {

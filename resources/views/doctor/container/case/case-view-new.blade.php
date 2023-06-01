@@ -806,7 +806,7 @@
                                                               name="prescription_comment" required
                                                               data-validation-required-message="Prescription Comment is required"></textarea>
 
-                                                
+
                                                     <p style="line-height: px;" class="mt-2">Additional comments*
                                                         <span id="additional_msg"
                                                                 style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
@@ -814,7 +814,7 @@
                                                     <textarea id="additional_comment" name="additional_comment"
                                                                 class="form-control" placeholder="Type Here..."
                                                                 style="height:80px!important;" required
-                                                                data-validation-required-message="Additional Comment is required"></textarea>  
+                                                                data-validation-required-message="Additional Comment is required"></textarea>
 
                                                 </div>
                                             </div>
@@ -1616,13 +1616,27 @@
                             beforeSend: function () {
                                 ajaxLoader();
                             },
+                            beforeSend: function () {
+                                ajaxLoader();
+                            },
+                            xhr: function () {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
                             success: function (data) {
                                 if (data.data = 'success') {
                                     $('.pop1').addClass('d-none');
                                     $('.pop1').fadeOut('d-none');
                                     $('#payment').removeClass('d-none');
                                     //  $('#order_payment').val(data.case.processing_fee_amount);
-                                    $('#loader').fadeOut();
+
                                     toastr.success('Payment Successfull', '', {
                                         timeOut: 2000
                                     });
@@ -1630,7 +1644,7 @@
                                         location.reload(true)
                                     }, 1000);
                                 } else {
-                                    $('#loader').fadeOut();
+
                                     toastr.error('Something Went Wrong, Try Again', '', {
                                         timeOut: 2000
                                     });

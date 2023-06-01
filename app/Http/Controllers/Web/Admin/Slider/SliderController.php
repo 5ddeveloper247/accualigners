@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
-    
+
     //new index
     public function index(Request $request)
     {
-        try{  
+        try{
             $sliders = Slider::query();
             if($request->has('filter') && !empty($request->filter)){
                 $filter = $request->filter;
@@ -69,7 +69,7 @@ class SliderController extends Controller
                 $inputs['slider_image'] = 'sliders/'.$ImageName;
             }
 
-            if(Slider::create($inputs))         
+            if(Slider::create($inputs))
                 {
                     $arrRes['msg']  = "Data saved successfully";
                     $arrRes['done'] = true;
@@ -108,7 +108,7 @@ class SliderController extends Controller
 
     public function show($id)
     {
-        
+
     }
 
     //new edit
@@ -146,7 +146,7 @@ class SliderController extends Controller
             }
 
             $Slider = Slider::find($id);
-            if($Slider->update($inputs))         
+            if($Slider->update($inputs))
                 {
                     $arrRes['msg']  = "Data updated successfully";
                     $arrRes['done'] = true;
@@ -161,7 +161,7 @@ class SliderController extends Controller
             return response()->json($arrRes);
         }
     }
-    
+
     //prev update
     // public function update(SliderUpdateRequest $request, $id)
     // {
@@ -191,7 +191,7 @@ class SliderController extends Controller
             foreach($recordIds as $id)
             {
                 $slider = Slider::find($id);
-                if($slider->forceDelete())         
+                if($slider->forceDelete())
                 {
                     $arrRes['msg']  = "Slider Deleted successfully";
                     $arrRes['done'] = true;

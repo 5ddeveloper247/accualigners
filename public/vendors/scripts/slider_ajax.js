@@ -41,7 +41,6 @@ $("#frmuser").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -89,7 +88,6 @@ $("#frmuser").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -130,23 +128,10 @@ function editFunction(id = '') {
         type: 'GET',
         url: base_url + "/slider/" + id + "/edit",
         data: {},
-        beforeSend: function () {
-            ajaxLoader();
-
-        },
-        xhr: function () {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
-            }, false);
-            return xhr;
+        beforeSend: function(){
+            ajaxLoadercount();
         },
         success: function (data) {
-            $('#loader').fadeOut();
 
             if (data) {
                 $("#sort_order").val(data['edit_values']['sort_order']);
@@ -185,23 +170,10 @@ $(".deletebtn").click(function (event) {
             type: 'DELETE',
             url: base_url + "/slider/" + recordId,
             data: {},
-            beforeSend: function () {
-                ajaxLoader();
-
-            },
-            xhr: function () {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
+            beforeSend: function(){
+                ajaxLoadercount();
             },
             success: function (data) {
-                $('#loader').fadeOut();
 
                 if (data) {
                     if (data.done == true) {

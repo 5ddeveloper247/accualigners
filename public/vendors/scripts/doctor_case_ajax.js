@@ -39,7 +39,7 @@ $("#frmcase2").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
                     // $('.pop1').addClass('d-none');
@@ -59,11 +59,11 @@ $("#frmcase2").submit(function (event) {
                     $('#order_payment').val(data.case.processing_fee_amount);
                     $('#order_case_id').val(data.case.id);
                     $('#order_currency').val(data.settings.currency);
-                    $('#loader').fadeOut();
+
                     toastr.success('Case successfully Updated', '', {timeOut: 2000});
 
                 } else {
-                    $('#loader').fadeOut();
+
                     toastr.error('Something Went Wrong', '', {timeOut: 2000});
                 }
             },
@@ -99,7 +99,7 @@ $("#frmcase2").submit(function (event) {
             },
             success: function (data) {
 
-                $('#loader').fadeOut();
+
                 if (data.done == true) {
                     $('#payment').removeClass('d-none');
                     $('#payment_price').text(' ');
@@ -108,7 +108,7 @@ $("#frmcase2").submit(function (event) {
                     $('#order_payment').val(data.case.processing_fee_amount);
                     $('#order_case_id').val(data.case.id);
                     $('#order_currency').val(data.settings.currency);
-                    $('#loader').fadeOut();
+
                 } else {
                     toastr.error(data.msg, '', {timeOut: 2000});
                 }
@@ -160,19 +160,7 @@ function editFunction(id = '') {
         url: base_url + "/case/" + id + "/edit",
         data: {},
         beforeSend: function(){
-            ajaxLoader();
-        },
-        xhr: function() {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
-                console.log(evt)
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
-            }, false);
-            return xhr;
+            ajaxLoadercount();
         },
         success: function (data) {
 
@@ -327,10 +315,10 @@ function editFunction(id = '') {
                     }
                 }
                 // $('.pop1').removeClass('d-none');
-                $('#loader').fadeOut();
+
                 $('.pop1').fadeIn('slow');
             } else {
-                $('#loader').fadeOut();
+
                 toastr.error('some error', 'Error');
             }
 
@@ -368,39 +356,10 @@ $(".deletebtn").click(function (event) {
             type: 'DELETE',
             url: base_url + "/case/" + recordId,
             data: {},
-            beforeSend: function () {
-                ajaxLoader();
-            },
-            xhr: function () {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
-            },
-            success: function (data) {
-                $('#loader').fadeOut();
-                if (data) {
-                    if (data.done == true) {
-                        $(".pop2").addClass("d-none");
-                        toastr.success('Success Message', data.msg, {timeOut: 2000});
-                        setTimeout(function () {
-                            location.reload(true)
-                        }, 1000);
-                    } else {
-                        toastr.error(data.msg, '', {timeOut: 2000});
-                    }
-                } else {
-                    toastr.error('some error', 'Error');
-                }
-
+            beforeSend: function(){
+                ajaxLoadercount();
             },
             error: function (data) {
-                $('#loader').fadeOut();
                 toastr.error('Something Went Wrong', 'Error');
             }
         });
@@ -468,7 +427,7 @@ function preViewImage(input) {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
+
             var id = data['data']['id']
             toastr.success('Success Message', 'File Uploaded Successfully', {timeOut: 2000});
             var attachment_ids_field = $('#attachment_ids');
@@ -549,7 +508,6 @@ function preViewImage2(input) {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
             $.each(data['data'], function (key, value) {
                 Attachment_Ids.push(value.id);
             });
@@ -622,7 +580,7 @@ function preViewImage3(input) {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
+
             var id = data['data']['id']
             toastr.success('Success Message', 'Picture Uploaded Successfully', {timeOut: 2000});
             var attachment_ids_field = $('#attachment_ids');
@@ -727,7 +685,6 @@ function jawImageAJAX(formData, id = '') {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
             $.each(data['data'], function (key, value) {
                 Attachment_Ids.push(value.id);
             });
@@ -811,7 +768,7 @@ $(document).on('click', '#pay_now_invoice', function (e) {
         },
         success: function (data) {
             if (data.data = 'success') {
-                $('#loader').fadeOut();
+
                 toastr.success('Invoice Added Successfully', '', {timeOut: 2000});
                 // $('.pop1').addClass('d-none');
                 $('.pop1').fadeOut('slow');
@@ -821,7 +778,7 @@ $(document).on('click', '#pay_now_invoice', function (e) {
                     location.reload(true)
                 }, 1000);
             } else {
-                $('#loader').fadeOut();
+
                 toastr.error('Something Went Wrong, Try Again', '', {timeOut: 2000});
             }
         },
@@ -1046,7 +1003,7 @@ $(".remove_image").click(function () {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
                 if (data.done == true) {
                     toastr.success(data.message, '', {timeOut: 2000});
                 } else {

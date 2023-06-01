@@ -1668,7 +1668,7 @@
                                                     $('.pop1').addClass('d-none');
                                                     $('#payment').removeClass('d-none');
                                                     //  $('#order_payment').val(data.case.processing_fee_amount);
-                                                    $('#loader').fadeOut();
+
                                                     toastr.success('Payment Successfull', '', {
                                                         timeOut: 2000
                                                     });
@@ -1676,7 +1676,7 @@
                                                         location.reload(true)
                                                     }, 1000);
                                                 } else {
-                                                    $('#loader').fadeOut();
+
                                                     toastr.error('Something Went Wrong, Try Again', '', {
                                                         timeOut: 2000
                                                     });
@@ -1731,7 +1731,7 @@
                                                     $('.pop1').addClass('d-none');
                                                     $('#payment').removeClass('d-none');
                                                     //  $('#order_payment').val(data.case.processing_fee_amount);
-                                                    $('#loader').fadeOut();
+
                                                     toastr.success('Payment Successfull', '', {
                                                         timeOut: 2000
                                                     });
@@ -1739,7 +1739,7 @@
                                                         location.reload(true)
                                                     }, 1000);
                                                 } else {
-                                                    $('#loader').fadeOut();
+
                                                     toastr.error('Something Went Wrong, Try Again', '', {
                                                         timeOut: 2000
                                                     });
@@ -1787,7 +1787,7 @@
                                             },
                                             success: function (data) {
                                                 if (data.success == 'Payment') {
-                                                    $('#loader').fadeOut();
+
                                                     toastr.success('Payment Added Successfully', '', {
                                                         timeOut: 2000
                                                     });
@@ -1843,7 +1843,7 @@
                                                     $('.pop1').addClass('d-none');
                                                     $('#payment').removeClass('d-none');
                                                     //  $('#order_payment').val(data.case.processing_fee_amount);
-                                                    $('#loader').fadeOut();
+
                                                     toastr.success('Payment Successfull', '', {
                                                         timeOut: 2000
                                                     });
@@ -1896,7 +1896,7 @@
                                                     $('.pop1').addClass('d-none');
                                                     $('#payment').removeClass('d-none');
                                                     //  $('#order_payment').val(data.case.processing_fee_amount);
-                                                    $('#loader').fadeOut();
+
                                                     toastr.success('Payment Successfull', '', {
                                                         timeOut: 2000
                                                     });
@@ -2035,7 +2035,7 @@
                             },
                             success: function (data) {
                                 if (data.success == 'Payment') {
-                                    $('#loader').fadeOut();
+
                                     toastr.success('Invoice Added Successfully', '', {
                                         timeOut: 2000
                                     });
@@ -2046,7 +2046,7 @@
                                         location.reload(true)
                                     }, 1000);
                                 } else {
-                                    $('#loader').fadeOut();
+
                                     toastr.error('Something Went Wrong, Try Again', '', {
                                         timeOut: 2000
                                     });
@@ -2090,7 +2090,7 @@
                             },
                             success: function (data) {
                                 if (data.success == 'Payment') {
-                                    $('#loader').fadeOut();
+
                                     toastr.success('Invoice Added Successfully', '', {
                                         timeOut: 2000
                                     });
@@ -2140,7 +2140,6 @@
                             },
                             success: function (data) {
                                 if (data.data = 'success') {
-                                    $('#loader').fadeOut();
                                     toastr.success('Invoice Added Successfully', '', {
                                         timeOut: 2000
                                     });
@@ -2151,7 +2150,6 @@
                                         location.reload(true)
                                     }, 1000);
                                 } else {
-                                    $('#loader').fadeOut();
                                     toastr.error('Something Went Wrong, Try Again', '', {
                                         timeOut: 2000
                                     });
@@ -2190,7 +2188,6 @@
                             },
                             success: function (data) {
                                 if (data.data = 'success') {
-                                    $('#loader').fadeOut();
                                     toastr.success('Invoice Added Successfully', '', {
                                         timeOut: 2000
                                     });
@@ -2201,7 +2198,6 @@
                                         location.reload(true)
                                     }, 1000);
                                 } else {
-                                    $('#loader').fadeOut();
                                     toastr.error('Something Went Wrong, Try Again', '', {
                                         timeOut: 2000
                                     });
@@ -2260,7 +2256,6 @@
                                 return xhr;
                             },
                             success: function (responseCollection) {
-                                $('#loader').fadeOut();
                                 console.log(responseCollection);
                                 var currency = responseCollection['settings'].currency;
                                 var aligner_kit_price = responseCollection['settings'].aligner_kit_price;
@@ -2318,7 +2313,7 @@
                                 return xhr;
                             },
                             success: function (responseCollection) {
-                                $('#loader').fadeOut();
+
                                 console.log(responseCollection);
                                 var currency = responseCollection['settings'].currency;
                                 var aligner_kit_price = responseCollection['settings'].aligner_kit_price;
@@ -2376,7 +2371,7 @@
                                 return xhr;
                             },
                             success: function (responseCollection) {
-                                $('#loader').fadeOut();
+
                                 console.log(responseCollection);
                                 var currency = responseCollection['settings'].currency;
                                 var aligner_kit_price = responseCollection['settings'].aligner_kit_price;
@@ -2435,7 +2430,6 @@
                                 return xhr;
                             },
                             success: function (responseCollection) {
-                                $('#loader').fadeOut();
                                 console.log(responseCollection);
                                 var currency = responseCollection['settings'].currency;
                                 var aligner_kit_price = responseCollection['settings'].aligner_kit_price;
@@ -2497,7 +2491,7 @@
                                 return xhr;
                             },
                             success: function (responseCollection) {
-                                $('#loader').fadeOut();
+
                                 console.log(responseCollection);
                                 var currency = responseCollection.setting.currency;
 
@@ -2549,7 +2543,7 @@
                                 return xhr;
                             },
                             success: function (responseCollection) {
-                                $('#loader').fadeOut();
+
                                 console.log(responseCollection);
                                 var currency = responseCollection.setting.currency;
 
@@ -2713,7 +2707,7 @@
                                 $('#select_box').val('CANCELED');
                             }
                             //  $('shipping_charges').val('response.data.edit_values.case_id');
-                            $('#loader').fadeOut();
+
                         },
                         error: function (xhr, status, error) {
                             // Handle errors
@@ -2762,7 +2756,7 @@
                             return xhr;
                         },
                         success: function (responseCollection) {
-                            $('#loader').fadeOut();
+
                             console.log(responseCollection);
                             toastr.success('Advice Added Successfully', '', {
                                 timeOut: 2000
@@ -2865,6 +2859,20 @@
                         data: {
                             '_token': "{{ csrf_token() }}",
                             'case_id': "{{ $edit_values->id }}"
+                        },
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
                         },
                         success: function (responseCollection) {
                             $('#loader').fadeOut();

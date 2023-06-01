@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class SettingController extends Controller
 {
     public function index_old(){
-         
+
          try{
             $edit_values = Setting::first();
             return view('originator.container.setting.setting-form', compact('edit_values'));
@@ -23,11 +23,11 @@ class SettingController extends Controller
     }
 
  public function index(){
-      
+
          try{
             $setting = Setting::all();
             $currency=Currency::all();
-            // dd($edit_values);
+//             dd($currency);
             return view('originator.container.setting.setting-form-new', compact('setting','currency'));
          }catch(Exception $e){
             return redirect()->back()->withErrors($e->getMessage());
@@ -83,11 +83,11 @@ class SettingController extends Controller
            }
              $currency->currency=$name;
              $currency=$currency->save();
-        }    
+        }
         if($currency){
-            return response()->json(['message' =>'success','name'=>$name,'id',$request->currency_id]); 
+            return response()->json(['message' =>'success','name'=>$name,'id',$request->currency_id]);
         }else{
-            return response()->json(['message'=>'error']); 
+            return response()->json(['message'=>'error']);
         }
      }
 
@@ -141,7 +141,7 @@ class SettingController extends Controller
             $inputs['home_impression_kit_enabled'] = $request->has('home_impression_kit_enabled') ? 1 : 0;
             $inputs['home_appointment_enabled'] = $request->has('home_appointment_enabled') ? 1 : 0;
             $inputs['home_i_am_candiate_enabled'] = $request->has('home_i_am_candiate_enabled') ? 1 : 0;
-            
+
             $user = Setting::find(1);
             $user->update($inputs);
 
