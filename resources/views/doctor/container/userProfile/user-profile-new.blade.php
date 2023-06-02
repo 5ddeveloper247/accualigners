@@ -98,7 +98,7 @@
                                 <div class="col-xl-6 col ">
                                     <p class="tee mt-4" style="font-weight: bold;">Gender
                                     </p>
-                                    <select class="form-control" name="gender" id="gender" readonly>
+                                    <select class="form-control" name="gender" id="gender" disabled>
                                         <option value="MALE" {{ $doctor->gender === "MALE" ? 'selected' : ''
                                                     }}>Male
                                         </option>
@@ -110,7 +110,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-xl-2 col mb-30 pendo pendo_new">
+                                <div class="col-xl-2 col mb-30 pendo pendo_new1">
                                     <img src="{{ asset('vendors/images/pen.png') }}">
                                 </div>
                             </div>
@@ -320,6 +320,17 @@
                         input.prop('readonly', false)
                     } else {
                         input.prop('readonly', true);
+                    }
+
+                });
+                $('.pendo_new1').on('click', function (e) {
+                    e.preventDefault();
+                    var input = $(this).prev('div').find('>:eq(1)');
+
+                    if (input.prop('disabled')) {
+                        input.prop('disabled', false)
+                    } else {
+                        input.prop('disabled', true);
                     }
 
                 });

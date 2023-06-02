@@ -115,24 +115,10 @@ function editFunction(id = '') {
         type: 'GET',
         url: base_url + "/doctor/" + id + "/edit",
         data: {},
-        beforeSend: function () {
-            ajaxLoader();
-
-        },
-        xhr: function() {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
-            }, false);
-            return xhr;
+        beforeSend: function(){
+            ajaxLoadercount();
         },
         success: function (data) {
-            $('#loader').fadeOut();
-
             if (data) {
                 $("#txtname").val(data['edit_values']['name']);
                 $("#txtemail").val(data['edit_values']['email']);

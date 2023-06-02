@@ -28,7 +28,7 @@ $("#frmclinic").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -74,7 +74,7 @@ $("#frmclinic").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -129,7 +129,7 @@ $("#frmdoctor").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -174,7 +174,7 @@ $("#frmdoctor").submit(function (event) {
                 return xhr;
             },
             success: function (data) {
-                $('#loader').fadeOut();
+
 
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});
@@ -214,27 +214,14 @@ function editFunction(id = '') {
 
     } else {
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: base_url + "/edit_clinic/" + id,
             data: {},
-            beforeSend: function () {
-                ajaxLoader();
-            },
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
+            beforeSend: function(){
+                ajaxLoadercount();
             },
             success: function (data) {
                 if (data) {
-                    $('#loader').fadeOut();
-
                     getSpecificClinic(data);
                     $('.pop1').fadeIn('slow');
                     // $('.pop1').removeClass('d-none');
@@ -276,7 +263,7 @@ function showDoctors(ClinicDocid, Clinicid) {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
+
 
             $('.pop1').fadeIn('slow');
             // $('.pop1').removeClass('d-none');
@@ -338,19 +325,9 @@ $(".deletebtn").click(function (event) {
             url: base_url + "/clinic/" + recordId,
             data: {},
             beforeSend: function () {
-                ajaxLoader();
+                ajaxLoadercount();
             },
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-                        ajaxLoaderprograss(percentComplete);
-                    }
-                }, false);
-                return xhr;
-            },
+
             success: function (data) {
                 $('#loader').fadeOut();
 
@@ -399,7 +376,7 @@ function deleteClinicDoctor(id) {
             return xhr;
         },
         success: function (data) {
-            $('#loader').fadeOut();
+
             if (data) {
                 if (data.done == true) {
                     toastr.success(data.msg, '', {timeOut: 2000});

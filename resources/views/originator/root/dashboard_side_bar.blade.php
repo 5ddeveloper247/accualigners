@@ -145,7 +145,6 @@
                     clearInterval(interval);
                     setTimeout(function () {
                         $('#loader').fadeOut();
-                        console.log(percent);
                     }, 500)
                 }
             }, 30);
@@ -166,7 +165,6 @@
                 if (percent >= 100) {
                     setTimeout(function () {
                         $('#loader').fadeOut();
-                        console.log(percent);
                     }, 250)
                 }
             },250);
@@ -189,7 +187,6 @@
                     clearInterval(interval);
                     setTimeout(function () {
                         $('#loader').fadeOut();
-                        console.log(percent);
                     }, 500)
                 }
             }, 100);
@@ -349,7 +346,7 @@
         <div>
             <img
                 src="{{ Auth()->user()->picture == null ? asset('vendors/images/roundimg.png') : Auth()->user()->picture }}"
-                style="width:45px;height:45px;margin-left:12px  !important; margin-right:12px  !important;margin-top: 8px  !important;border-radius:50%;">
+                style="border:2px solid #202342;width:45px;height:45px;margin-left:12px  !important; margin-right:12px  !important;margin-top: 8px  !important;border-radius:50%;">
 
         </div>
         <div class="user-notification">
