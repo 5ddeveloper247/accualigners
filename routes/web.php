@@ -76,12 +76,12 @@ Route::group(['middleware' => 'guest'], function () {
     Route::view('/signup', 'originator.container.auth.signup')->name('signup');
     // Route::view('/signup1', 'originator.container.auth.signupprev')->name('signup1');
     Route::post('/sign-up', [AuthController::class, 'signUpPost'])->name('signUpPost');
-    
-    
+
+
     Route::get('get-state-by-country', [GeographyController::class, 'getStateByCountry'])->name('get-state-by-country');
     Route::get('get-city-by-state', [GeographyController::class, 'getCityByState'])->name('get-city-by-state');
     Route::get('get-shipping-by-city', [GeographyController::class, 'getShippingByCity'])->name('get-shipping-by-city');
-    
+
 });
 //// Auth Routes
 
@@ -102,7 +102,7 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
       Route::post('/add_additional', [SettingController::class,'add_additional'])->name('add_additional2');
       Route::post('/delete', [SettingController::class,'delete'])->name('delete2');
 
-      
+
         Route::group(['prefix' => 'geography'], function () {
             Route::get('get-state-by-country', [GeographyController::class, 'getStateByCountry'])->name('get-state-by-country');
             Route::get('get-city-by-state', [GeographyController::class, 'getCityByState'])->name('get-city-by-state');
@@ -123,7 +123,7 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
         Route::get('clinicnew', [ClinicController::class,'new_index'])->name('clinicnew');
         Route::get('/fetch_countries', [ClinicController::class,'new_create'])->name('fetch_countries');
         Route::post('/add_clinic', [ClinicController::class,'new_store'])->name('add_clinic');
-        Route::post('/edit_clinic/{id}', [ClinicController::class,'new_edit'])->name('edit_clinic');
+        Route::get('/edit_clinic/{id}', [ClinicController::class,'new_edit'])->name('edit_clinic');
         Route::post('update_new_clinic', [ClinicController::class,'update_new'])->name('update_new_clinic');
 
         /*_______help & Support______*/
@@ -135,7 +135,7 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
         // return View("originator.container.helpSupport.support");
 
         Route::resource('doctor', DoctorController::class);
-    
+
          //new route
          Route::post('update_new_doctor', [DoctorController::class,'update_new'])->name('update_new_doctor');
 
@@ -153,7 +153,7 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
             'index', 'edit', 'destroy', 'create', 'store'
         ]);
 
-         /* new appointment */ 
+         /* new appointment */
          Route::get('appointment_new', [AppointmentController::class,'index_new'])->name('appointment.new');
          Route::post('/appointment_get', [AppointmentController::class,'appointment_get'])->name('appointment.get');
          Route::post('/appointment_add', [AppointmentController::class,'appointment_add'])->name('appointment.add');
@@ -180,7 +180,7 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
 
          Route::resource('case', CaseController::class);
 
-         /* new route */ 
+         /* new route */
          Route::get('/case_new', [CaseController::class, 'index_new'])->name('case.new');
          Route::get('/case_view/{id}', [CaseController::class, 'case_view'])->name('case.view');
         //  Route::get('/index_new', [PaymentController::class,'new_index'])->name('index_new');
@@ -205,13 +205,13 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
          Route::post('case/upload-video', [CaseController::class, 'uploadVideo'])->name('case.upload-video');
          Route::post('case/delete-video', [CaseController::class, 'deleteVideo'])->name('case.delete-video');
          Route::post('case/embedded-video', [CaseController::class, 'embeddedVideo'])->name('case.embedded-video');
-          
+
          /* new route  */
          Route::post('case/upload-attachment2', [CaseController::class, 'uploadAttachment2'])->name('case.upload-attachment2');
          Route::post('case/upload-attachments2', [CaseController::class, 'uploadAttachments2'])->name('case.upload-attachments2');
          Route::post('case/upload-attachment', [CaseController::class, 'uploadAttachment'])->name('case.upload-attachment');
          Route::post('/delete_attachment', [CaseController::class, 'deleteAttachment'])->name('delete_attachment');
-        
+
          Route::post('case/upload-attachments', [CaseController::class, 'uploadAttachments'])->name('case.upload-attachments');
          Route::get('case/download-attachment/{case_id}', [CaseController::class, 'downloadAttachment'])->name('case.download-attachment');
          Route::post('case/destroy-attachment', [CaseController::class, 'destroyAttachment'])->name('case.destroy-attachment');
@@ -237,11 +237,11 @@ Route::middleware(['auth','role:receptionist'])->group(function () {
                      Route::get('get-shipping-by-city', [GeographyController::class, 'getShippingByCity'])->name('get-shipping-by-city');
     });
 
-      
+
     Route::get('account-details/{id}', [ProfileController::class, 'index'])->name('case.profile.index');
     Route::post('profile-update/{id}', [ProfileController::class, 'updateProfile']);
     Route::post('change-password/{id}', [ProfileController::class, 'chnagePassword']);
-    
+
     /// roles
     Route::resource('doctor', DoctorController::class);
     Route::get('clinic-doctors', [PatientController::class, 'clinicDoctors'])->name('get-doctor-by-clinic');
@@ -257,7 +257,7 @@ Route::middleware(['auth','role:receptionist'])->group(function () {
 });
 
 
-/// Lab technician 
+/// Lab technician
 Route::prefix('lab-technician')->name('lab-technician.')->group(function () {
 
  Route::get('clinic-doctors', [PatientController::class, 'clinicDoctors'])->name('get-doctor-by-clinic');
@@ -273,7 +273,7 @@ Route::prefix('lab-technician')->name('lab-technician.')->group(function () {
     Route::resource('order', OrderController::class)->only([
             'index', 'edit', 'update', 'destroy'
     ]);
-    
+
     Route::get('account-details/{id}', [ProfileController::class, 'index'])->name('case.profile.index');
     Route::post('profile-update/{id}', [ProfileController::class, 'updateProfile']);
     Route::post('change-password/{id}', [ProfileController::class, 'chnagePassword']);
@@ -284,7 +284,7 @@ Route::prefix('lab-technician')->name('lab-technician.')->group(function () {
 Route::prefix(trans('siteConfig.subDomain.web.doctor'))->name('doctor.')->group(function () {
 
      Route::middleware(['auth','role:doctor'])->group(function () {
-         
+
          Route::group(['prefix' => 'geography'], function () {
             Route::get('get-state-by-country', [GeographyController::class, 'getStateByCountry'])->name('get-state-by-country');
             Route::get('get-city-by-state', [GeographyController::class, 'getCityByState'])->name('get-city-by-state');
@@ -297,22 +297,22 @@ Route::prefix(trans('siteConfig.subDomain.web.doctor'))->name('doctor.')->group(
          Route::get('/save_agreement', [DoctorDashbordController::class, 'save_agreement'])->name('save_agreement');
 
          Route::get('case/download-attachment/{case_id}', [CaseController::class, 'downloadAttachment'])->name('case.download-attachment');
-         
+
          Route::resource('case', DoctorCaseController::class);
 
           Route::post('case/store/new', [DoctorCaseController::class, 'case_store'])->name('case.store.new');
          /* new route */
-         
+
          Route::post('/delete_attachment', [DoctorCaseController::class, 'deleteAttachment'])->name('delete_attachment');
          Route::get('/case_detail/{id}', [DoctorCaseController::class, 'show_new'])->name('case.detail');
          Route::get('case/new/', [DoctorCaseController::class, 'index_new'])->name('case.new');
          Route::post('update_new_case', [DoctorCaseController::class,'update_new'])->name('update_new_case');
-          
+
          Route::get('account-details/{id}', [ProfileController::class, 'index'])->name('case.profile.index');
             /* new route */
          Route::get('account-details-new/{id}', [ProfileController::class, 'index_new'])->name('case.profile.index.new');
 
-         
+
          Route::post('profile-update', [ProfileController::class, 'updateProfile'])->name('profile-update');
          Route::post('change-password/{id}', [ProfileController::class, 'chnagePassword']);
 
@@ -323,9 +323,9 @@ Route::prefix(trans('siteConfig.subDomain.web.doctor'))->name('doctor.')->group(
 
          /* NEw Route  */
          Route::post('case/payment/index_new', [PaymentController::class, 'index_new'])->name('case.payment.store.new');
-         
+
          Route::get('/order_edit/{id}', [OrderController::class, 'order_edit'])->name('order.edit.new');
-         
+
          Route::post('case/payment/store', [PaymentController::class, 'store_new'])->name('case.payment.store');
 
          /*________digital scan_________*/
@@ -338,19 +338,19 @@ Route::prefix(trans('siteConfig.subDomain.web.doctor'))->name('doctor.')->group(
          Route::resource('case.payment', PaymentController::class);
 
          Route::post('case/missing-tray-update', [DoctorCaseController::class, 'missingTrayUpdate'])->name('case.missing-tray-update');
-        
+
                   /// missing-tray new
          Route::get('case/order-missing-tray/{case}', [OrderAlignerController::class, 'missingTrayIndex'])->name('case.order-missing-tray.index');
          Route::post('case/order-missing-tray/stripe-store', [OrderAlignerController::class, 'missingTrayStoreStripe'])->name('case.order-missing-tray.storeStripe');
          Route::post('case/order-missing-tray/invoice-store', [OrderAlignerController::class, 'missingTrayStoreInvoice'])->name('case.order-missing-tray.storeInvoice');
-        
+
          /*  New msiing tray */
          Route::post('case/order-missing-tray/new', [OrderAlignerController::class, 'missingTrayIndex_new'])->name('case.order-missing-tray.index.new');
          Route::post('case/order-missing-tray/stripe-store_new', [OrderAlignerController::class, 'missingTrayStoreStripe_new'])->name('case.order-missing-tray.storeStripe_new');
          Route::post('case/order-missing-tray/invoice-store-new', [OrderAlignerController::class, 'missingTrayStoreInvoice_new'])->name('case.order-missing-tray.storeInvoice.new');
 
          Route::post('case/order-aligner/invoice-store', [OrderAlignerController::class, 'storeInvoice'])->name('case.order-aligner.storeInvoice');
-         
+
          Route::resource('case.order-aligner', OrderAlignerController::class);
 
           /* new Route */
@@ -361,7 +361,7 @@ Route::prefix(trans('siteConfig.subDomain.web.doctor'))->name('doctor.')->group(
          Route::get('get-shipping-detail', [OrderAlignerController::class, 'getShippingDetail'])->name('get-shipping-detail');
          Route::get('case/order-aligner/second-installment/{case}', [OrderAlignerController::class, 'indexSecondInstallment'])->name('case.order-aligner.indexSecondInstallment');
          Route::post('case/order-aligner/second-installment/{case}', [OrderAlignerController::class, 'storeSecondInstallment'])->name('case.order-aligner.storeSecondInstallment');
-         
+
          /* new route */
          Route::post('case/order-aligner/invoice-store/second-installment_new', [OrderAlignerController::class, 'storeSecondInstallment_new'])->name('case.order-aligner.storeInvoiceSecondInstallment.new');
          Route::post('case/order-aligner/second-installment_new', [OrderAlignerController::class, 'indexSecondInstallment_new'])->name('case.order-aligner.indexSecondInstallment.new');
