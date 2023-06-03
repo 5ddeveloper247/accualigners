@@ -534,6 +534,8 @@
             $('#conidion' + x).prop('disabled', false);
         }
         $('#name , #phone_no , #email , #address , #dob').removeAttr('readonly');
+        $('#additional_comment')
+            .prop('disabled', false);
         $('.disable_input , #arch_to_treat , #a_p_relationship , #overjet , #overbite , #midline , #clinical_comment , #prescription_comment')
             .prop('disabled', false);
         $('.add_image , .remove_image').show();

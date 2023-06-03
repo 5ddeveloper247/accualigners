@@ -27,12 +27,11 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         $user =  Auth::user();
-
         return [
 
             'name' => 'required|min:3|max:100',
 //            'gender' => 'required',
-            'phone' => 'required|min:10|max:20',
+            'phone' => 'required|numeric|min:11',
             'email' => 'required|email|max:100|unique:users,email,' . ($user ? $user->id : ''),
             'current_password' => [
                 function ($attribute, $value, $fail) use ($user) {

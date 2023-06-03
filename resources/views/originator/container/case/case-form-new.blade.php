@@ -295,7 +295,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="boxdozama2 mt-3 text-right">
-                            @if ($edit_values->digital_scan_fee)
+                            @if ($edit_values->processing_fee_payment_at)
                                 <p style="font-size:13px;color:grey;" class="d-inline">{{date('h:i a',
                                                                 strtotime($edit_values->processing_fee_payment_at))}} | {{date('d M Y',
                                                                 strtotime($edit_values->processing_fee_payment_at))}}
@@ -427,9 +427,9 @@
                             </div>
                             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                                 <button class="btn btn-primary float-right" style="background:#00205C;border-radius: 20px;color:white;cursor:pointer;"
-                                     data-toggle="modal" data-target="#video_modal2">Add Link</button>
+                                     data-toggle="modal" data-target="#video_modal">Add Link</button>
                                 <button class="btn float-right mx-2" style="border-radius: 20px;border:1px solid grey" data-toggle="modal"
-                                data-target="#video_modal">Add Video</button>
+                                data-target="#video_modal2">Add Video</button>
                                 {{-- <div class="float-right">
                                     <a class="px-3" style="padding:2% 2%; cursor:pointer;" data-toggle="modal"
                                     data-target="#video_modal">Add Link</a>
@@ -1154,757 +1154,7 @@
                 </div>
             @endif
 
-            <script>
-                // var case_id=
-                var base_url = "{{url('admin/')}}";
-                $("body").on("click", "#no_of_days_button", function () {
-                    var no_of_days = $("#no_of_days").val();
-                    var no_of_trays = $('#no_of_trays').val();
-                    if (no_of_days == "") {
-                        toastr.error(`Some values are required for updating`, 'Error');
-                    } else if (no_of_days < 0 || no_of_days > 24) {
-                        toastr.error(`No of hours should be between 0 to 24`, 'Error');
-                    } else {
-                        var data = {
-                            _token: '{{csrf_token()}}'
-                            , case_id: "{{$edit_values->id}}"
-                            , no_of_days: no_of_days
-                            , no_of_trays: no_of_trays
-                        }
-                        $.ajax({
-                            url: '{{route("admin.case.no-of-days-update")}}'
-                            , type: "POST"
-                            , dataType: 'json'
-                            , data: data,
-                            beforeSend: function () {
-                            ajaxLoader();
-                            },
-                            xhr: function () {
-                                var xhr = new window.XMLHttpRequest();
-                                xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                            console.log(evt)
-                                            var percentComplete = evt.loaded / evt.total;
-                                            percentComplete = parseInt(percentComplete * 100);
-                                            ajaxLoaderprograss(percentComplete);
-                                        }
-                                }, false);
-                                return xhr;
-                            },
 
-                             success: function (responseCollection) {
-                                toastr.success('Updated successfully', '', {
-                                    timeOut: 2000
-                                });
-                                // toastr.success('Updated successfully', "Success!", {
-                                //     positionClass: "toast-bottom-left",
-                                //     containerId: "toast-bottom-left"
-                                // });
-                                // $("#no_of_days").val(' ');
-                                // $('#no_of_trays').val(' ');
-
-
-
-                            }
-                            , error: function (e) {
-                                $('#loader').fadeOut();
-                                var responseCollection = e.responseJSON;
-                                console.log(e);
-                                toastr.error(responseCollection['message'], '', {
-                                    timeOut: 2000
-                                });
-                                // $("#no_of_days").val(' ');
-                                // $('#no_of_trays').val(' ');
-                                // toastr.error(responseCollection['message'], "Error!", {
-                                //     positionClass: "toast-bottom-left",
-                                //     containerId: "toast-bottom-left"
-                                // });
-
-                            }
-                        }); //end of ajax
-                    }
-                });
-
-                function preViewImage(input) {
-                    //getting values in variables
-                    var file = input.files[0];
-                    var sort = $(input).data('sort');
-                    var type = $(input).data('type');
-                    //appending form
-                    var form = $('#upload-attachment-form');
-                    formData = new FormData(form[0]);
-                    // formData= new FormData();
-                    formData.append("_token", '{{csrf_token()}}');
-                    formData.append("case_id", '{{$edit_values->id}}');
-                    // formData.append("attachment", file);
-                    formData.append("sort_order", sort);
-                    formData.append("attachment_type", type);
-
-                    //preview image on front
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        var output = document.getElementById('IMAGE_1');
-                        output.src = reader.result;
-                    };
-                    reader.readAsDataURL(event.target.files[0]);
-
-                    $.ajax({
-                        type: "POST"
-                        , url: '{{route("admin.case.upload-attachments")}}'
-                        , data: formData
-                        , processData: false
-                        , contentType: false,
-                        beforeSend: function () {
-                         ajaxLoader();
-                        },
-                        xhr: function () {
-                            var xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
-                            }, false);
-                            return xhr;
-                        },
-
-
-                         success: function (responseCollection) {
-
-                            // var id = data['data']['id']
-
-
-                            toastr.success(responseCollection['message'], 'Picture Uploaded Successfully', {
-                                timeOut: 2000
-                            });
-                            // var attachment_ids_field = $('#attachment_ids');
-                            // var attachment_ids = attachment_ids_field.val();
-                            // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
-                        }
-                        , error: function (message, error) {
-                            $('#loader').fadeOut();
-
-                            toastr.error('Error Message', error, {
-                                timeOut: 3000
-                            });
-
-                        }
-                    });
-                }
-
-                function addvideolink() {
-                    // var inputs = $("#video_link").val();
-                    //  var video_embedded = [];
-                    //  for(var i = 0; i < inputs.length; i++){
-                    //     video_embedded.push($(inputs[i]).val());
-                    //  }
-                    var inputs = $(".video_link");
-                    if (inputs == "") {
-                        $('#error').text(' ');
-                        $('#error').text('Please Paste the link to proceed');
-                        $('#error').show();
-                        return;
-                    }
-                    var check = true;
-                    $('.video_link').each(function () {
-                        var inputValue = $(this).val();
-                        if (inputValue.startsWith("https://") || inputValue.startsWith("http://")) {
-                        } else {
-                            check = false;
-                            return;
-                        }
-                    });
-
-                    if (check == false) {
-                        $('#success').hide();
-                        $('#error').text(' ');
-                        $('#error').text('Please enter valid Link');
-                        $('#error').show();
-                        return;
-                    }
-                    var input = [];
-                    for (var i = 0; i < inputs.length; i++) {
-                        input.push($(inputs[i]).val());
-                    }
-                    if (inputs == "") {
-                        $('#error').text(' ');
-                        $('#error').text('Please Paste the link to proceed');
-                        $('#error').show();
-                        return;
-                    } else {
-                        var data = {
-                            _token: '{{csrf_token()}}'
-                            , case_id: "{{$edit_values->id}}"
-                            , video_embedded: input
-                        }
-
-                        $.ajax({
-                            url: "{{route('admin.case.embedded-video')}}"
-                            , type: "POST"
-                            , dataType: 'json'
-                            , data: data,
-                            beforeSend: function () {
-                            ajaxLoader();
-                        },
-                            xhr: function () {
-                                var xhr = new window.XMLHttpRequest();
-                                xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                            console.log(evt)
-                                            var percentComplete = evt.loaded / evt.total;
-                                            percentComplete = parseInt(percentComplete * 100);
-                                            ajaxLoaderprograss(percentComplete);
-                                        }
-                                }, false);
-                                return xhr;
-                            },
-
-                             success: function (response) {
-                                if (response.message == 'success') {
-                                    $('#error').hide();
-                                    $('#success').text('link successfully Added');
-                                    $('#success').show();
-                                    $("#video_link").val(' ');
-                                } else {
-                                    $('#success').hide();
-                                    $('#error').text(' ');
-                                    $('#error').text('Something Went Wrong, Try again');
-                                    $('#error').show();
-                                    $("#video_link").val(' ');
-                                }
-                                // toastr.success('Updated successfully', "Success!", {
-                                //     positionClass: "toast-bottom-left",
-                                //     containerId: "toast-bottom-left"
-                                // });
-
-                                setTimeout(function () {
-                                    location.reload(true)
-                                }, 1000);
-
-                            }
-                            , error: function (e) {
-                                // var responseCollection = e.responseJSON;
-                                console.log(e);
-                                $('#success').hide();
-                                $('#error').text(' ');
-                                $('#error').text('Something Went Wrong, Try again');
-                                $('#error').show();
-                                $("#video_link").val(' ');
-                                // toastr.error(responseCollection['message'], "Error!", {
-                                //     positionClass: "toast-bottom-left",
-                                //     containerId: "toast-bottom-left"
-                                // });
-                                $('#loader').fadeOut();
-
-                            }
-                        }); //end of ajax
-                    }
-                }
-
-                function onClose() {
-                    $('#success').text(' ');
-                    $('#success').hide();
-                    $('#error').text(' ');
-                    $('#error').hide();
-                    $('#success2').text(' ');
-                    $('#success2').hide();
-                    $('#error2').text(' ');
-                    $('#error2').hide();
-                    $("#video").val('');
-
-                }
-
-                function uploadvideo() {
-
-                    $('#success2').hide();
-                    $('#error2').text(' ');
-                    $('#error2').text('Somthing Wnet Wrong, Try again');
-                    $('#error2').hide();
-                    var file = $('#video_upload').get(0).files[0];
-                    if (file) {
-                        var fileType = file.type;
-                        if (fileType.indexOf('video') !== -1) {
-                            //   console.log('Video uploaded:', file.name);
-                            //   formData = new FormData(form[0]);
-                            formData = new FormData();
-                            formData.append("_token", '{{csrf_token()}}');
-                            formData.append("case_id", '{{$edit_values->id}}');
-                            formData.append('file', file);
-
-                            $.ajax({
-                                type: "POST"
-                                , url: '{{route("admin.case.upload-video")}}'
-                                , data: formData
-                                , processData: false
-                                , contentType: false,
-                                beforeSend: function () {
-                                ajaxLoader();
-                                },
-                                    xhr: function () {
-                                        var xhr = new window.XMLHttpRequest();
-                                        xhr.upload.addEventListener("progress", function (evt) {
-                                                if (evt.lengthComputable) {
-                                                    console.log(evt)
-                                                    var percentComplete = evt.loaded / evt.total;
-                                                    percentComplete = parseInt(percentComplete * 100);
-                                                    ajaxLoaderprograss(percentComplete);
-                                                }
-                                        }, false);
-                                        return xhr;
-                                    },
-
-                                 success: function (message) {
-                                    $('#success2').text('Video Uploaded Successfully');
-                                    $('#success2').show();
-                                    $("#video").val('');
-                                    $('#error2').text('');
-                                    $('#error2').hide();
-                                    setTimeout(function () {
-                                        location.reload(true)
-                                    }, 1000);
-                                }
-                                , error: function (message) {
-                                    console.log(message.errors);
-                                    // console.log(responseCollection);
-                                    $('#success2').hide();
-                                    $('#error2').text('');
-                                    $('#error2').text('Something Went wrong,Please check file types Gif,Mp4 ');
-                                    $('#error2').show();
-                                    $("#video2").val('');
-                                    $('#loader').fadeOut();
-
-                                    //  toastr.error('Error Message',error, {timeOut: 3000});
-                                }
-                            });
-
-                        } else if (fileType.indexOf('image') !== -1) {
-                            //   console.log('Image uploaded:', file.name);
-                            $('#success2').hide();
-                            $('#error2').text(' ');
-                            $('#error2').text('Please Uploda Video to Proceed');
-                            $('#error2').show();
-                            $("#video2").val(' ');
-                        }
-                    } else {
-                        $('#success2').hide();
-                        $('#error2').text(' ');
-                        $('#error2').text('Please Upload a video');
-                        $('#error2').show();
-                    }
-
-                }
-
-                //  Deleting video ajax
-                $("body").on("click", "#delete_video", function () {
-
-                    var val = $(this).val();
-
-                    var data = {
-                        _token: '{{csrf_token()}}'
-                        , case_id: "{{$edit_values->id}}"
-                        ,
-                    }
-
-                    $.ajax({
-                        url: '{{route("admin.case.delete-video")}}'
-                        , type: "POST"
-                        , dataType: 'json'
-                        , data: data,
-                        beforeSend: function () {
-                            ajaxLoader();
-                                    },
-                        xhr: function () {
-                            var xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
-                            }, false);
-                            return xhr;
-                        },
-
-                         success: function (responseCollection) {
-
-                            toastr.success(responseCollection['message'], 'Video Removed Successfully', {
-                                timeOut: 2000
-                            });
-                            setTimeout(location.reload.bind(location), 500);
-                            $('#loader').fadeOut();
-
-                        }
-                        , error: function (e) {
-                            var responseCollection = e.responseJSON;
-                            toastr.error(responseCollection['message'], 'Error', {
-                                timeOut: 2000
-                            });
-                            $('#loader').fadeOut();
-
-                        }
-                    }); //end of ajax
-
-
-                });
-
-                function view(id) {
-                    $('#order_id').val(' ');
-                    $('#order_id').val(id);
-                    var id_int = (parseInt(id));
-                    //   alert(id_int);
-                    $('#order_details').removeClass('d-none');
-                    $.ajax({
-                        url: base_url + '/order_edit/' + id_int
-                        , method: "GET",
-                        // data: json,
-
-                        beforeSend: function(){
-                                    ajaxLoadercount();
-                                },
-                        success: function (response) {
-                            // Handle successful response
-                            console.log(response.data.edit_values.id);
-                            console.log(response.data.edit_values.created_at)
-
-
-                            $('.case_empty').text(' ');
-
-                            $('#case_id').text(response.data.edit_values.case_id);
-                            $('#order_id').text(response.data.edit_values.id);
-                            if (response.data.hasOwnProperty("doctor")) {
-                                $('#dentist_name').text(response.data.doctor.name);
-                            }
-                            if (response.data.hasOwnProperty("case")) {
-                                $('#no_of_tray').text(response.data.case.no_of_trays);
-                            }
-                            $('#shipping_charges').text(response.data.edit_values.shipping_charges + '{{ $default_currency }}');
-                            //  console.log(response.data.edit_values.discount);
-                            //  if(response.data.edit_values.discount > 0){
-                            //      var unit_amount=response.data.edit_values.unit_amout;
-                            //      var string_unit=unit_amount.toString();
-                            //      var full= string_unit+'<?php echo($default_currency);  ?>';
-                            //      $('#unit_price').text(full);
-                            //  }else{
-                            //      var unit_amount=response.data.edit_values.unit_amout - (response.data.edit_values.discount/response.data.edit_values.quantity);
-                            //      $('#unit_price').text(unit_amount+'<?php echo($default_currency); ?>');
-                            //  }
-                            $('#quantity').text(response.data.edit_values.quantity);
-                            $('#shipping2').text(response.data.edit_values.shipping_charges + '<?php echo($default_currency);  ?>');
-                            $('#total_price').text(response.data.edit_values.total_amount + '<?php echo($default_currency);   ?>');
-                            $('#name').text(response.data.edit_values.name);
-                            $('#name_id').text('ID:' + response.data.edit_values.doctor_id);
-                            $('#email').text(response.data.edit_values.email);
-                            $('#phone').text(response.data.edit_values.phone_no);
-
-                            //  var formattedDate = $.datepicker.formatDate('d-m-y', date);
-                            //  var formattedTime = $.datepicker.formatTime('hh:mm:ss', {hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds()});
-                            //  var formattedDateTime = formattedDate + ' ' + formattedTime;
-                            //  console.log(formattedDateTime);
-
-                            var date = new Date(response.data.edit_values.created_at);
-                            var day = date.getDate();
-                            var month = date.getMonth() + 1;
-                            var year = date.getFullYear();
-                            var hours = date.getHours();
-                            var minutes = date.getMinutes();
-                            var seconds = date.getSeconds();
-
-                            var fulldate = day + '-' + month + '-' + year;
-                            var fullhour = '  ' + hours + ':' + minutes + ':' + seconds;
-                            console.log(response.data.edit_values.order_url);
-                            $('#date').text(fulldate + fullhour);
-                            $('#country').text(response.data.country);
-                            $('#state').text(response.data.state);
-                            $('#city').text(response.data.city);
-                            $('#address').text(response.data.edit_values.street1);
-                            $('#url').val(response.data.edit_values.order_url);
-                            //  $('#name_id').text(response.data.edit_values.email);
-                            //  $('#name_id').text(response.data.edit_values.email);
-                            if (response.data.edit_values.hasOwnProperty("patient")) {
-                                $('#img').attr('src', ' ');
-                                $('#img').attr('src', response.data.edit_values.patient.picture);
-                            }
-                            if (response.data.edit_values.status == 'PENDING') {
-                                $('#select_box').val('PENDING');
-                            } else if (response.data.edit_values.status == 'CONFIRMED') {
-                                $('#select_box').val('CONFIRMED');
-                            } else if (response.data.edit_values.status == 'DISPATCHED') {
-                                $('#select_box').val('DISPATCHED');
-                            } else if (response.data.edit_values.status == 'DELIVERED') {
-                                $('#select_box').val('DELIVERED');
-                            } else if (response.data.edit_values.status == 'CANCELED') {
-                                $('#select_box').val('CANCELED');
-                            }
-                            //  $('shipping_charges').val('response.data.edit_values.case_id');
-                            $('#loader').fadeOut();
-                        }
-                        , error: function (xhr, status, error) {
-                            // Handle errors
-                            toastr.error('Something Went Wrong, Try Again', '', {
-                                timeOut: 2000
-                            });
-                            $('#order_details').addClass('d-none');
-                            $('#loader').fadeOut();
-                        }
-                    });
-                }
-
-                $(document).on('click', '#update', function (e) {
-                    id = $('#order_id').val();
-                    status = $('#select_box').val();
-                    url = $('#url').val();
-                    $.ajax({
-                        url: base_url + '/order_update'
-                        , type: 'POST'
-                        , data: {
-                            status: status
-                            , order_url: url
-                            , id: id
-                            ,
-                        }
-                        beforeSend: function () {
-                        ajaxLoader();
-                    },
-                        xhr: function () {
-                            var xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
-                            }, false);
-                            return xhr;
-                        },
-
-                         success: function (response) {
-                            if (response.successMessage == 'success') {
-                                toastr.success('Order Updated Successfully', '', {
-                                    timeOut: 2000
-                                });
-                                setTimeout(function () {
-                                    location.reload(true)
-                                }, 1000);
-                                //  window.location.reload();
-                            } else {
-                                toastr.error('Something went wrong please try again', '', {
-                                    timeOut: 2000
-                                });
-                                setTimeout(function () {
-                                    location.reload(true)
-                                }, 1000);
-                                console.log('error');
-                            }
-                            $('#loader').fadeOut();
-                        }
-                        , error: function (xhr, status, error) {
-                            toastr.error('Something went wrong please try again', '', {
-                                timeOut: 2000
-                            });
-                            setTimeout(function () {
-                                location.reload(true)
-                            }, 1000);
-                            console.log('Request failed');
-                            $('#loader').fadeOut();
-                        }
-                    });
-                });
-                $("body").on("click", "#advice_comment_button", function () {
-
-                    var advice_comment = $("#advice_comment").val();
-
-                    var data = {
-                        _token: '{{csrf_token()}}'
-                        , case_id: "{{$edit_values->id}}"
-                        , message: advice_comment
-                    }
-
-                    $.ajax({
-                        url: '{{route("admin.case.add-advice")}}'
-                        , type: "POST"
-                        , dataType: 'json'
-                        , data: data,
-                        beforeSend: function () {
-                        ajaxLoader();
-                    },
-                        xhr: function () {
-                            var xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
-                            }, false);
-                            return xhr;
-                        },
-
-                         success: function (responseCollection) {
-
-                            console.log(responseCollection);
-                            toastr.success('Advice Added Successfully', '', {
-                                timeOut: 2000
-                            });
-
-                            //    console.log(responseCollection['data']['concern'].created_date);
-                            var currentTime = new Date();
-                            var hours = currentTime.getHours();
-                            var minutes = currentTime.getMinutes();
-                            var seconds = currentTime.getSeconds();
-                            var meridiem = "AM";
-                            if (hours > 12) {
-                                hours = hours - 12;
-                                meridiem = "PM";
-                            }
-                            // add leading zeros to minutes and seconds
-                            if (minutes < 10) {
-                                minutes = "0" + minutes;
-                            }
-                            if (seconds < 10) {
-                                seconds = "0" + seconds;
-                            }
-                            //  if(responseCollection['data']['concern'].message_by=='ADVISER')
-                            //  $html =`<div class="col-md-12 remove_ajax">
-                            //                             <div class="row mt-3">
-                            //                                 <div class="col-md-2 p-0 ">
-                            //                                 </div>
-                            //                                 <div class="col-md-9 p-0 myapp ">
-                            //                                     <div class=" text-white mx-2 p-3">
-                            //                                         <p>
-                            //                                         ${responseCollection['data']['concern'].message}
-                            //                                         </p>
-                            //                                         <span style="font-size: 13px;color: #afafaf;">
-                            //                                       ${hours+':'+minutes+' '+ meridiem}
-                            //                                     </span>
-                            //                                     </div>
-                            //                                 </div>
-                            //                                  <div class="col-md-1 p-0 ">
-                            //                                     <div class="proimgda mx-2">
-                            //                                         <img src="{{ asset('vendors/images/logo.png') }}">
-                            //                                     </div>
-                            //                                  </div>
-                            //                             </div>
-                            //                         </div>`;
-                            //          else{
-                            //             $html=`<div class="col-md-12 remove_ajax">
-                            //                             <div class="row mt-3 m-0">
-                            //                                 <div class="col-md-1 p-0 ">
-                            //                                     <div class="proimgda mx-2">
-                            //                                         <img src="{{ asset('vendors/images/profileimg.jpg') }}">
-
-                            //                                     </div>
-                            //                                 </div>
-                            //                                 <div class="col-md-9 p-0 ">
-                            //                                     <div class="textdo mx-2 p-3">
-                            //                                         <p>
-                            //                                       ${responseCollection['data']['concern'].message}
-                            //                                         </p>
-                            //                                         <span style="font-size: 13px;color: #afafaf;">
-                            //                                         ${hours+':'+minutes+' '+ meridiem}
-                            //                                         </span>
-                            //                                     </div>
-                            //                                 </div>
-                            //                             </div>
-                            //                         </div>`;
-                            //          }
-                            $("#append").prepend($html);
-                            refresh();
-                            $("#advice_comment").val('');
-
-                        }
-                        , error: function (e) {
-                            var responseCollection = e.responseJSON;
-                            console.log(e);
-                            $('#loader').fadeOut();
-
-                            toastr.error(responseCollection['message'], "Error!", {
-                                positionClass: "toast-bottom-left"
-                                , containerId: "toast-bottom-left"
-                            });
-
-                        }
-                    }); //end of ajax
-                });
-
-                function append_video() {
-                    var random_class = Math.floor(Math.random() * 1000) + 1;
-                    $('#video_append').append(`<div class="remove_${random_class}" style="display:flex;align-items:center;margin-top:10px;">
-                 <input type="text" class="form-control digital-scan link_remove video_link"  name="link[]"  aria-describedby="emailHelp" placeholder="Enter Link"><br>
-                 <i class="bi bi-dash-lg" style="cursor:pointer;" onclick="video_remove(${random_class})"></i>
-                  </div>
-                 <br>`);
-                }
-
-                function video_remove(id) {
-                    $('.remove_' + id).remove();
-                    return false;
-                }
-
-                /*__________________updating missing trays________________*/
-                $("body").on("click", "#missing_trays", function () {
-
-
-                    var data = {
-                        _token: '{{csrf_token()}}'
-                        , case_id: "{{$edit_values->id}}"
-                        , missing_trays: $("#no_of_trays").val()
-                        ,
-                    }
-
-                    $.ajax({
-                        url: '{{route("admin.case.missing_aligners")}}'
-                        , type: "POST"
-                        , dataType: 'json'
-                        , data: data
-                        beforeSend: function () {
-                        ajaxLoader();
-                        },
-                            xhr: function () {
-                                var xhr = new window.XMLHttpRequest();
-                                xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                            console.log(evt)
-                                            var percentComplete = evt.loaded / evt.total;
-                                            percentComplete = parseInt(percentComplete * 100);
-                                            ajaxLoaderprograss(percentComplete);
-                                        }
-                                }, false);
-                                return xhr;
-                            },
-
-                         success: function (data) {
-
-                            if (data.done == true) {
-                                toastr.success(data['message'], 'Success', {
-                                    timeOut: 2000
-                                });
-                            } else {
-                                toastr.error(data['message'], 'Error', {
-                                    timeOut: 2000
-                                });
-                            }
-                            $('#loader').fadeOut();
-
-                        }
-                        , error: function (e) {
-                            var data = e.responseJSON;
-                            toastr.error(data['message'], 'Error', {
-                                timeOut: 2000
-                            });
-                            $('#loader').fadeOut();
-
-                        }
-                    }); //end of ajax
-
-
-                });
-
-            </script>
             <div class="modal fade" id="video_modal" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document"
@@ -2021,6 +1271,759 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                console.log('adas');
+                // var case_id=
+                var base_url = "{{url('admin/')}}";
+                $("body").on("click", "#no_of_days_button", function () {
+                    var no_of_days = $("#no_of_days").val();
+                    var no_of_trays = $('#no_of_trays').val();
+                    if (no_of_days == "") {
+                        toastr.error(`Some values are required for updating`, 'Error');
+                    } else if (no_of_days < 0 || no_of_days > 24) {
+                        toastr.error(`No of hours should be between 0 to 24`, 'Error');
+                    } else {
+                        var data = {
+                            _token: '{{csrf_token()}}'
+                            , case_id: "{{$edit_values->id}}"
+                            , no_of_days: no_of_days
+                            , no_of_trays: no_of_trays
+                        }
+                        $.ajax({
+                            url: '{{route("admin.case.no-of-days-update")}}'
+                            , type: "POST"
+                            , dataType: 'json'
+                            , data: data,
+                            beforeSend: function () {
+                                ajaxLoader();
+                            },
+                            xhr: function () {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
+
+                            success: function (responseCollection) {
+                                toastr.success('Updated successfully', '', {
+                                    timeOut: 2000
+                                });
+                                // toastr.success('Updated successfully', "Success!", {
+                                //     positionClass: "toast-bottom-left",
+                                //     containerId: "toast-bottom-left"
+                                // });
+                                // $("#no_of_days").val(' ');
+                                // $('#no_of_trays').val(' ');
+
+
+
+                            }
+                            , error: function (e) {
+                                $('#loader').fadeOut();
+                                var responseCollection = e.responseJSON;
+                                console.log(e);
+                                toastr.error(responseCollection['message'], '', {
+                                    timeOut: 2000
+                                });
+                                // $("#no_of_days").val(' ');
+                                // $('#no_of_trays').val(' ');
+                                // toastr.error(responseCollection['message'], "Error!", {
+                                //     positionClass: "toast-bottom-left",
+                                //     containerId: "toast-bottom-left"
+                                // });
+
+                            }
+                        }); //end of ajax
+                    }
+                });
+
+                function preViewImage(input) {
+                    //getting values in variables
+                    var file = input.files[0];
+                    var sort = $(input).data('sort');
+                    var type = $(input).data('type');
+                    //appending form
+                    var form = $('#upload-attachment-form');
+                    formData = new FormData(form[0]);
+                    // formData= new FormData();
+                    formData.append("_token", '{{csrf_token()}}');
+                    formData.append("case_id", '{{$edit_values->id}}');
+                    // formData.append("attachment", file);
+                    formData.append("sort_order", sort);
+                    formData.append("attachment_type", type);
+
+                    //preview image on front
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var output = document.getElementById('IMAGE_1');
+                        output.src = reader.result;
+                    };
+                    reader.readAsDataURL(event.target.files[0]);
+
+                    $.ajax({
+                        type: "POST"
+                        , url: '{{route("admin.case.upload-attachments")}}'
+                        , data: formData
+                        , processData: false
+                        , contentType: false,
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+
+
+                        success: function (responseCollection) {
+
+                            // var id = data['data']['id']
+
+
+                            toastr.success(responseCollection['message'], 'Picture Uploaded Successfully', {
+                                timeOut: 2000
+                            });
+                            // var attachment_ids_field = $('#attachment_ids');
+                            // var attachment_ids = attachment_ids_field.val();
+                            // attachment_ids_field.val((attachment_ids != "" ? attachment_ids+','+id : id));
+                        }
+                        , error: function (message, error) {
+                            $('#loader').fadeOut();
+
+                            toastr.error('Error Message', error, {
+                                timeOut: 3000
+                            });
+
+                        }
+                    });
+                }
+
+                function addvideolink() {
+                    // var inputs = $("#video_link").val();
+                    //  var video_embedded = [];
+                    //  for(var i = 0; i < inputs.length; i++){
+                    //     video_embedded.push($(inputs[i]).val());
+                    //  }
+                    var inputs = $(".video_link");
+                    if (inputs == "") {
+                        $('#error').text(' ');
+                        $('#error').text('Please Paste the link to proceed');
+                        $('#error').show();
+                        return;
+                    }
+                    var check = true;
+                    $('.video_link').each(function () {
+                        var inputValue = $(this).val();
+                        if (inputValue.startsWith("https://") || inputValue.startsWith("http://")) {
+                        } else {
+                            check = false;
+                            return;
+                        }
+                    });
+
+                    if (check == false) {
+                        $('#success').hide();
+                        $('#error').text(' ');
+                        $('#error').text('Please enter valid Link');
+                        $('#error').show();
+                        return;
+                    }
+                    var input = [];
+                    for (var i = 0; i < inputs.length; i++) {
+                        input.push($(inputs[i]).val());
+                    }
+                    if (inputs == "") {
+                        $('#error').text(' ');
+                        $('#error').text('Please Paste the link to proceed');
+                        $('#error').show();
+                        return;
+                    } else {
+                        var data = {
+                            _token: '{{csrf_token()}}'
+                            , case_id: "{{$edit_values->id}}"
+                            , video_embedded: input
+                        }
+
+                        $.ajax({
+                            url: "{{route('admin.case.embedded-video')}}"
+                            , type: "POST"
+                            , dataType: 'json'
+                            , data: data,
+                            beforeSend: function () {
+                                ajaxLoader();
+                            },
+                            xhr: function () {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        console.log(evt)
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        ajaxLoaderprograss(percentComplete);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
+
+                            success: function (response) {
+                                if (response.message == 'success') {
+                                    $('#error').hide();
+                                    $('#success').text('link successfully Added');
+                                    $('#success').show();
+                                    $("#video_link").val(' ');
+                                } else {
+                                    $('#success').hide();
+                                    $('#error').text(' ');
+                                    $('#error').text('Something Went Wrong, Try again');
+                                    $('#error').show();
+                                    $("#video_link").val(' ');
+                                }
+                                // toastr.success('Updated successfully', "Success!", {
+                                //     positionClass: "toast-bottom-left",
+                                //     containerId: "toast-bottom-left"
+                                // });
+
+                                setTimeout(function () {
+                                    location.reload(true)
+                                }, 1000);
+
+                            }
+                            , error: function (e) {
+                                // var responseCollection = e.responseJSON;
+                                console.log(e);
+                                $('#success').hide();
+                                $('#error').text(' ');
+                                $('#error').text('Something Went Wrong, Try again');
+                                $('#error').show();
+                                $("#video_link").val(' ');
+                                // toastr.error(responseCollection['message'], "Error!", {
+                                //     positionClass: "toast-bottom-left",
+                                //     containerId: "toast-bottom-left"
+                                // });
+                                $('#loader').fadeOut();
+
+                            }
+                        }); //end of ajax
+                    }
+                }
+
+                function onClose() {
+                    $('#success').text(' ');
+                    $('#success').hide();
+                    $('#error').text(' ');
+                    $('#error').hide();
+                    $('#success2').text(' ');
+                    $('#success2').hide();
+                    $('#error2').text(' ');
+                    $('#error2').hide();
+                    $("#video").val('');
+
+                }
+
+                function uploadvideo() {
+
+                    $('#success2').hide();
+                    $('#error2').text(' ');
+                    $('#error2').text('Somthing Wnet Wrong, Try again');
+                    $('#error2').hide();
+                    var file = $('#video_upload').get(0).files[0];
+                    if (file) {
+                        var fileType = file.type;
+                        if (fileType.indexOf('video') !== -1) {
+                            //   console.log('Video uploaded:', file.name);
+                            //   formData = new FormData(form[0]);
+                            formData = new FormData();
+                            formData.append("_token", '{{csrf_token()}}');
+                            formData.append("case_id", '{{$edit_values->id}}');
+                            formData.append('file', file);
+
+                            $.ajax({
+                                type: "POST"
+                                , url: '{{route("admin.case.upload-video")}}'
+                                , data: formData
+                                , processData: false
+                                , contentType: false,
+                                beforeSend: function () {
+                                    ajaxLoader();
+                                },
+                                xhr: function () {
+                                    var xhr = new window.XMLHttpRequest();
+                                    xhr.upload.addEventListener("progress", function (evt) {
+                                        if (evt.lengthComputable) {
+                                            console.log(evt)
+                                            var percentComplete = evt.loaded / evt.total;
+                                            percentComplete = parseInt(percentComplete * 100);
+                                            ajaxLoaderprograss(percentComplete);
+                                        }
+                                    }, false);
+                                    return xhr;
+                                },
+
+                                success: function (message) {
+                                    $('#success2').text('Video Uploaded Successfully');
+                                    $('#success2').show();
+                                    $("#video").val('');
+                                    $('#error2').text('');
+                                    $('#error2').hide();
+                                    setTimeout(function () {
+                                        location.reload(true)
+                                    }, 1000);
+                                }
+                                , error: function (message) {
+                                    console.log(message.errors);
+                                    // console.log(responseCollection);
+                                    $('#success2').hide();
+                                    $('#error2').text('');
+                                    $('#error2').text('Something Went wrong,Please check file types Gif,Mp4 ');
+                                    $('#error2').show();
+                                    $("#video2").val('');
+                                    $('#loader').fadeOut();
+
+                                    //  toastr.error('Error Message',error, {timeOut: 3000});
+                                }
+                            });
+
+                        } else if (fileType.indexOf('image') !== -1) {
+                            //   console.log('Image uploaded:', file.name);
+                            $('#success2').hide();
+                            $('#error2').text(' ');
+                            $('#error2').text('Please Uploda Video to Proceed');
+                            $('#error2').show();
+                            $("#video2").val(' ');
+                        }
+                    } else {
+                        $('#success2').hide();
+                        $('#error2').text(' ');
+                        $('#error2').text('Please Upload a video');
+                        $('#error2').show();
+                    }
+
+                }
+
+                //  Deleting video ajax
+                $("body").on("click", "#delete_video", function () {
+
+                    var val = $(this).val();
+
+                    var data = {
+                        _token: '{{csrf_token()}}'
+                        , case_id: "{{$edit_values->id}}"
+                        ,
+                    }
+
+                    $.ajax({
+                        url: '{{route("admin.case.delete-video")}}'
+                        , type: "POST"
+                        , dataType: 'json'
+                        , data: data,
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+
+                        success: function (responseCollection) {
+
+                            toastr.success(responseCollection['message'], 'Video Removed Successfully', {
+                                timeOut: 2000
+                            });
+                            setTimeout(location.reload.bind(location), 500);
+                            $('#loader').fadeOut();
+
+                        }
+                        , error: function (e) {
+                            var responseCollection = e.responseJSON;
+                            toastr.error(responseCollection['message'], 'Error', {
+                                timeOut: 2000
+                            });
+                            $('#loader').fadeOut();
+
+                        }
+                    }); //end of ajax
+
+
+                });
+
+                function view(id) {
+                    $('#order_id').val(' ');
+                    $('#order_id').val(id);
+                    var id_int = (parseInt(id));
+                    //   alert(id_int);
+                    $('#order_details').removeClass('d-none');
+                    $.ajax({
+                        url: base_url + '/order_edit/' + id_int
+                        , method: "GET",
+                        // data: json,
+
+                        beforeSend: function(){
+                            ajaxLoadercount();
+                        },
+                        success: function (response) {
+                            // Handle successful response
+                            console.log(response.data.edit_values.id);
+                            console.log(response.data.edit_values.created_at)
+
+
+                            $('.case_empty').text(' ');
+
+                            $('#case_id').text(response.data.edit_values.case_id);
+                            $('#order_id').text(response.data.edit_values.id);
+                            if (response.data.hasOwnProperty("doctor")) {
+                                $('#dentist_name').text(response.data.doctor.name);
+                            }
+                            if (response.data.hasOwnProperty("case")) {
+                                $('#no_of_tray').text(response.data.case.no_of_trays);
+                            }
+                            $('#shipping_charges').text(response.data.edit_values.shipping_charges + '{{ $default_currency }}');
+                            //  console.log(response.data.edit_values.discount);
+                            //  if(response.data.edit_values.discount > 0){
+                            //      var unit_amount=response.data.edit_values.unit_amout;
+                            //      var string_unit=unit_amount.toString();
+                            //      var full= string_unit+'<?php echo($default_currency);  ?>';
+                            //      $('#unit_price').text(full);
+                            //  }else{
+                            //      var unit_amount=response.data.edit_values.unit_amout - (response.data.edit_values.discount/response.data.edit_values.quantity);
+                            //      $('#unit_price').text(unit_amount+'<?php echo($default_currency); ?>');
+                            //  }
+                            $('#quantity').text(response.data.edit_values.quantity);
+                            $('#shipping2').text(response.data.edit_values.shipping_charges + '<?php echo($default_currency);  ?>');
+                            $('#total_price').text(response.data.edit_values.total_amount + '<?php echo($default_currency);   ?>');
+                            $('#name').text(response.data.edit_values.name);
+                            $('#name_id').text('ID:' + response.data.edit_values.doctor_id);
+                            $('#email').text(response.data.edit_values.email);
+                            $('#phone').text(response.data.edit_values.phone_no);
+
+                            //  var formattedDate = $.datepicker.formatDate('d-m-y', date);
+                            //  var formattedTime = $.datepicker.formatTime('hh:mm:ss', {hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds()});
+                            //  var formattedDateTime = formattedDate + ' ' + formattedTime;
+                            //  console.log(formattedDateTime);
+
+                            var date = new Date(response.data.edit_values.created_at);
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            var hours = date.getHours();
+                            var minutes = date.getMinutes();
+                            var seconds = date.getSeconds();
+
+                            var fulldate = day + '-' + month + '-' + year;
+                            var fullhour = '  ' + hours + ':' + minutes + ':' + seconds;
+                            console.log(response.data.edit_values.order_url);
+                            $('#date').text(fulldate + fullhour);
+                            $('#country').text(response.data.country);
+                            $('#state').text(response.data.state);
+                            $('#city').text(response.data.city);
+                            $('#address').text(response.data.edit_values.street1);
+                            $('#url').val(response.data.edit_values.order_url);
+                            //  $('#name_id').text(response.data.edit_values.email);
+                            //  $('#name_id').text(response.data.edit_values.email);
+                            if (response.data.edit_values.hasOwnProperty("patient")) {
+                                $('#img').attr('src', ' ');
+                                $('#img').attr('src', response.data.edit_values.patient.picture);
+                            }
+                            if (response.data.edit_values.status == 'PENDING') {
+                                $('#select_box').val('PENDING');
+                            } else if (response.data.edit_values.status == 'CONFIRMED') {
+                                $('#select_box').val('CONFIRMED');
+                            } else if (response.data.edit_values.status == 'DISPATCHED') {
+                                $('#select_box').val('DISPATCHED');
+                            } else if (response.data.edit_values.status == 'DELIVERED') {
+                                $('#select_box').val('DELIVERED');
+                            } else if (response.data.edit_values.status == 'CANCELED') {
+                                $('#select_box').val('CANCELED');
+                            }
+                            //  $('shipping_charges').val('response.data.edit_values.case_id');
+                            $('#loader').fadeOut();
+                        }
+                        , error: function (xhr, status, error) {
+                            // Handle errors
+                            toastr.error('Something Went Wrong, Try Again', '', {
+                                timeOut: 2000
+                            });
+                            $('#order_details').addClass('d-none');
+                            $('#loader').fadeOut();
+                        }
+                    });
+                }
+
+                $(document).on('click', '#update', function (e) {
+                    id = $('#order_id').val();
+                    status = $('#select_box').val();
+                    url = $('#url').val();
+                    $.ajax({
+                        url: base_url + '/order_update',
+                         type: 'POST',
+                         data: {
+                            status: status,
+                             order_url: url,
+                             id: id,
+
+                        },
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+
+                        success: function (response) {
+                            if (response.successMessage == 'success') {
+                                toastr.success('Order Updated Successfully', '', {
+                                    timeOut: 2000
+                                });
+                                setTimeout(function () {
+                                    location.reload(true)
+                                }, 1000);
+                                //  window.location.reload();
+                            } else {
+                                toastr.error('Something went wrong please try again', '', {
+                                    timeOut: 2000
+                                });
+                                setTimeout(function () {
+                                    location.reload(true)
+                                }, 1000);
+                                console.log('error');
+                            }
+                            $('#loader').fadeOut();
+                        }
+                        , error: function (xhr, status, error) {
+                            toastr.error('Something went wrong please try again', '', {
+                                timeOut: 2000
+                            });
+                            setTimeout(function () {
+                                location.reload(true)
+                            }, 1000);
+                            console.log('Request failed');
+                            $('#loader').fadeOut();
+                        }
+                    });
+                });
+                $("body").on("click", "#advice_comment_button", function () {
+
+                    var advice_comment = $("#advice_comment").val();
+
+                    var data = {
+                        _token: '{{csrf_token()}}'
+                        , case_id: "{{$edit_values->id}}"
+                        , message: advice_comment
+                    }
+
+                    $.ajax({
+                        url: '{{route("admin.case.add-advice")}}'
+                        , type: "POST"
+                        , dataType: 'json'
+                        , data: data,
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+
+                        success: function (responseCollection) {
+
+                            console.log(responseCollection);
+                            toastr.success('Advice Added Successfully', '', {
+                                timeOut: 2000
+                            });
+
+                            //    console.log(responseCollection['data']['concern'].created_date);
+                            var currentTime = new Date();
+                            var hours = currentTime.getHours();
+                            var minutes = currentTime.getMinutes();
+                            var seconds = currentTime.getSeconds();
+                            var meridiem = "AM";
+                            if (hours > 12) {
+                                hours = hours - 12;
+                                meridiem = "PM";
+                            }
+                            // add leading zeros to minutes and seconds
+                            if (minutes < 10) {
+                                minutes = "0" + minutes;
+                            }
+                            if (seconds < 10) {
+                                seconds = "0" + seconds;
+                            }
+                            //  if(responseCollection['data']['concern'].message_by=='ADVISER')
+                            //  $html =`<div class="col-md-12 remove_ajax">
+                            //                             <div class="row mt-3">
+                            //                                 <div class="col-md-2 p-0 ">
+                            //                                 </div>
+                            //                                 <div class="col-md-9 p-0 myapp ">
+                            //                                     <div class=" text-white mx-2 p-3">
+                            //                                         <p>
+                            //                                         ${responseCollection['data']['concern'].message}
+                            //                                         </p>
+                            //                                         <span style="font-size: 13px;color: #afafaf;">
+                            //                                       ${hours+':'+minutes+' '+ meridiem}
+                            //                                     </span>
+                            //                                     </div>
+                            //                                 </div>
+                            //                                  <div class="col-md-1 p-0 ">
+                            //                                     <div class="proimgda mx-2">
+                            //                                         <img src="{{ asset('vendors/images/logo.png') }}">
+                            //                                     </div>
+                            //                                  </div>
+                            //                             </div>
+                            //                         </div>`;
+                            //          else{
+                            //             $html=`<div class="col-md-12 remove_ajax">
+                            //                             <div class="row mt-3 m-0">
+                            //                                 <div class="col-md-1 p-0 ">
+                            //                                     <div class="proimgda mx-2">
+                            //                                         <img src="{{ asset('vendors/images/profileimg.jpg') }}">
+
+                            //                                     </div>
+                            //                                 </div>
+                            //                                 <div class="col-md-9 p-0 ">
+                            //                                     <div class="textdo mx-2 p-3">
+                            //                                         <p>
+                            //                                       ${responseCollection['data']['concern'].message}
+                            //                                         </p>
+                            //                                         <span style="font-size: 13px;color: #afafaf;">
+                            //                                         ${hours+':'+minutes+' '+ meridiem}
+                            //                                         </span>
+                            //                                     </div>
+                            //                                 </div>
+                            //                             </div>
+                            //                         </div>`;
+                            //          }
+                            $("#append").prepend($html);
+                            refresh();
+                            $("#advice_comment").val('');
+
+                        }
+                        , error: function (e) {
+                            var responseCollection = e.responseJSON;
+                            console.log(e);
+                            $('#loader').fadeOut();
+
+                            toastr.error(responseCollection['message'], "Error!", {
+                                positionClass: "toast-bottom-left"
+                                , containerId: "toast-bottom-left"
+                            });
+
+                        }
+                    }); //end of ajax
+                });
+
+                function append_video() {
+                    var random_class = Math.floor(Math.random() * 1000) + 1;
+                    $('#video_append').append(`<div class="remove_${random_class}" style="display:flex;align-items:center;margin-top:10px;">
+                 <input type="text" class="form-control digital-scan link_remove video_link"  name="link[]"  aria-describedby="emailHelp" placeholder="Enter Link"><br>
+                 <i class="bi bi-dash-lg" style="cursor:pointer;" onclick="video_remove(${random_class})"></i>
+                  </div>
+                 <br>`);
+                }
+
+                function video_remove(id) {
+                    $('.remove_' + id).remove();
+                    return false;
+                }
+
+                /*__________________updating missing trays________________*/
+                $("body").on("click", "#missing_trays", function () {
+
+
+                    var data = {
+                        _token: '{{csrf_token()}}',
+                         case_id: "{{$edit_values->id}}",
+                         missing_trays: $("#no_of_trays").val(),
+
+                    }
+
+                    $.ajax({
+                        url: '{{route("admin.case.missing_aligners")}}',
+                         type: "POST",
+                         dataType: 'json',
+                         data: data,
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+
+                        success: function (data) {
+
+                            if (data.done == true) {
+                                toastr.success(data['message'], 'Success', {
+                                    timeOut: 2000
+                                });
+                            } else {
+                                toastr.error(data['message'], 'Error', {
+                                    timeOut: 2000
+                                });
+                            }
+                            $('#loader').fadeOut();
+
+                        }
+                        , error: function (e) {
+                            var data = e.responseJSON;
+                            toastr.error(data['message'], 'Error', {
+                                timeOut: 2000
+                            });
+                            $('#loader').fadeOut();
+
+                        }
+                    }); //end of ajax
+
+
+                });
+
+            </script>
 
             <script>
                 /*_________close model__________*/
@@ -2358,14 +2361,14 @@
                 function refresh() {
 
                     $.ajax({
-                        url: '{{url("admin/case/get-advices")}}'
-                        , type: "POST"
-                        , dataType: 'json'
-                        , data: {
-                            '_token': "{{ csrf_token() }}"
-                            , 'case_id': "{{ $edit_values->id }}"
-                            ,
-                        }
+                        url: '{{url("admin/case/get-advices")}}',
+                         type: "POST",
+                         dataType: 'json',
+                         data: {
+                            '_token': "{{ csrf_token() }}",
+                             'case_id': "{{ $edit_values->id }}",
+
+                        },
                         beforeSend: function () {
                         ajaxLoader();
                     },

@@ -339,7 +339,7 @@
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
                     <script>
-                        toastr.error('{{$error}}', 'Error', {timeOut: 5000});
+                        toastr.error('{{$error}}', 'Error', {timeOut: 9000});
                     </script>
                 @endforeach
             @endif

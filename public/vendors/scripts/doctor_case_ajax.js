@@ -275,9 +275,9 @@ function editFunction(id = '') {
                     for (var i = 0; i < data['attachments']['LOWER_JAW'].length; i++) {
 
                         var sort_order = data['attachments']['LOWER_JAW'][i].sort_order;
-                        $("#select2").val(sort_order);
-                        $("#LOWER_JAW_2").attr("src", data['attachments']['LOWER_JAW'][i].full_path);
-                        $("#imgShow2").attr("src", data['attachments']['LOWER_JAW'][i].full_path);
+                        $("#select2").val(2);
+                        $("#LOWER_JAW_2").attr("src", "https://accualigners.app/vendors/images/stl.png");
+                        $("#imgShow2").attr("src", "https://accualigners.app/vendors/images/stl.png");
                         // Get a reference to our file input
                         const fileInput = document.querySelector('input[type="file"]');
 
@@ -297,9 +297,9 @@ function editFunction(id = '') {
                     for (var i = 0; i < data['attachments']['UPPER_JAW'].length; i++) {
 
                         var sort_order = data['attachments']['UPPER_JAW'][i].sort_order;
-                        $("#select1").val(sort_order);
-                        $("#UPPER_JAW_1").attr("src", data['attachments']['UPPER_JAW'][i].full_path);
-                        $("#imgShow1").attr("src", data['attachments']['UPPER_JAW'][i].full_path);
+                        $("#select1").val(1);
+                        $("#UPPER_JAW_1").attr("src", "https://accualigners.app/vendors/images/stl.png");
+                        $("#imgShow1").attr("src", "https://accualigners.app/vendors/images/stl.png");
                         const fileInput = document.querySelector('input[type="file"]');
 
                         // Create a new File object
