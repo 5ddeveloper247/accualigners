@@ -823,7 +823,7 @@ class CaseController extends Controller
 
         try {
             $CaseModel = CaseModel::find($request->case_id);
-            Storage::disk(env('FILE_SYSTEM'))->forceDelete($CaseModel->video_uploaded);
+            Storage::disk(env('FILE_SYSTEM'))->delete($CaseModel->video_uploaded);
 
             $CaseModel->video_uploaded = null;
             $CaseModel->video_uploaded_type = null;

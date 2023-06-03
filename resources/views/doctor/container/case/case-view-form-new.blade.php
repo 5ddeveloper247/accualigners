@@ -2617,19 +2617,8 @@
                         url: base_url + '/order_edit/' + id_int,
                         method: "GET",
                         // data: json,
-                        beforeSend: function () {
-                            ajaxLoader();
-                        },
-                        xhr: function() {
-                            var xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener("progress", function(evt) {
-                                if (evt.lengthComputable) {
-                                    var percentComplete = evt.loaded / evt.total;
-                                    percentComplete = parseInt(percentComplete * 100);
-                                    ajaxLoaderprograss(percentComplete);
-                                }
-                            }, false);
-                            return xhr;
+                        beforeSend: function(){
+                            ajaxLoadercount();
                         },
                         success: function (response) {
                             // Handle successful response
