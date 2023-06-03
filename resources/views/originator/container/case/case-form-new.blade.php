@@ -1686,11 +1686,88 @@
                     $('#order_details').removeClass('d-none');
                     $.ajax({
                         url: base_url + '/order_edit/' + id_int,
-                         method: "GET",
+                        method: "GET",
                         // data: json,
-
                         beforeSend: function(){
                             ajaxLoadercount();
+                        },
+                        success: function (response) {
+                            // Handle successful response
+                            console.log(response.data.edit_values.id);
+                            console.log(response.data.edit_values.created_at)
+
+
+                            $('.case_empty').text(' ');
+
+                            $('#case_id').text(response.data.edit_values.case_id);
+                            $('#order_id').text(response.data.edit_values.id);
+                            if (response.data.hasOwnProperty("doctor")) {
+                                $('#dentist_name').text(response.data.doctor.name);
+                            }
+                            if (response.data.hasOwnProperty("case")) {
+                                $('#no_of_tray').text(response.data.case.no_of_trays);
+                            }
+                            $('#shipping_charges').text(response.data.edit_values.shipping_charges +
+                                '{{ $default_currency }}');
+                            //  console.log(response.data.edit_values.discount);
+                            //  if(response.data.edit_values.discount > 0){
+                            //      var unit_amount=response.data.edit_values.unit_amout;
+                            //      var string_unit=unit_amount.toString();
+                            //      var full= string_unit+'<?php echo $default_currency; ?>';
+                            //      $('#unit_price').text(full);
+                            //  }else{
+                            //      var unit_amount=response.data.edit_values.unit_amout - (response.data.edit_values.discount/response.data.edit_values.quantity);
+                            //      $('#unit_price').text(unit_amount+'<?php echo $default_currency; ?>');
+                            //  }
+                            $('#quantity').text(response.data.edit_values.quantity);
+                            $('#shipping2').text(response.data.edit_values.shipping_charges + '<?php echo $default_currency; ?>');
+                            $('#total_price').text(response.data.edit_values.total_amount + '<?php echo $default_currency; ?>');
+                            $('#name').text(response.data.edit_values.name);
+                            $('#name_id').text('ID:' + response.data.edit_values.doctor_id);
+                            $('#email').text(response.data.edit_values.email);
+                            $('#phone').text(response.data.edit_values.phone_no);
+
+                            //  var formattedDate = $.datepicker.formatDate('d-m-y', date);
+                            //  var formattedTime = $.datepicker.formatTime('hh:mm:ss', {hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds()});
+                            //  var formattedDateTime = formattedDate + ' ' + formattedTime;
+                            //  console.log(formattedDateTime);
+
+                            var date = new Date(response.data.edit_values.created_at);
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            var hours = date.getHours();
+                            var minutes = date.getMinutes();
+                            var seconds = date.getSeconds();
+
+                            var fulldate = day + '-' + month + '-' + year;
+                            var fullhour = '  ' + hours + ':' + minutes + ':' + seconds;
+                            console.log(response.data.edit_values.order_url);
+                            $('#date').text(fulldate + fullhour);
+                            $('#country').text(response.data.country);
+                            $('#state').text(response.data.state);
+                            $('#city').text(response.data.city);
+                            $('#address').text(response.data.edit_values.street1);
+                            $('#url').val(response.data.edit_values.order_url);
+                            //  $('#name_id').text(response.data.edit_values.email);
+                            //  $('#name_id').text(response.data.edit_values.email);
+                            if (response.data.edit_values.hasOwnProperty("patient")) {
+                                $('#img').attr('src', ' ');
+                                $('#img').attr('src', response.data.edit_values.patient.picture);
+                            }
+                            if (response.data.edit_values.status == 'PENDING') {
+                                $('#select_box').val('PENDING');
+                            } else if (response.data.edit_values.status == 'CONFIRMED') {
+                                $('#select_box').val('CONFIRMED');
+                            } else if (response.data.edit_values.status == 'DISPATCHED') {
+                                $('#select_box').val('DISPATCHED');
+                            } else if (response.data.edit_values.status == 'DELIVERED') {
+                                $('#select_box').val('DELIVERED');
+                            } else if (response.data.edit_values.status == 'CANCELED') {
+                                $('#select_box').val('CANCELED');
+                            }
+                            //  $('shipping_charges').val('response.data.edit_values.case_id');
+
                         },
                         error: function (xhr, status, error) {
                             // Handle errors
