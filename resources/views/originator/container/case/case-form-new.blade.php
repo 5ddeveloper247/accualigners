@@ -177,9 +177,9 @@
     }
 
     .border-dotted-grey {
-  border: 3px dotted rgb(226, 217, 217);
-  border-radius: 10px;
-}
+        border: 3px dotted rgb(226, 217, 217);
+        border-radius: 10px;
+    }
 
 </style>
 
@@ -426,10 +426,14 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
-                                <button class="btn btn-primary float-right" style="background:#00205C;border-radius: 20px;color:white;cursor:pointer;"
-                                     data-toggle="modal" data-target="#video_modal">Add Link</button>
-                                <button class="btn float-right mx-2" style="border-radius: 20px;border:1px solid grey" data-toggle="modal"
-                                data-target="#video_modal2">Add Video</button>
+                                <button class="btn btn-primary float-right"
+                                        style="background:#00205C;border-radius: 20px;color:white;cursor:pointer;"
+                                        data-toggle="modal" data-target="#video_modal">Add Link
+                                </button>
+                                <button class="btn float-right mx-2" style="border-radius: 20px;border:1px solid grey"
+                                        data-toggle="modal"
+                                        data-target="#video_modal2">Add Video
+                                </button>
                                 {{-- <div class="float-right">
                                     <a class="px-3" style="padding:2% 2%; cursor:pointer;" data-toggle="modal"
                                     data-target="#video_modal">Add Link</a>
@@ -440,7 +444,7 @@
                             </div>
                         </div>
                         <!-- <div class="row mt-4"> -->
-                            <hr />
+                        <hr/>
                         <div class="row mt-4 m-lg-1">
                             <!-- <div class="col-md-12 p-0 px-2  fullheight borderbottom pb-3">
                                 <div class="row py-2 m-1 dashedborder" >
@@ -489,6 +493,20 @@
                                             class="ft-trash"></i> Remove
                                     </button>
                                 </div>
+                            @elseif (!empty($edit_values->video_embedded))
+                                <?php
+                                $videos_embedded = !empty($edit_values->video_embedded) ? json_decode($edit_values->video_embedded) : [];
+                                ?>
+                                @forelse($videos_embedded as $key => $video_embedded)
+                                    <div class="col-12 p-1">
+                                        <iframe width="100%" height="450" src="{{ $video_embedded }}"
+                                                title="YouTube video player" frameborder="0"
+                                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                autoplay allowfullscreen></iframe>
+                                    </div>
+                                @empty
+                                    <p class="text-center">No Treatment plan Found</p>
+                                @endforelse
                             @endif
                         </div>
                         <!--<div class="row mt-4 ">
@@ -513,28 +531,31 @@
                             <div class="col-md-12  p-0 pb-3">
                                 <h5 class="pb-2">Upload Treatment Plan PDF</h5>
                             </div>
-                    <div class="border-dotted-grey row pause p-2 pr-5">
-                            <div class="col-md-2 p-0 ">
-                                <img src="{{asset('vendors/images/drag.png')}}" width="40" class="mx-2 mt-4">
-                            </div>
-                            <div class="col-md-8 p-3">
-                                <form id="upload-attachment-form">
+                            <div class="border-dotted-grey row pause p-2 pr-5">
+                                <div class="col-md-2 p-0 ">
+                                    <img src="{{asset('vendors/images/drag.png')}}" width="40" class="mx-2 mt-4">
+                                </div>
+                                <div class="col-md-8 p-3">
+                                    <form id="upload-attachment-form">
 
-                                    <h5 style="font-size: 15px" class="mt-2 m-2"> Select a file to upload</h5>
-                                    <span style="font-size: 11px;">JPG, PNG or PDF, file size no more than 10MB</span>
-                            </div>
-                            <div class="col-md-2 mt-2 p-0 pt-2">
-                                <!-- <a class="textcolor attachImg"  style="font-size: 15px;color:#00205C;text-decoration: underline; cursor:pointer;"> Browse</a> -->
-                                <!-- <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden> -->
-                                <label class="btn">
-                                    <input type="file" multiple name="attachment[]" class="hidden upload-attachment"
-                                           data-type="TREATMENT-PLAN-PDF" data-sort="1" onchange="preViewImage(this)"
-                                           hidden>
-                                    <img src="{{asset('link/files/app-assets/images/case/upload.png')}}" id="IMAGE_1"
-                                         alt="Image" class="img-thumbnail"
-                                         style="max-width:250% !important;float:right;">
-                                </label>
-                    </div>
+                                        <h5 style="font-size: 15px" class="mt-2 m-2"> Select a file to upload</h5>
+                                        <span
+                                            style="font-size: 11px;">JPG, PNG or PDF, file size no more than 10MB</span>
+                                </div>
+                                <div class="col-md-2 mt-2 p-0 pt-2">
+                                    <!-- <a class="textcolor attachImg"  style="font-size: 15px;color:#00205C;text-decoration: underline; cursor:pointer;"> Browse</a> -->
+                                    <!-- <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden> -->
+                                    <label class="btn">
+                                        <input type="file" multiple name="attachment[]" accept="application/pdf" class="hidden upload-attachment"
+                                               data-type="TREATMENT-PLAN-PDF" data-sort="1"
+                                               onchange="preViewImage(this)"
+                                               hidden>
+                                        <img src="{{asset('link/files/app-assets/images/case/upload.png')}}"
+                                             id="IMAGE_1"
+                                             alt="Image" class="img-thumbnail"
+                                             style="max-width:250% !important;float:right;">
+                                    </label>
+                                </div>
                             </div>
                             </form>Upload Video
                         </div>
@@ -1180,7 +1201,7 @@
                                 @forelse($videos_embedded as $key => $video_embedded)
                                     <div class="remove_{{ $key }}" style="display:flex;align-items:center;">
                                         <input type="text" class="form-control digital-scan video_link"
-                                               value="{{$video_embedded}}" name="link[]"  aria-describedby="emailHelp"
+                                               value="{{$video_embedded}}" name="link[]" aria-describedby="emailHelp"
                                                placeholder="Enter Link"><br>
                                         @if($key == 0)
                                             <i class="bi bi-plus" style="cursor:pointer;" onclick="append_video()"></i>
@@ -1249,8 +1270,8 @@
                                         <!-- <a class="textcolor attachImg"  style="font-size: 15px;color:#00205C;text-decoration: underline; cursor:pointer;"> Browse</a> -->
                                         <!-- <input type="file" id="picture" name="picture" class="fileInput" accept="image/*" value="" hidden> -->
                                         <label class="btn mt-3">
-                                            <input type="file"  name="video" id="video_upload_case"
-                                                   class="hidden upload-attachment"  accept="video/*"  hidden>
+                                            <input type="file" name="video" id="video_upload_case"
+                                                   class="hidden upload-attachment" accept="video/*" hidden>
                                             <img src="{{asset('link/files/app-assets/images/case/upload.png')}}"
                                                  id="addvideoCase" alt="Image" class="img-thumbnail">
                                         </label>
@@ -1278,8 +1299,6 @@
                 var base_url = "{{url('admin/')}}";
 
 
-
-
                 $("body").on("click", "#no_of_days_button", function () {
                     var no_of_days = $("#no_of_days").val();
                     var no_of_trays = $('#no_of_trays').val();
@@ -1290,15 +1309,15 @@
                     } else {
                         var data = {
                             _token: '{{csrf_token()}}',
-                             case_id: "{{$edit_values->id}}",
-                             no_of_days: no_of_days,
-                             no_of_trays: no_of_trays,
+                            case_id: "{{$edit_values->id}}",
+                            no_of_days: no_of_days,
+                            no_of_trays: no_of_trays,
                         }
                         $.ajax({
                             url: '{{route("admin.case.no-of-days-update")}}',
-                             type: "POST",
+                            type: "POST",
                             dataType: 'json',
-                             data: data,
+                            data: data,
                             beforeSend: function () {
                                 ajaxLoader();
                             },
@@ -1325,7 +1344,6 @@
                                 // });
                                 // $("#no_of_days").val(' ');
                                 // $('#no_of_trays').val(' ');
-
 
 
                             }
@@ -1367,15 +1385,19 @@
                     var reader = new FileReader();
                     reader.onload = function () {
                         var output = document.getElementById('IMAGE_1');
-                        output.src = reader.result;
+                        if (file.type === "application/pdf") {
+                            output.setAttribute("src", "https://accualigners.app/storage/images/file.png");
+                        } else {
+                            output.setAttribute("src", reader.result);
+                        }
                     };
                     reader.readAsDataURL(event.target.files[0]);
 
                     $.ajax({
                         type: "POST",
-                         url: '{{route("admin.case.upload-attachments")}}',
-                         data: formData,
-                         processData: false,
+                        url: '{{route("admin.case.upload-attachments")}}',
+                        data: formData,
+                        processData: false,
                         contentType: false,
                         beforeSend: function () {
                             ajaxLoader();
@@ -1464,15 +1486,15 @@
                     } else {
                         var data = {
                             _token: '{{csrf_token()}}',
-                             case_id: "{{$edit_values->id}}",
-                             video_embedded: input,
+                            case_id: "{{$edit_values->id}}",
+                            video_embedded: input,
                         }
 
                         $.ajax({
                             url: "{{route('admin.case.embedded-video')}}",
-                             type: "POST",
-                             dataType: 'json',
-                             data: data,
+                            type: "POST",
+                            dataType: 'json',
+                            data: data,
                             beforeSend: function () {
                                 ajaxLoader();
                             },
@@ -1563,10 +1585,10 @@
 
                             $.ajax({
                                 type: "POST",
-                                 url: '{{route("admin.case.upload-video")}}',
-                                 data: formData,
+                                url: '{{route("admin.case.upload-video")}}',
+                                data: formData,
                                 processData: false,
-                                 contentType: false,
+                                contentType: false,
                                 beforeSend: function () {
                                     ajaxLoader();
                                 },
@@ -1631,15 +1653,15 @@
 
                     var data = {
                         _token: '{{csrf_token()}}',
-                         case_id: "{{$edit_values->id}}",
+                        case_id: "{{$edit_values->id}}",
 
                     }
 
                     $.ajax({
                         url: '{{route("admin.case.delete-video")}}',
-                         type: "POST",
-                         dataType: 'json',
-                         data: data,
+                        type: "POST",
+                        dataType: 'json',
+                        data: data,
                         beforeSend: function () {
                             ajaxLoader();
                         },
@@ -1688,7 +1710,7 @@
                         url: base_url + '/order_edit/' + id_int,
                         method: "GET",
                         // data: json,
-                        beforeSend: function(){
+                        beforeSend: function () {
                             ajaxLoadercount();
                         },
                         success: function (response) {
@@ -1786,11 +1808,11 @@
                     url = $('#url').val();
                     $.ajax({
                         url: base_url + '/order_update',
-                         type: 'POST',
-                         data: {
+                        type: 'POST',
+                        data: {
                             status: status,
-                             order_url: url,
-                             id: id,
+                            order_url: url,
+                            id: id,
 
                         },
                         beforeSend: function () {
@@ -1847,15 +1869,15 @@
 
                     var data = {
                         _token: '{{csrf_token()}}',
-                         case_id: "{{$edit_values->id}}",
+                        case_id: "{{$edit_values->id}}",
                         message: advice_comment,
                     }
 
                     $.ajax({
                         url: '{{route("admin.case.add-advice")}}',
-                         type: "POST",
-                         dataType: 'json',
-                         data: data,
+                        type: "POST",
+                        dataType: 'json',
+                        data: data,
                         beforeSend: function () {
                             ajaxLoader();
                         },
@@ -1979,16 +2001,16 @@
 
                     var data = {
                         _token: '{{csrf_token()}}',
-                         case_id: "{{$edit_values->id}}",
-                         missing_trays: $("#no_of_trays").val(),
+                        case_id: "{{$edit_values->id}}",
+                        missing_trays: $("#no_of_trays").val(),
 
                     }
 
                     $.ajax({
                         url: '{{route("admin.case.missing_aligners")}}',
-                         type: "POST",
-                         dataType: 'json',
-                         data: data,
+                        type: "POST",
+                        dataType: 'json',
+                        data: data,
                         beforeSend: function () {
                             ajaxLoader();
                         },
@@ -2186,31 +2208,31 @@
 
                                     $.ajax({
                                         type: "POST",
-                                         url: base_url + "/case/payment/store",
-                                         data: {
+                                        url: base_url + "/case/payment/store",
+                                        data: {
                                             'id': "{{$edit_values->id}}",
-                                             'amount': payment,
-                                             'currency': currency,
-                                             'stripeToken': token,
+                                            'amount': payment,
+                                            'currency': currency,
+                                            'stripeToken': token,
 
                                         },
                                         beforeSend: function () {
-                                        ajaxLoader();
-                                    },
-                                    xhr: function () {
-                                        var xhr = new window.XMLHttpRequest();
-                                        xhr.upload.addEventListener("progress", function (evt) {
+                                            ajaxLoader();
+                                        },
+                                        xhr: function () {
+                                            var xhr = new window.XMLHttpRequest();
+                                            xhr.upload.addEventListener("progress", function (evt) {
                                                 if (evt.lengthComputable) {
                                                     console.log(evt)
                                                     var percentComplete = evt.loaded / evt.total;
                                                     percentComplete = parseInt(percentComplete * 100);
                                                     ajaxLoaderprograss(percentComplete);
                                                 }
-                                        }, false);
-                                        return xhr;
-                                    },
+                                            }, false);
+                                            return xhr;
+                                        },
 
-                                         success: function (data) {
+                                        success: function (data) {
                                             if (data.data = 'success') {
                                                 $('.pop1').addClass('d-none');
                                                 $('#payment').removeClass('d-none');
@@ -2257,24 +2279,24 @@
 
                     $.ajax({
                         type: "POST",
-                         url: base_url + "/case/payment/invoice",
+                        url: base_url + "/case/payment/invoice",
                         beforeSend: function () {
-                        ajaxLoader();
-                                    },
+                            ajaxLoader();
+                        },
                         xhr: function () {
                             var xhr = new window.XMLHttpRequest();
                             xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
                             }, false);
                             return xhr;
                         },
 
-                         data: {
+                        data: {
                             'id': "{{$edit_values->id}}"
                             , 'amount': payment
                             , 'currency': currency
@@ -2321,22 +2343,22 @@
                             id: id
                         }, // the data variables that you want to send along with the request
                         beforeSend: function () {
-                        ajaxLoader();
-                    },
+                            ajaxLoader();
+                        },
                         xhr: function () {
                             var xhr = new window.XMLHttpRequest();
                             xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
                             }, false);
                             return xhr;
                         },
 
-                         success: function (response) {
+                        success: function (response) {
 
                             if (response.done == true) {
                                 toastr.success('Dentist Will Pay Digital Scan Shortly..', 'Success', {
@@ -2371,30 +2393,30 @@
 
                     $.ajax({
                         url: '{{url("admin/case/get-advices")}}',
-                         type: "POST",
-                         dataType: 'json',
-                         data: {
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
                             '_token': "{{ csrf_token() }}",
-                             'case_id': "{{ $edit_values->id }}",
+                            'case_id': "{{ $edit_values->id }}",
 
                         },
                         beforeSend: function () {
-                        ajaxLoader();
-                    },
+                            ajaxLoader();
+                        },
                         xhr: function () {
                             var xhr = new window.XMLHttpRequest();
                             xhr.upload.addEventListener("progress", function (evt) {
-                                    if (evt.lengthComputable) {
-                                        console.log(evt)
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        ajaxLoaderprograss(percentComplete);
-                                    }
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
                             }, false);
                             return xhr;
                         },
 
-                         success: function (responseCollection) {
+                        success: function (responseCollection) {
 
                             console.log(responseCollection);
                             $('.remove_ajax').remove();
