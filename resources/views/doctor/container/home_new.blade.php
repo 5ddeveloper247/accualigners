@@ -36,7 +36,7 @@ $title = 'Dashboard';
 <!-- saadullah -->
 
     </div>
-    
+
 <div class="main-container">
     <div class="m-3">
         <div class="row">
@@ -47,7 +47,7 @@ $title = 'Dashboard';
     <div class="card-body">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                @foreach ($sliders as $idx=>$slider)    
+                @foreach ($sliders as $idx=>$slider)
                     <li data-target="#carousel-example-generic" data-slide-to="{{$idx}}" class="@if($idx==0) active @endif"></li>
                 @endforeach
                 {{--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -55,7 +55,7 @@ $title = 'Dashboard';
                 <li data-target="#carousel-example-generic" data-slide-to="2"></li> --}}
             </ol>
             <div class="carousel-inner" role="listbox">
-                @foreach ($sliders as $idx=>$slider)    
+                @foreach ($sliders as $idx=>$slider)
                     <div class="carousel-item @if($idx==0) active @endif">
                         <img src="{{$slider->slider_image}}" alt="First slide">
                     </div>
@@ -85,7 +85,7 @@ $title = 'Dashboard';
            </div> -->
             </div>
             </div>
-          
+
         <div class="row">
 
             <div class="fun1">
@@ -106,13 +106,13 @@ $title = 'Dashboard';
                             </div>
                         </div>
                         <div class="col-md-6 p-0 col d-flex gap-2 align-items-center justify-content-end">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -131,7 +131,7 @@ font-size: 10px">Total Patients</span>
                         <div class="col-md-2  col">
                             <div class="iconsdoonu ">
                                 <img src="{{ asset('vendors/images/2fi.png') }}">
-                     
+
                             </div>
                         </div>
                         <div class="col-md-2 p-0 col">
@@ -144,13 +144,13 @@ font-size: 10px">Total Patients</span>
                             </div>
                         </div>
                         <div class="col-md-6 p-0 col d-flex gap-2 align-items-center justify-content-end">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -180,13 +180,13 @@ font-size: 10px">Total Patients</span>
                             </div>
                         </div>
                         <div class="col-md-6 p-0 col d-flex gap-2 align-items-center justify-content-end">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -217,7 +217,7 @@ font-size: 10px">Total Patients</span>
                         </div>
 
                      </div>
-                     
+
                      <div class="col-xl-4 mb-30">
                         <div class="carx2 input">
                         <form action="{{url(Request()->path())}}" id="filter-form" method="get">
@@ -228,7 +228,7 @@ font-size: 10px">Total Patients</span>
                                         <i class="bi bi-sliders"></i>
                                     </a>
                                 </div>
-                            
+
                             </form>
                         </div>
                     </div>
@@ -261,7 +261,7 @@ font-size: 10px">Total Patients</span>
                                                 Paid
                                             @else
                                                 UnPaid
-                                            @endif    
+                                            @endif
                                             </a></td>
                                             <td><a href="{{ url('doctor/case_detail/'.$active_case->id) }}">View Details</a></td>
                                         </tr>
@@ -274,7 +274,7 @@ font-size: 10px">Total Patients</span>
                 </div>
             </div>
 
-          
+
         </div>
          <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
          <!-- js -->

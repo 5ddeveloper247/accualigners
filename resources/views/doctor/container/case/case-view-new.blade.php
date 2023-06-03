@@ -974,7 +974,7 @@
                                                                    name="X_RAY_[]"
                                                                    class="hidden upload-attachment disable_input"
                                                                    data-type="X_RAY" data-sort="{{ $i }}"
-                                                                   onchange="preViewImage(this)"  hidden>
+                                                                   onchange="preViewImage2(this)" multiple  hidden>
                                                             <img src="{{ $media }}" id="{{ 'X_RAY_' . $i }}"
                                                                  alt="Image" class="img-thumbnail">
                                                             <input type="hidden" value=""
@@ -1030,12 +1030,12 @@
                                                                 <label class="btn">
                                                                     <input type="file"
                                                                            id="jaw_{{ $i }}"
-                                                                           accept="image/*,application/pdf"
+                                                                           accept=".STL,.stl"
                                                                            name="{{ $jaw_type . '_' . $i }}"
                                                                            class="hidden upload-attachment disable_input"
                                                                            data-type="{{ $jaw_type }}"
                                                                            onchange="preViewJawImage(this)"
-                                                                           data-sort="{{ $i }}" multiple hidden>
+                                                                           data-sort="{{ $i }}" hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ $jaw_type . '_' . $i }}" alt="Image"
                                                                          class="img-thumbnail">

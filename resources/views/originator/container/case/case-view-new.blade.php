@@ -812,7 +812,7 @@
                                                               style="height:80px!important;" required
                                                               data-validation-required-message="Prescription Comment is required"></textarea>
 
-                                                
+
                                                    <p style="line-height: px;" class="mt-2">Additional comments*
                                                         <span id="additional_msg"
                                                                       style="margin-left: 25px;font-size: 10px;color: red;font-weight: bold;font-family:'Inter';"></span>
@@ -964,7 +964,7 @@
                                                                    id="upload_attach" name="X_RAY_[]"
                                                                    class="hidden upload-attachment image_disable disable_input"
                                                                    data-type="X_RAY" data-sort="{{ $i }}"
-                                                                   onchange="preViewImage(this)" hidden>
+                                                                   onchange="preViewImage2(this)" multiple hidden>
                                                             <img src="{{ $media }}" id="{{ 'X_RAY_' . $i }}"
                                                                  alt="Image" class="img-thumbnail">
                                                             <input type="hidden" value=""
@@ -1022,12 +1022,12 @@
                                                             <div class="col-md-2 mt-2 p-0 pt-2">
                                                                 <label class="btn">
                                                                     <input type="file"
-                                                                           accept="image/*,application/pdf"
+                                                                           accept=".STL,.stl"
                                                                            id="jaw_{{ $i }}"
                                                                            name="{{ $jaw_type . '_' . $i }}"
                                                                            class="hidden upload-attachment disable_input"
                                                                            data-type="{{ $jaw_type }}"
-                                                                           onchange="preViewJawImage(this)" multiple
+                                                                           onchange="preViewJawImage(this)"
                                                                            data-sort="{{ $i }}" hidden>
                                                                     <img src="{{ $media }}"
                                                                          id="{{ $jaw_type . '_' . $i }}"
@@ -1252,7 +1252,7 @@
                             *Please Select Doctor to Assign The Case</h3>
                         <form action=""></form>
                         <select name="clinic_doc" id="clinic_doc">
-                            <option value="first_index">Select Doctor</option>
+                            <option value="">Select Doctor</option>
                             @foreach ($doctors as $clinic_Doctor)
                                 <option value="{{ $clinic_Doctor->doctor->id }}">
                                     {{ ucwords($clinic_Doctor->doctor->name) }}</option>
@@ -1452,7 +1452,7 @@
                     }, 1000);
 
                 } else if (data.msg == "success2") {
-                  
+
                     toastr.success('Treatment Plan Status Set to Unpaid', '', {
                         timeOut: 2000
                     });
@@ -1492,6 +1492,11 @@
     function connect_case() {
         var caseId = $('#connect_case_id').val();
         var doctor_id = $('#clinic_doc').val();
+
+        if (doctor_id == '') {
+            toastr.error('Please select doctor first', 'Validation Error', {timeOut: 5000});
+            return false;
+        }
         $.ajax({
             type: "POST",
             url: base_url + "/connect/case",
@@ -1520,7 +1525,7 @@
 
             success: function (data) {
                 if (data.done == true) {
-                  
+
                     toastr.success('Case assigned Successfully', 'Case Assigned', {
                         timeOut: 2000
                     });
@@ -1529,7 +1534,7 @@
                     }, 1000);
 
                 } else if (data.done == false) {
-                   
+
                     toastr.success('Error in assigning case', 'Error', {
                         timeOut: 2000
                     });
@@ -1538,7 +1543,7 @@
                     }, 1000);
 
                 } else {
-                  
+
                     toastr.error('Something Went Wrong, Try again', '', {
                         timeOut: 2000
                     });

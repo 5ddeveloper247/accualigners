@@ -44,7 +44,7 @@ class OrderAlignerController extends Controller
     }
 
     public function index2(Request $request)
-    {  
+    {
         try {
              $case = CaseModel::find($request->id);
                if (empty($case->no_of_trays) || $case->no_of_trays < 0 || !empty($case->aligner_kit_order_id)) {
@@ -60,11 +60,11 @@ class OrderAlignerController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-  
-  
+
+
 
     public function store(CaseOrderAlignerStoreRequest $request, $id)
-    {   
+    {
         try {
 
             DB::beginTransaction();
@@ -124,6 +124,7 @@ class OrderAlignerController extends Controller
                 $case->update([
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
+                    'processing_fee_payment_at' => Carbon::now(),
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -150,12 +151,12 @@ class OrderAlignerController extends Controller
     }
 
     public function store_new(Request $request)
-    {     
+    {
            $address_id=$request->address_id;
         try {
-         
+
              $id=$request->id;
-     
+
              DB::beginTransaction();
 
              $case = CaseModel::find($id);
@@ -213,6 +214,7 @@ class OrderAlignerController extends Controller
                 $case->update([
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
+                    'processing_fee_payment_at' => Carbon::now(),
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -226,7 +228,7 @@ class OrderAlignerController extends Controller
                 $data['patient_name'] = $username;
                 $html = view('emails.orderAlignerNotification', $data)->render();
                 $check = $this->sendMailViaPostMark($html, $to, $subject);
-                 
+
                 return response()->json(['success' => 'Payment']);
                 return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);
             } else {
@@ -240,13 +242,13 @@ class OrderAlignerController extends Controller
     }
 
     public function storeInvoice_new(Request $request)
-    {       
+    {
            $id=$request->id;
            $address_id=$request->address_id;
 
            $invoice_id=rand(9,99999999999999);
          try{
-            
+
              DB::beginTransaction();
 
              $case = CaseModel::find($request->id);
@@ -294,6 +296,7 @@ class OrderAlignerController extends Controller
                 $case->update([
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
+                    'processing_fee_payment_at' => Carbon::now(),
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -322,7 +325,7 @@ class OrderAlignerController extends Controller
     }
 
     public function storeInvoice(Request $request)
-    {     
+    {
         try {
             $validated = $request->validate([
                 'address_id' => 'required|exists:addresses,id',
@@ -372,6 +375,7 @@ class OrderAlignerController extends Controller
                 $case->update([
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
+                    'processing_fee_payment_at' => Carbon::now(),
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -400,7 +404,7 @@ class OrderAlignerController extends Controller
 
 
     public function indexSecondInstallment($id)
-    {    
+    {
          try {
             $case = CaseModel::find($id);
             $settings = Setting::first();
@@ -413,7 +417,7 @@ class OrderAlignerController extends Controller
 
     }
     public function indexSecondInstallment_new(Request $request)
-    {    
+    {
          try {
             $case = CaseModel::find($request->id);
             $settings = Setting::first();
@@ -428,7 +432,7 @@ class OrderAlignerController extends Controller
     }
 
     public function storeSecondInstallment_new(Request $request)
-    {   
+    {
         // dd($request->all());
         try {
 
@@ -483,9 +487,9 @@ class OrderAlignerController extends Controller
     }
 
     public function storeSecondInstallment(Request $request, $id)
-    {   
+    {
         try {
-      
+
             DB::beginTransaction();
 
              $case = CaseModel::find($id);
@@ -583,7 +587,7 @@ class OrderAlignerController extends Controller
         }
     }
     public function storeInvoiceSecondInstallment_new(Request $request)
-    {     
+    {
         try {
             // $validated = $request->validate([
             //     'invoiceId' => 'required',
@@ -663,7 +667,7 @@ class OrderAlignerController extends Controller
 
 
     public function missingTrayStoreStripe(Request $request)
-    {    
+    {
         $validated = $request->validate([
             'stripeToken' => 'required',
             'order_type' => 'required',
@@ -768,7 +772,7 @@ class OrderAlignerController extends Controller
         //         'no_of_trays' => 'required',
         //     ]);
         // }
-           
+
 
         try {
 
@@ -840,7 +844,7 @@ class OrderAlignerController extends Controller
                   $case_amount=CaseModel::where('id',$request->id)->first();
                 $trays_amount=  ($case_amount->missing_trays_amount == NULL) ? 0 : $case_amount->missing_trays_amount ;
                 $total_amount_actual= $request->total_amount + $trays_amount;
-                
+
            if(CaseModel::where('id',$request->id)->update(['no_of_missing_trays' => NULL, 'missing_trays_amount' =>   $total_amount_actual ])){
             return response()->json(['success' => 'Payment']);
         }else{
@@ -1019,7 +1023,7 @@ class OrderAlignerController extends Controller
                  $case_amount=CaseModel::where('id',$request->id)->first();
                  $trays_amount=  ($case_amount->missing_trays_amount == NULL) ? 0 : $case_amount->missing_trays_amount ;
                  $total_amount_actual= $request->total_amount + $trays_amount;
-                
+
            if(CaseModel::where('id',$request->id)->update(['no_of_missing_trays' => NULL, 'missing_trays_amount' =>   $total_amount_actual ])){
                       return response()->json(['success' => 'Payment']);
                 }else{
@@ -1030,9 +1034,9 @@ class OrderAlignerController extends Controller
             }
 
             DB::rollBack();
-          
+
             return response()->json(['success' => 'error']);
-            
+
             return redirect()->back()->withErrors('Something went wrong');
         } catch (Exception $e) {
             DB::rollBack();

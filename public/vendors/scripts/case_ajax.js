@@ -581,21 +581,23 @@ function preViewJawImage(input) {
     var type = $(input).data('type');
 
     var file = input.files[input.files.length - 1];
-    //preview image on front
-    var reader = new FileReader();
-    reader.onload = function () {
+
+    // //preview image on front
+    // var reader = new FileReader();
+    // reader.onload = function () {
         var output = document.getElementById(type + '_' + sort);
         var imgShow = document.getElementById('imgShow' + sort);
-        if (file.type === "application/pdf") {
-            output.setAttribute("src", "https://accualigners.app/storage/images/file.png");
-            imgShow.setAttribute("src", "https://accualigners.app/storage/images/file.png");
-        } else {
-            output.setAttribute("src", reader.result);
-            imgShow.setAttribute("src", reader.result);
-        }
 
-    };
-    reader.readAsDataURL(file);
+        // if (file.type === "application/pdf") {
+            output.setAttribute("src", "https://accualigners.app/vendors/images/stl.png");
+            imgShow.setAttribute("src", "https://accualigners.app/vendors/images/stl.png");
+    //     } else {
+    //         output.setAttribute("src", reader.result);
+    //         imgShow.setAttribute("src", reader.result);
+    //     }
+    //
+    // };
+    // reader.readAsDataURL(file);
 
 }
 
@@ -744,16 +746,28 @@ function validationOfCase() {
             toastr.error('Please attach Image atleast one image', 'Validation Error', {timeOut: 5000});
             return false;
         }
+// Jaw Scan(Upper/Lower)
+        if ($('#jaw_1').val() == '') {
+            toastr.error('Please Select Jaw Scan(Upper/Lower) Images', 'Validation Error', {timeOut: 5000});
+            return false;
+        }
         // Jaw Scan(Upper/Lower)
         if ($('#select1').val() == '') {
-            toastr.error('Please Select Jaw Scan(Upper/Lower) Image at least one image', 'Validation Error', {timeOut: 5000});
+            toastr.error('Please Select Jaw Scan(Upper/Lower)', 'Validation Error', {timeOut: 5000});
             return false;
         }
         // Jaw Scan(Upper/Lower)
-        if ($('#select2').val() == '') {
-            toastr.error('Please Select Image Jaw Scan(Upper/Lower) at least one image', 'Validation Error', {timeOut: 5000});
+        if ($('#jaw_2').val() == '') {
+            toastr.error('Please Select Jaw Scan(Upper/Lower) Images', 'Validation Error', {timeOut: 5000});
             return false;
         }
+
+        // Jaw Scan(Upper/Lower)
+        if ($('#select2').val() == '') {
+            toastr.error('Please Select Image Jaw Scan(Upper/Lower)', 'Validation Error', {timeOut: 5000});
+            return false;
+        }
+
     }
     return true;
 }

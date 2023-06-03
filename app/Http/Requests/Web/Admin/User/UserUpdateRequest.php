@@ -31,7 +31,7 @@ class UserUpdateRequest extends FormRequest
         return [
 
             'name' => 'required|min:3|max:100',
-            'gender' => 'required',
+//            'gender' => 'required',
             'phone' => 'required|min:10|max:20',
             'email' => 'required|email|max:100|unique:users,email,' . ($user ? $user->id : ''),
             'current_password' => [

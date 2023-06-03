@@ -72,13 +72,13 @@
                             </div>
                         </div>
                         <div class="col-md-4 p-0 col d-flex gap-2 align-items-center">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -107,13 +107,13 @@
                             </div>
                         </div>
                         <div class="col-md-4 p-0 col d-flex gap-2 align-items-center">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -142,13 +142,13 @@
                             </div>
                         </div>
                         <div class="col-md-4 p-0 col d-flex gap-2 align-items-center">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -179,13 +179,13 @@
                             </div>
                         </div>
                         <div class="col-md-4 p-0 col d-flex gap-2 align-items-center">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">
@@ -216,13 +216,13 @@
                             </div>
                         </div>
                         <div class="col-md-4 p-0 col d-flex gap-2 align-items-center">
-                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>
-                            <div class="iconsd zamado rightarrow">
+{{--                            <h6 class="m-0" style="color:green;font-size:10px;">2.5%</h6>--}}
+{{--                            <div class="iconsd zamado rightarrow">--}}
 
-                                <span style="color:green;font-size:10px;">
-                                </span>
-                                <i class="bi bi-arrow-up-right"></i>
-                            </div>
+{{--                                <span style="color:green;font-size:10px;">--}}
+{{--                                </span>--}}
+{{--                                <i class="bi bi-arrow-up-right"></i>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="col-md-12 pt-2 col">
                             <div class="iconsdoo zamado rightarrow">

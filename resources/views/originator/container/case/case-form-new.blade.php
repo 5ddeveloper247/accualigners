@@ -297,8 +297,8 @@
                         <div class="boxdozama2 mt-3 text-right">
                             @if ($edit_values->digital_scan_fee)
                                 <p style="font-size:13px;color:grey;" class="d-inline">{{date('h:i a',
-                                                                strtotime($edit_values->updated_at))}} | {{date('d M Y',
-                                                                strtotime($edit_values->updated_at))}}
+                                                                strtotime($edit_values->processing_fee_payment_at))}} | {{date('d M Y',
+                                                                strtotime($edit_values->processing_fee_payment_at))}}
                                     <span
                                         style="color:black;font-weight:bold;font-size:20px;">{{$edit_values->processing_fee_amount}}</span> {{strtoupper($default_currency)}}
                                 </p>
@@ -422,7 +422,7 @@
                                 <div class="addlinkdo mt-3 p-3">
 
                                     <h5 class="d-inline">Upload Video</h5>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
@@ -762,63 +762,31 @@
                         <div class="row">
                             @isset($attachmentGroups['UPPER_JAW'])
                                 @foreach ($attachmentGroups['UPPER_JAW'] as $attachment)
-                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
-                                    @if(strpos($image, 'pdf') !== false)
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
-                                            <a href="{{$image}}" target="_blank"
-                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    @elseif((strpos($image, 'stl') !== false))
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                            <a href="{{ $image}}" target="_blank"
-                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    @else
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{$image}}">
-                                            <a href="{{ $image}}" target="_blank"
-                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    @endif
+                                    @php($image = storageUrl_h($attachment->path . $attachment->name))
+                                    <div class="col-md-3 text-center my-3">
+                                        <img src="{{ asset('vendors/images/stl.png') }}"
+                                             style="width: 100%;height:80%;">
+                                        <a href="{{ $image }}" target="_blank" download="{{ $image }}"
+                                           style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
+                                            <img
+                                                src="{{ asset('vendors/images/download.png') }}"
+                                                width="15"
+                                                class="mx-2"></a>
+                                    </div>
                                 @endforeach
                             @endisset
-
                             @isset($attachmentGroups['LOWER_JAW'])
                                 @foreach ($attachmentGroups['LOWER_JAW'] as $attachment)
-                                    @php($image = storageUrl_h($attachment->path.$attachment->name))
-                                    @if(strpos($image, 'pdf') !== false)
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
-                                            <a href="{{$image}}" target="_blank"
-                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    @elseif((strpos($image, 'stl') !== false))
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                            <a href="{{ $image}}" target="_blank"
-                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    @else
-                                        <div class="col-md-3 text-center my-3">
-                                            <img src="{{$image}}">
-                                            <a href="{{ $image}}" target="_blank"
-                                               download="{{ $image }}">{{$attachment->attachment_type}} <img
-                                                    src="{{ asset('vendors/images/download.png') }}" width="15"
-                                                    class="mx-2"></a>
-                                        </div>
-                                    @endif
+                                    @php($image = storageUrl_h($attachment->path . $attachment->name))
+                                    <div class="col-md-3 text-center my-3">
+                                        <img src="{{ asset('vendors/images/stl.png') }}"
+                                             style="width: 100%;height:80%;">
+                                        <a href="{{ $image }}" target="_blank" download="{{ $image }}"
+                                           style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
+                                            <img src="{{ asset('vendors/images/download.png') }}"
+                                                 width="15"
+                                                 class="mx-2"></a>
+                                    </div>
                                 @endforeach
                             @endisset
 
@@ -1234,7 +1202,7 @@
                                 // });
                                 // $("#no_of_days").val(' ');
                                 // $('#no_of_trays').val(' ');
-                              
+
 
 
                             }
@@ -1302,11 +1270,11 @@
                             return xhr;
                         },
 
-                        
+
                          success: function (responseCollection) {
 
                             // var id = data['data']['id']
-                           
+
 
                             toastr.success(responseCollection['message'], 'Picture Uploaded Successfully', {
                                 timeOut: 2000
@@ -1410,7 +1378,7 @@
                                 //     positionClass: "toast-bottom-left",
                                 //     containerId: "toast-bottom-left"
                                 // });
-                                
+
                                 setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
@@ -1592,7 +1560,7 @@
                         url: base_url + '/order_edit/' + id_int
                         , method: "GET",
                         // data: json,
-                                                
+
                         beforeSend: function(){
                                     ajaxLoadercount();
                                 },
@@ -1712,7 +1680,7 @@
                             }, false);
                             return xhr;
                         },
-   
+
                          success: function (response) {
                             if (response.successMessage == 'success') {
                                 toastr.success('Order Updated Successfully', '', {
@@ -1775,9 +1743,9 @@
                             }, false);
                             return xhr;
                         },
- 
+
                          success: function (responseCollection) {
-                        
+
                             console.log(responseCollection);
                             toastr.success('Advice Added Successfully', '', {
                                 timeOut: 2000
@@ -2333,6 +2301,7 @@
                 /*___________payDigitalScan__________*/
                 function payDigitalScan() {
                     id = "{{$edit_values->id}}";
+                    var base_url = "{{url('admin/')}}";
                     $.ajax({
                         url: base_url + "/case/allow_doct", // the URL of the server-side script that handles the request
                         type: "POST", // the type of request (POST or GET)
@@ -2356,7 +2325,7 @@
                         },
 
                          success: function (response) {
-                          
+
                             if (response.done == true) {
                                 toastr.success('Dentist Will Pay Digital Scan Shortly..', 'Success', {
                                     timeOut: 3000
@@ -2409,12 +2378,12 @@
                                         percentComplete = parseInt(percentComplete * 100);
                                         ajaxLoaderprograss(percentComplete);
                                     }
-                            }, false);  
+                            }, false);
                             return xhr;
                         },
 
                          success: function (responseCollection) {
-                       
+
                             console.log(responseCollection);
                             $('.remove_ajax').remove();
 

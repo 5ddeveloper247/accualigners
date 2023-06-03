@@ -85,8 +85,8 @@ class ClinicDoctorController extends Controller
             $inputs['saturday_time'] = (empty($request->_saturday_timefrom) && empty($request->saturday_time_to)) ? null : ($request->saturday_time_from . ' - ' . $request->saturday_time_to);
             $inputs['sunday_time'] = (empty($request->sunday_time_from) && empty($request->sunday_time_to)) ? null : ($request->sunday_time_from . ' - ' . $request->sunday_time_to);
             $inputs['clinic_id'] = $id;
-            
-            if(ClinicDoctor::create($inputs))         
+
+            if(ClinicDoctor::create($inputs))
             {
                 $arrRes['msg']  = "Doctor added to clinic saved successfully";
                 $arrRes['done'] = true;
@@ -105,7 +105,7 @@ class ClinicDoctorController extends Controller
 
     public function show($id)
     {
-        
+
     }
 
     public function edit(ClinicDoctorEditRequest $request)
@@ -123,7 +123,7 @@ class ClinicDoctorController extends Controller
     {
         try{
             $clinicDoctor = ClinicDoctor::where('id', $request->ClinicDocid)->first();
-            $clinicDoctor['clinic'] = ClinicController::new_edit($request->Clinicid);  
+            $clinicDoctor['clinic'] = ClinicController::new_edit($request->Clinicid);
             return response()->json($clinicDoctor);
         }catch(Exception $e){
             return redirect()->back()->withErrors($e->getMessage());
@@ -156,7 +156,7 @@ class ClinicDoctorController extends Controller
         //new update
         public function update_new(Request $request)
     {
-        
+
         try{
             $inputs = $request->only(['doctor_id']);
             $inputs['monday_time'] = (empty($request->monday_time_from) && empty($request->monday_time_to)) ? null : ($request->monday_time_from . ' - ' . $request->monday_time_to);
@@ -169,7 +169,7 @@ class ClinicDoctorController extends Controller
 
             $user = ClinicDoctor::find($request->doctorId);
 
-            if($user->update($inputs))         
+            if($user->update($inputs))
             {
                 $arrRes['msg']  = "Data updated successfully";
                 $arrRes['done'] = true;
@@ -200,7 +200,7 @@ class ClinicDoctorController extends Controller
     {
         try{
             $clinic_doctor = ClinicDoctor::find($id);
-            if($clinic_doctor->forceDelete())         
+            if($clinic_doctor->forceDelete())
             {
                 $arrRes['msg']  = "Data Deleted successfully";
                 $arrRes['done'] = true;
