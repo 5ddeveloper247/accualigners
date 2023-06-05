@@ -804,7 +804,7 @@ emailInput.on('input', function () {
 
 /*____________________Add_Case_Reset____________________*/
 function resetAddCase() {
-    $('#name, #email,#phone_no,#dob,#address,#clinical_comment,#prescription_comment,#embedded_url').val('');
+    $('#ElementId,#name, #email,#phone_no,#dob,#address,#clinical_comment,#prescription_comment,#embedded_url').val('');
     $('#arch_to_treat,#a_p_relationship,#overjet,#overbite,#midline').parent().addClass('btn-outline-secondary off').removeClass('btn-outline-primary');
     $('#arch_to_treat,#a_p_relationship,#overjet,#overbite,#midline,#conidion1,#conidion2,#conidion3,#conidion4,#conidion5,#conidion6,#conidion7').prop('checked', false);
     $('#X_RAY_1,#X_RAY_2,#UPPER_JAW_1,#LOWER_JAW_2,#OTHER_1,#OTHER_2,#imgShow1,#imgShow2').attr('src', 'https://accualigners.app/link/files/app-assets/images/case/upload.png');
