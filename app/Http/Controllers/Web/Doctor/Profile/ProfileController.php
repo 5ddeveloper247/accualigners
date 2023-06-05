@@ -89,7 +89,7 @@ class ProfileController extends Controller
                             //     $this->update_clinic($request->clinics_ids);
                             //  }
                              $data['password'] = Hash::make($request->password);
-                             $data = $request->except('password_confirmation','_token','password');
+                             $data = $request->except('password_confirmation','_token','password','current_password');
 
                      }else{
                             //  if(isset($request->clinics_ids)){
