@@ -823,6 +823,7 @@ class CaseController extends Controller
 
         try {
             $CaseModel = CaseModel::find($request->case_id);
+
             Storage::disk(env('FILE_SYSTEM'))->delete($CaseModel->video_uploaded);
 
             $CaseModel->video_uploaded = null;
@@ -831,6 +832,23 @@ class CaseController extends Controller
             $CaseModel->save();
 
             return successJsonResponse_h();
+        } catch (Exception $e) {
+            return errorJsonResponse_h($e->getMessage());
+        }
+    }
+
+    public function deleteembeddedVideo(CaseDeleteVideoRequest $request)
+    {
+
+        try {
+            $CaseModel = CaseModel::find($request->case_id);
+
+            $CaseModel->video_uploaded = null;
+            $CaseModel->video_uploaded_type = null;
+            $CaseModel->video_embedded = null;
+            $CaseModel->save();
+
+            return successJsonResponse_h('link has been deleted', []);
         } catch (Exception $e) {
             return errorJsonResponse_h($e->getMessage());
         }

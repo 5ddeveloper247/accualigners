@@ -460,6 +460,23 @@
                                      </div>
                                 </div>
                             </div> -->
+                            <style>
+                                .btn-primary {
+                                    background-color: #00205C !important;
+                                    border-color: #00205C !important;
+                                }
+
+                                .btn-primary:hover {
+                                    background-color: #0a3078 !important;
+                                    border-color: #0a3078 !important;
+                                }
+
+                                .bgcolor:hover {
+                                    background-color: #0a3078 !important;
+                                    border-color: #0a3078 !important;
+                                }
+
+                            </style>
                             @if(!empty($edit_values->video_uploaded))
                                 <div class="col-12 videoPlayer video_uploaded">
                                     @if ($edit_values->video_uploaded_type == 'VIDEO')
@@ -470,23 +487,7 @@
                                         <img src="{{storageUrl_h($edit_values->video_uploaded)}}" class="img-fluid">
                                     @endif
                                 </div>
-                                <style>
-                                    .btn-primary {
-                                        background-color: #00205C !important;
-                                        border-color: #00205C !important;
-                                    }
 
-                                    .btn-primary:hover {
-                                        background-color: #0a3078 !important;
-                                        border-color: #0a3078 !important;
-                                    }
-
-                                    .bgcolor:hover {
-                                        background-color: #0a3078 !important;
-                                        border-color: #0a3078 !important;
-                                    }
-
-                                </style>
                                 <div class="col-12 video_uploaded">
                                     <button type="button" class="btn btn-block btn-primary" id="delete_video"
                                             style="margin-top: 2px !important;width: 100%; text-align:center;"><i
@@ -504,6 +505,12 @@
                                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                 autoplay allowfullscreen></iframe>
                                     </div>
+                                        <div class="col-12 video_uploaded">
+                                            <button type="button" class="btn btn-block btn-primary" id="delete_embed_video"
+                                                    style="margin-top: 2px !important;width: 100%; text-align:center;"><i
+                                                    class="ft-trash"></i> Remove
+                                            </button>
+                                        </div>
                                 @empty
                                     <p class="text-center">No Treatment plan Found</p>
                                 @endforelse
@@ -1681,6 +1688,61 @@
                         success: function (responseCollection) {
 
                             toastr.success(responseCollection['message'], 'Video Removed Successfully', {
+                                timeOut: 2000
+                            });
+                            setTimeout(location.reload.bind(location), 500);
+                            $('#loader').fadeOut();
+
+                        }
+                        , error: function (e) {
+                            var responseCollection = e.responseJSON;
+                            toastr.error(responseCollection['message'], 'Error', {
+                                timeOut: 2000
+                            });
+                            $('#loader').fadeOut();
+
+                        }
+                    }); //end of ajax
+
+
+                });
+
+
+                //  Deleting video ajax
+                $("body").on("click", "#delete_embed_video", function () {
+
+                    var val = $(this).val();
+
+                    var data = {
+                        _token: '{{csrf_token()}}',
+                        case_id: "{{$edit_values->id}}",
+
+                    }
+
+                    $.ajax({
+                        url: '{{route("admin.case.delete-embed-video")}}',
+                        type: "POST",
+                        dataType: 'json',
+                        data: data,
+                        beforeSend: function () {
+                            ajaxLoader();
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    console.log(evt)
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    ajaxLoaderprograss(percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+
+                        success: function (responseCollection) {
+
+                            toastr.success(responseCollection['message'], 'Link Removed Successfully', {
                                 timeOut: 2000
                             });
                             setTimeout(location.reload.bind(location), 500);

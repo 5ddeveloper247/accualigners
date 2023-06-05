@@ -204,6 +204,7 @@ Route::prefix(trans('siteConfig.subDomain.web.originator'))->name('admin.')->gro
          Route::post('case/add-advice', [CaseController::class, 'addAdvice'])->name('case.add-advice');
          Route::post('case/upload-video', [CaseController::class, 'uploadVideo'])->name('case.upload-video');
          Route::post('case/delete-video', [CaseController::class, 'deleteVideo'])->name('case.delete-video');
+         Route::post('case/delete-embed-video', [CaseController::class, 'deleteembeddedVideo'])->name('case.delete-embed-video');
          Route::post('case/embedded-video', [CaseController::class, 'embeddedVideo'])->name('case.embedded-video');
 
          /* new route  */
