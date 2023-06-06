@@ -218,6 +218,7 @@
     .classma td select {
         display: block !important;
     }
+    
 
 </style>
 <div class="mobile-menu-overlay"></div>

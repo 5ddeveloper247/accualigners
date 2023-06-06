@@ -35,7 +35,34 @@
     .deleteform {
         top: 25px !important;
     }
-
+    .video_uploaded {
+        width: 100%;
+        height: 170px; /* Set your desired fixed height */
+        overflow: hidden;
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+    }
+    .video_uploaded .vid{
+        /* position: absolute; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%, -50%); */
+        /* height: 100%;
+        min-width: 100%;
+        max-height: 100%; */
+        width: 100%;
+        height: 100%;
+}
+    .img_height{
+        height: 160px;
+        width: 200px;
+        border-radius: 10px;
+    }
+    .img_height_stl{
+        height: 250px;
+        width: 200px;
+    }
 </style>
 @php
     $title = 'Case Details';
@@ -265,7 +292,9 @@
                 <div class="c1data p-3 m-2" style="height: 113px;overflow-wrap: break-word;">
                     <h5 class="mt-3">Patient Email</h5>
 
-                    <p style="color: #4B5563;" class="mt-2">{{ ucfirst($edit_values->email) }}</p>
+                    <p style="color: #4B5563;  white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;" class="mt-2" s>{{ ucfirst($edit_values->email) }}</p>
                 </div>
             </div>
         </div>
@@ -331,7 +360,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div id="append" style="height:580px;overflow-y:scroll;overflow-x:hidden;width:100%;"></div>
+                            <div id="append" style="height:739px;overflow-y:scroll;overflow-x:hidden;width:100%;"></div>
 
                         <!-- @isset($edit_values->concerns)
                             @foreach ($edit_values->concerns as $concern)
@@ -417,15 +446,15 @@
                     </div>
 
                     <div class="col-md-4 borderleft m-0 p-0 ">
-                        <div class="row d-flex justify-content-center align-items-center">
-                            <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6">
-                                <div class="addlinkdo mt-3 p-3">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-5">
+                                <div class="addlinkdo py-3">
 
                                     <h5 class="d-inline">Upload Video</h5>
 
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
+                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-7">
                                 <button class="btn btn-primary float-right"
                                         style="background:#00205C;border-radius: 20px;color:white;cursor:pointer;"
                                         data-toggle="modal" data-target="#video_modal">Add Link
@@ -478,17 +507,17 @@
 
                             </style>
                             @if(!empty($edit_values->video_uploaded))
-                                <div class="col-12 videoPlayer video_uploaded">
+                                <div class="col-12 videoPlayer video_uploaded text-center">
                                     @if ($edit_values->video_uploaded_type == 'VIDEO')
                                         <video id="vid0" src="{{storageUrl_h($edit_values->video_uploaded)}}"
                                                controls="controls" crossorigin="anonymous" class="vid"
-                                               style="width:100%;" playsinline autoplay muted loop></video>
+                                               style="" playsinline autoplay muted loop></video>
                                     @else
                                         <img src="{{storageUrl_h($edit_values->video_uploaded)}}" class="img-fluid">
                                     @endif
                                 </div>
 
-                                <div class="col-12 video_uploaded">
+                                <div class="col-12 p-1 video_uploaded_1">
                                     <button type="button" class="btn btn-block btn-primary" id="delete_video"
                                             style="margin-top: 2px !important;width: 100%; text-align:center;"><i
                                             class="ft-trash"></i> Remove
@@ -500,12 +529,12 @@
                                 ?>
                                 @forelse($videos_embedded as $key => $video_embedded)
                                     <div class="col-12 p-1">
-                                        <iframe width="100%" height="450" src="{{ $video_embedded }}"
+                                        <iframe width="100%" height="250" src="{{ $video_embedded }}"
                                                 title="YouTube video player" frameborder="0"
                                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                 autoplay allowfullscreen></iframe>
                                     </div>
-                                        <div class="col-12 video_uploaded">
+                                        <div class="col-12 p-1 video_uploaded_1">
                                             <button type="button" class="btn btn-block btn-primary" id="delete_embed_video"
                                                     style="margin-top: 2px !important;width: 100%; text-align:center;"><i
                                                     class="ft-trash"></i> Remove
@@ -534,18 +563,18 @@
                             </div>
                         </div> -->
                         <!-- <div class="row py-2 m-1 attachImg" style="border: 1px dashed black;border-radius: 5px;"> -->
-                        <div class="row mt-4 p-5">
+                        <div class="row mt-4 p-2">
                             <div class="col-md-12  p-0 pb-3">
                                 <h5 class="pb-2">Upload Treatment Plan PDF</h5>
                             </div>
-                            <div class="border-dotted-grey row pause p-2 pr-5">
+                            <div class="border-dotted-grey row pause p-2 ">
                                 <div class="col-md-2 p-0 ">
                                     <img src="{{asset('vendors/images/drag.png')}}" width="40" class="mx-2 mt-4">
                                 </div>
                                 <div class="col-md-8 p-3">
                                     <form id="upload-attachment-form">
 
-                                        <h5 style="font-size: 15px" class="mt-2 m-2"> Select a file to upload</h5>
+                                        <h5 style="font-size: 15px" class=""> Select a file to upload</h5>
                                         <span
                                             style="font-size: 11px;">JPG, PNG or PDF, file size no more than 10MB</span>
                                 </div>
@@ -567,18 +596,18 @@
                             </form>Upload Video
                         </div>
                         <hr/>
-                        <div class="row mt-4 p-4 ">
-                            <div class="col-md-12   p-0 px-2  pb-3">
-                                <h5 class="px-2 pb-2">Treatment Instructions</h5>
+                        <div class="row mt-4 p-2 ">
+                            <div class="col-md-12  p-0 pb-3">
+                                <h5 class="">Treatment Instructions</h5>
                             </div>
 
-                            <div class="col-md-12   p-0 px-3  pb-3">
+                            <div class="col-md-12  p-0 pb-3">
                                 <label> Number of trays required*</label>
                                 <input type="number" min="1" class="form-control"
                                        value="{{ old('no_of_trays', isset($edit_values) ? $edit_values->no_of_trays + $edit_values->no_of_missing_trays  : NULL) }}"
                                        placeholder="Enter Here" name="no_of_trays" id="no_of_trays">
                             </div>
-                            <div class="col-md-12   p-0 px-3  pb-3">
+                            <div class="col-md-12  p-0 pb-3">
                                 <label> Number of hours to wear in a day</label>
                                 <input type="number" min="1" max="24" class="form-control" placeholder="Enter Here"
                                        name="no_of_days" id="no_of_days"
@@ -712,21 +741,21 @@
                                     @php($image = storageUrl_h($attachment->path.$attachment->name))
                                     @if(strpos($image, 'pdf') !== false)
                                         <div class="col-md-3 text-center attachement my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
                                             <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
                                         </div>
                                     @elseif((strpos($image, 'stl') !== false))
                                         <div class="col-md-3 text-center my-3 ">
-                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
                                             <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
                                         </div>
                                     @else
                                         <div class="col-md-3 text-center  my-3">
-                                            <img src="{{$image}}">
+                                            <img class="img_height" src="{{$image}}">
                                             <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
@@ -752,7 +781,7 @@
                                     @php($image = storageUrl_h($attachment->path.$attachment->name))
                                     @if(strpos($image, 'pdf') !== false)
                                         <div class="col-md-3 text-center my-3 ">
-                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}"
+                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'pdf.jpg')}}"
                                                  class="attachement">
                                             <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
@@ -760,7 +789,7 @@
                                         </div>
                                     @elseif((strpos($image, 'stl') !== false))
                                         <div class="col-md-3 text-center my-3 ">
-                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}"
+                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'stl.jpg')}}"
                                                  class="attachement">
                                             <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
@@ -768,7 +797,7 @@
                                         </div>
                                     @else
                                         <div class="col-md-3 text-center my-3 ">
-                                            <img src="{{ $image }}" class="attachement">
+                                            <img class="img_height" src="{{ $image }}" class="attachement">
                                             <a href="{{$image}}" target="_blank" download="{{ $image }}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
@@ -792,11 +821,11 @@
                                 @foreach ($attachmentGroups['UPPER_JAW'] as $attachment)
                                     @php($image = storageUrl_h($attachment->path . $attachment->name))
                                     <div class="col-md-3 text-center my-3">
-                                        <img src="{{ asset('vendors/images/stl.png') }}"
-                                             style="width: 100%;height:80%;">
+                                        <img class="img_height_stl" src="{{ asset('vendors/images/stl.png') }}"
+                                             style="">
                                         <a href="{{ $image }}" target="_blank" download="{{ $image }}"
                                            style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
-                                            <img
+                                            <img 
                                                 src="{{ asset('vendors/images/download.png') }}"
                                                 width="15"
                                                 class="mx-2"></a>
@@ -807,11 +836,11 @@
                                 @foreach ($attachmentGroups['LOWER_JAW'] as $attachment)
                                     @php($image = storageUrl_h($attachment->path . $attachment->name))
                                     <div class="col-md-3 text-center my-3">
-                                        <img src="{{ asset('vendors/images/stl.png') }}"
-                                             style="width: 100%;height:80%;">
+                                        <img class="img_height_stl" src="{{ asset('vendors/images/stl.png') }}"
+                                             style="">
                                         <a href="{{ $image }}" target="_blank" download="{{ $image }}"
                                            style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
-                                            <img src="{{ asset('vendors/images/download.png') }}"
+                                            <img  src="{{ asset('vendors/images/download.png') }}"
                                                  width="15"
                                                  class="mx-2"></a>
                                     </div>
@@ -840,14 +869,14 @@
 
                                     @if(strpos($image, 'pdf') !== false)
                                         <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h('images/file.png')}}">
+                                            <img class="img_height" src="{{storageUrl_h('images/file.png')}}">
                                             <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
                                         </div>
                                     @elseif((strpos($image, 'stl') !== false))
                                         <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
                                             <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
@@ -855,7 +884,7 @@
                                         </div>
                                     @else
                                         <div class="col-md-3 text-center my-3">
-                                            <img src="{{$image}}">
+                                            <img class="img_height" src="{{$image}}">
                                             <a href="{{$image}}" target="_blank" download="{{$image}}">Download <img
                                                     src="{{ asset('vendors/images/download.png') }}" width="15"
                                                     class="mx-2"></a>
@@ -878,16 +907,16 @@
 
                                     @if(strpos($image, 'pdf') !== false)
                                         <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h('images/file.png')}}">
+                                            <img class="img_height" src="{{storageUrl_h('images/file.png')}}">
                                             <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
-                                                <img src="{{ asset('vendors/images/download.png') }}" width="15"
+                                                <img  src="{{ asset('vendors/images/download.png') }}" width="15"
                                                      class="mx-2"></a>
 
                                         </div>
                                     @elseif((strpos($image, 'stl') !== false))
 
                                         <div class="col-md-3 text-center my-3">
-                                            <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
+                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
                                             <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
                                                 <img src="{{ asset('vendors/images/download.png') }}" width="15"
                                                      class="mx-2"></a>
@@ -895,7 +924,7 @@
                                         </div>
                                     @else
                                         <div class="col-md-3 text-center my-3">
-                                            <img src="{{ $image }}">
+                                            <img class="img_height" src="{{ $image }}">
                                             <a href="{{ $image }}" target="_blank" download="{{ $image }}">Download
                                                 <img src="{{ asset('vendors/images/download.png') }}" width="15"
                                                      class="mx-2"></a>
