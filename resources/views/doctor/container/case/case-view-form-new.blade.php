@@ -181,8 +181,10 @@
             <div class="fun2  p-0">
                 <div class="c1data p-3 m-2" style="overflow-wrap: break-word;height: 120px;">
                     <h5 class="mt-3">Patient Email</h5>
-                    <p style="color: #4B5563;" class="mt-2"
-                       style="color: #4B5563;font-size: 14px;float: left;margin-left: -12px;">
+                    <p class="mt-2"
+                       style="color: #4B5563;font-size: 14px;white-space: nowrap;
+                       overflow: hidden;
+                       text-overflow: ellipsis;">
                         {{ ucfirst($edit_values->email) }}</p>
                 </div>
             </div>
@@ -804,8 +806,8 @@
                                                 @foreach ($attachmentGroups['IMAGE'] as $attachment)
                                                     @php($image = storageUrl_h($attachment->path . $attachment->name))
                                                     <div class="col-md-3 text-center my-3">
-                                                        <img src="{{ $image }}" class=""
-                                                             style="width: 100%;height:80%;">
+                                                        <img class="img_height" src="{{ $image }}" class=""
+                                                             >
                                                         <a href="{{ $image }}" target="_blank"
                                                            download="{{ $image }}">Download <img
                                                                 src="{{ asset('vendors/images/download.png') }}"
@@ -830,7 +832,7 @@
                                                 @foreach ($attachmentGroups['X_RAY'] as $attachment)
                                                     @php($image = storageUrl_h($attachment->path . $attachment->name))
                                                     <div class="col-md-3 text-center my-3">
-                                                        <img src="{{ $image }}" style="width: 100%;height:80%;">
+                                                        <img class="img_height" src="{{ $image }}" style="">
                                                         <a href="{{ $image }}" target="_blank"
                                                            download="{{ $image }}">Download <img
                                                                 src="{{ asset('vendors/images/download.png') }}"
@@ -854,8 +856,8 @@
                                                 @foreach ($attachmentGroups['UPPER_JAW'] as $attachment)
                                                     @php($image = storageUrl_h($attachment->path . $attachment->name))
                                                     <div class="col-md-3 text-center my-3">
-                                                        <img src="{{ asset('vendors/images/stl.png') }}"
-                                                             style="width: 100%;height:80%;">
+                                                        <img class="img_height_stl" src="{{ asset('vendors/images/stl.png') }}"
+                                                             style="">
                                                         <a href="{{ $image }}" target="_blank" download="{{ $image }}"
                                                            style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
                                                             <img
@@ -869,7 +871,7 @@
                                                 @foreach ($attachmentGroups['LOWER_JAW'] as $attachment)
                                                     @php($image = storageUrl_h($attachment->path . $attachment->name))
                                                     <div class="col-md-3 text-center my-3">
-                                                        <img src="{{ asset('vendors/images/stl.png') }}"
+                                                        <img class="img_height" src="{{ asset('vendors/images/stl.png') }}"
                                                              style="width: 100%;height:80%;">
                                                         <a href="{{ $image }}" target="_blank" download="{{ $image }}"
                                                            style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
@@ -899,14 +901,14 @@
 
                                                     @if(strpos($image, 'pdf') !== false)
                                                         <div class="col-md-3 text-center my-3">
-                                                            <img src="{{storageUrl_h('images/file.png')}}">
+                                                            <img class="img_height" src="{{storageUrl_h('images/file.png')}}">
                                                             <a href="{{$image}}" target="_blank" download="{{$image}}">Download
                                                                 <img src="{{ asset('vendors/images/download.png') }}"
                                                                      width="15" class="mx-2"></a>
                                                         </div>
                                                     @elseif((strpos($image, 'stl') !== false))
                                                         <div class="col-md-3 text-center my-3">
-                                                            <img src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
+                                                            <img class="img_height" src="{{storageUrl_h($attachment->path.'pdf.jpg')}}">
                                                             <a href="{{$image}}" target="_blank" download="{{$image}}">Download
                                                                 <img src="{{ asset('vendors/images/download.png') }}"
                                                                      width="15" class="mx-2"></a>
@@ -914,7 +916,7 @@
                                                         </div>
                                                     @else
                                                         <div class="col-md-3 text-center my-3">
-                                                            <img src="{{$image}}">
+                                                            <img class="img_height" src="{{$image}}">
                                                             <a href="{{$image}}" target="_blank" download="{{$image}}">Download
                                                                 <img src="{{ asset('vendors/images/download.png') }}"
                                                                      width="15" class="mx-2"></a>
@@ -937,7 +939,7 @@
 
                                                     @if(strpos($image, 'pdf') !== false)
                                                         <div class="col-md-3 text-center my-3">
-                                                            <img src="{{storageUrl_h('images/file.png')}}">
+                                                            <img class="img_height" src="{{storageUrl_h('images/file.png')}}">
                                                             <a href="{{ $image }}" target="_blank"
                                                                download="{{ $image }}">Download
                                                                 <img src="{{ asset('vendors/images/download.png') }}"
@@ -948,7 +950,7 @@
 
                                                         <div class="col-md-3 text-center my-3">
                                                             <img src="{{storageUrl_h($attachment->path.'stl.jpg')}}">
-                                                            <a href="{{ $image }}" target="_blank"
+                                                            <a class="img_height" href="{{ $image }}" target="_blank"
                                                                download="{{ $image }}">Download
                                                                 <img src="{{ asset('vendors/images/download.png') }}"
                                                                      width="15" class="mx-2"></a>
@@ -956,7 +958,7 @@
                                                         </div>
                                                     @else
                                                         <div class="col-md-3 text-center my-3">
-                                                            <img src="{{ $image }}">
+                                                            <img class="img_height" src="{{ $image }}">
                                                             <a href="{{ $image }}" target="_blank"
                                                                download="{{ $image }}">Download
                                                                 <img src="{{ asset('vendors/images/download.png') }}"
