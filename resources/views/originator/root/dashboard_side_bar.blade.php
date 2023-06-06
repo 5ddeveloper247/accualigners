@@ -436,7 +436,7 @@
     <div class="brand-log zamalogoda floatright ">
         <div class="logodata p-4">
             <img src="{{ asset('vendors/images/logo.png') }}">
-            <a href="index.html">
+            <a href="javascript:void(0)">
                 <h5 class="  txtcolor">AccuAligners</h5>
             </a>
             <p class="txtcolor ">Clear <span style="font-weight: bold;">Solutions</span></p>
