@@ -65,7 +65,7 @@
 </style>
 
 @php
-$title = 'Support';
+$title = 'Help/Support';
 $currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $path = parse_url($currentUrl, PHP_URL_PATH);
 @endphp
@@ -85,7 +85,7 @@ $path = parse_url($currentUrl, PHP_URL_PATH);
                             <div class="row">
                                 <div class="col-md-12 borderbottom">
                                     <img src="{{asset('vendors/images/logo.png')}}" width="30">
-                                    <span>Help & Support Service</span>
+                                    <span>Chat Support</span>
                                     <div class="sendnoti">
                                         <a class="d-block text-center py-3 cursor mt-3" onclick="sendNotification()">Send Notification</a>
                                         <form action="search_case" method="POST">
@@ -139,7 +139,7 @@ $path = parse_url($currentUrl, PHP_URL_PATH);
                             <div class="row">
                                 <div class="col-md-12 borderbottom pb-3">
                                     <img src="{{asset('vendors/images/logo.png')}}" width="30">
-                                    <span style="font-weight: bold;font-size:20px;">Help & Support Service</span>
+                                    <span style="font-weight: bold;font-size:20px;">Chat Support</span>
 
                                 </div>
                             </div>
