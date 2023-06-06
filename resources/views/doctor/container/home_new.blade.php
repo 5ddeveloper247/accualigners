@@ -221,7 +221,7 @@ font-size: 10px">Total Patients</span>
                      <div class="col-xl-4 mb-30">
                         <div class="carx2 input">
                         <form action="{{url(Request()->path())}}" id="filter-form" method="get">
-                                <input type="text" name="filter" class="form-control" placeholder="Search...">
+                                <input type="text" name="filter" class="form-control" placeholder="Search..." value="{{Request()->has('filter') ? Request()->get('filter') : ''}}">
                                 <div class="searchicons">
                                     <button type="submit" style="background: none;border:none;"><i class="bi bi-search" style="margin-right:12px;"></i></button>|
                                     <a href="{{Request()->has('filter') ? url(Request()->path()) : 'JavaScript:void(0);'}}">
