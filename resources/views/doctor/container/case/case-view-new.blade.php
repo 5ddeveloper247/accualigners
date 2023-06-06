@@ -64,7 +64,7 @@
     }
 </style>
 @php
-    $title = 'Case';
+    $title = 'Cases';
 @endphp
 @extends('originator.root.dashboard_side_bar', ['title' => $title])
 @section('title', 'Case')
