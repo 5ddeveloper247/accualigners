@@ -1047,7 +1047,7 @@
                                                     <th style="font-size: 10px!important;" class="case_empty"
                                                         id="dentist_name">Mujtaba Fatih
                                                     </th>
-                                                    <td style="font-size: 8px!important;">Number of trays:</td>
+                                                    <td style="font-size: 8px!important;">Number Of Trays:</td>
                                                     <th style="font-size: 10px!important;" class="case_empty"
                                                         id="no_of_tray">10
                                                     </th>

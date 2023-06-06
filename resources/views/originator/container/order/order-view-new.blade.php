@@ -124,7 +124,7 @@
                                             <th>Payment Type</th>
                                             <th>Shipping Free</th>
                                             <th>Total</th>
-                                            <th>Stutas</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                             </thead>
 
@@ -152,7 +152,7 @@
                                                                  aria-labelledby="dropdownMenuButton">
                                                                 <a class="dropdown-item"
                                                                    style="text-align: center;padding: 0;text-decoration: none;"
-                                                                   href=" {{ $order->order_url }}">Courier Link</a>
+                                                                   href=" {{ !empty($order->order_url) ? $order->order_url : 'javascript:void(0)' }}">Courier Link</a>
                                                                 <a class="dropdown-item"
                                                                    style="text-align: center;padding: 0;text-decoration: none;"
                                                                    onclick="view('{{ $order->id }}')">View Details</a>
@@ -268,7 +268,7 @@
             $('#order_details').removeClass('d-none');
             $.ajax({
                 url: base_url + '/order_edit/' + id_int,
-                method: "GET",              
+                method: "GET",
                 beforeSend: function(){
                 ajaxLoadercount();
                         },
@@ -599,7 +599,7 @@
                                         <th class="case_empty" id="order_id">1</th>
                                         <td>Dentist’s Name:</td>
                                         <th class="case_empty" id="dentist_name">Mujtaba Fatih</th>
-                                        <td>Number of trays:</td>
+                                        <td>Number Of Trays:</td>
                                         <th class="case_empty" id="no_of_tray">10</th>
                                         {{-- <td >Shipping Charges:</td>
                                         <th   class="case_empty" id="shipping_charges">0 AED</th> --}}
