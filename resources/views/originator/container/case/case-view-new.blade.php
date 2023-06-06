@@ -228,7 +228,7 @@
         <div class="row">
             <div class="col-xl-12 ">
                 <div class="row">
-                    <div class="col-md-5 onedo ">
+                    <div class="col-md-4 onedo ">
                         <div class="">
                             <div class="widget-data">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -250,7 +250,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 fourdo mb-30">
+                    <div class="col-md-4 fourdo mb-30">
                         <div class="carx2 input">
 
                             <form action="{{ url('admin/case') }}" id="filter-form" method="get">

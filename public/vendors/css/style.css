@@ -964,11 +964,11 @@ input:checked+.slider:before {
 }
 
 .searchicons {
-
+    background: white;
     position: absolute;
-    top: 11px;
-    right: 18px;
-    font-size: 20px;
+    top: 6px;
+    right: 10px;
+    font-size: 21px;
 }
 
 .searchicons i {
