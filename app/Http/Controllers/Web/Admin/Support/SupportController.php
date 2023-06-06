@@ -51,11 +51,11 @@ class SupportController extends Controller
     use EmailTrait;
 
     public function index_new(Request $request)
-    {   
-        
+    {
+
         try {
-            
-            $case = CaseModel::with(['doctor'=>function($q2){
+
+            $case = CaseModel::has('doctor')->with(['doctor'=>function($q2){
                 $q2->select(['id','name','picture']);
             }])->get();
             return view('originator.container.helpSupport.support', compact('case'));
@@ -63,11 +63,11 @@ class SupportController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
-    
+
     public function search_result(Request $request)
-    {   
+    {
         try {
-            
+
             $case = CaseModel::where('id',$request->case_id)->with(['doctor'=>function($q2){
                 $q2->select(['id','name','picture']);
             }])->get();
@@ -78,7 +78,7 @@ class SupportController extends Controller
     }
 
     public function specific_case_concerns(Request $request)
-    {   
+    {
         try {
             $concerns = CaseConcern::where('case_id', $request->case_id)->get();
             return response()->json($concerns);
@@ -88,7 +88,7 @@ class SupportController extends Controller
     }
 
     public function add_message(Request $request)
-    {   
+    {
         $newMessage = [
             'case_id' =>  $request->case_id,
             'message' =>  $request->message,
@@ -112,13 +112,13 @@ class SupportController extends Controller
     }
 
     function sendNotificationMail(Request $request){
-       
+
         $case = CaseModel::where('id',$request->case_id)->with('doctor')->first();
         $lastMessage = CaseConcern::where('case_id',$request->case_id)->latest()->first();
-        
+
         /*________send email code________*/
         if(!empty($case->doctor)){
-                
+
             $username = $case->doctor->name;
             $to = $case->doctor->email;
             $subject = "Admin Responded";
@@ -129,7 +129,7 @@ class SupportController extends Controller
 
             $html = view('emails.notificationEmail', $data)->render();
             $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+
             $data['done'] = true;
             $data['msg'] = 'Email Sent successfully';
             return $data;
@@ -137,9 +137,9 @@ class SupportController extends Controller
         else{
             $data['done'] = false;
             $data['msg'] = 'Error in sending Email';
-            
+
             return $data;
         }
     }
-   
+
 }

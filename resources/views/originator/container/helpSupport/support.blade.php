@@ -1,6 +1,6 @@
 
 <style>
-    
+
     body{
         display: none;
     }
@@ -14,7 +14,7 @@
     right: 10px;
 }
     .dall{
-        
+
     POSITION: RELATIVE;
     TOP: -95px;
     right: 13px;
@@ -102,26 +102,27 @@ $path = parse_url($currentUrl, PHP_URL_PATH);
                                 <div class="col-md-12  py-2 bground">
                                     <div class="row">
                                         <div class="col-md-2 p-0 ">
-                                            <img src="{{$case_item->doctor->picture}}" width="70" class="mx-2">
+
+                                            <img src="{{$case_item->doctor->picture ?? asset('storage/images/no-image.png')}}" width="70" class="mx-2">
                                         </div>
                                         <div class="col-md-7">
-                                            <h5 style="font-size: 12px;" class="mt-2 name"> {{$case_item->doctor->name}} <br> Case_ID:{{$case_item->id}}</h5>
+                                            <h5 style="font-size: 12px;" class="mt-2 name"> {{$case_item->doctor->name ?? 'Deleted Doctor'}} <br> Case_ID:{{$case_item->id}}</h5>
                                             <span style="font-size: 11px;"> {{$case_item->lastConcern->message}} </span>
-                                        </div>  
+                                        </div>
                                         <div class="col-md-3 mt-2">
-                                          <p style="font-size: 11px;"> 
+                                          <p style="font-size: 11px;">
                                           @php
                                             $ip = request()->ip();
                                             $api_key = "4eb0722e7f464951aef4c772283952fb"; // replace with your actual API key
                                             $api_url = "https://api.ipgeolocation.io/timezone?apiKey={$api_key}&ip={$ip}";
                                             $api_response = json_decode(file_get_contents($api_url), true);
                                             $user_timezone = new DateTimeZone($api_response['timezone']);
-                            
+
                                             $created_at = new DateTime($case_item->lastConcern->created_at, new DateTimeZone('UTC'));
                                             $created_at->setTimezone($user_timezone);
-                                @endphp  
+                                @endphp
 
-                                {{ $created_at->format('H:i A') }}                                 
+                                {{ $created_at->format('H:i A') }}
                                           </p>
                                         </div>
                                     </div>
@@ -132,7 +133,7 @@ $path = parse_url($currentUrl, PHP_URL_PATH);
                            @if($path != '/admin/support')
                             <a href="/admin/support" type="button" class="goback"> <- Go Back</a>
                           @endif
-                            
+
                         </div>
                         <div class="col-xl-8 ">
                             <div class="row">
@@ -143,22 +144,22 @@ $path = parse_url($currentUrl, PHP_URL_PATH);
                                 </div>
                             </div>
                             <div id="cincern_msg">
-                                
+
                             </div>
                             <div class="row mt-3  mainclass m-2" style="top:0 !important; margin-bottom: 12px !important;">
 
                                 <div class="col-md-12 dall  ">
                                     <input type="" class="form-control" placeholder="Type Something..." id="admin_response" readonly>
                                     <div class="item" style="right:0 !important;">
-                                   
+
                                         <!-- <img src="images/i1.png">
                                         <img src="images/i2.png">
                                         <img src="images/i3.png">
                                         <img src="images/Emoji-smile.png"> -->
                                         <button type="button" data-id="" id="btnSend" class="bgcolor text-white py-2 px-4 mt-5" onclick="sendMessage(this)" disabled>Send</button>
                                 </div>
-                               
-                       
+
+
                                 </div>
                            </div>
                         </div>
