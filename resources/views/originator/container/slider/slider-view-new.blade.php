@@ -127,7 +127,7 @@ $title = 'Sliders';
                         </div>
                         <div class="col-md-6 bold ">
                                   <h6 class="textcolor pt-3" style="font-size: 14px;">Upload Profile Picture</h6>
-                            <span style="font-size: 12px;">The file Dimesions should be height: 380 px width: 980 px</span>
+                            <span style="font-size: 12px;">The file Dimensions should be height: 380 px width: 980 px</span>
 
                         </div>
                         <div class="col-md-3 px-4 bold pt-4">
@@ -140,7 +140,7 @@ $title = 'Sliders';
 
                     <div class="row  pt-4">
                                <div class="col-md-12 bold ">
-                            <span>Sort order*</span>
+                            <span>Sort Order*</span>
                             <input type="text" name="ElementId" id="ElementId" hidden/>
                             <input type="number" name="sort_order" id="sort_order" class="form-control" placeholder="Enter Here">
                         </div>
