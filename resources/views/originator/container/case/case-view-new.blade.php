@@ -309,7 +309,7 @@
                                                 <th style="white-space:nowrap;">Treatment Plan</th>
                                                 <th>Aligners</th>
                                                 <th>Status</th>
-                                                <th>Link Doctor</th>
+                                                <th style="white-space: nowrap;">Link Doctor</th>
                                                 <th>View</th>
                                                 <th>Edit</th>
                                             </tr>
