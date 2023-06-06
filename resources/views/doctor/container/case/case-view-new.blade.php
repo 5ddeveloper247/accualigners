@@ -225,8 +225,8 @@
                     <div class="col-xl-4 fourdo mb-30">
                         <div class="carx2 input">
 
-                            <form action="{{ url('admin/case_new') }}" id="filter-form" method="get">
-                                <input type="text" class="form-control" name="filter" placeholder="Search..." value="{{Request()->has('filter') ? Request()->get('filter') : ''}}">
+                            <form action="{{ url(Request()->path()) }}" id="filter-form" method="GET">
+                                <input type="text" class="form-control" name="filter" placeholder="Search..."  value="{{Request()->has('filter') ? Request()->get('filter') : ''}}">
                                 <div class="searchicons">
                                     <button type="submit" style="background: none;border:none;">
                                         <i class="bi bi-search" style="margin-right:12px;"></i>|

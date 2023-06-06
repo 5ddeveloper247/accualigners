@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\Doctor\CaseCont;
 
 use App\Http\Controllers\Controller;
-use DateTimeZone;
 use App\Http\Requests\Web\Admin\CaseReq\CaseAddAdviceRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseAlignerKitDeliveryRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseDeleteVideoRequest;
@@ -12,15 +11,13 @@ use App\Http\Requests\Web\Admin\CaseReq\CaseEmbeddedVideoRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseImpressionKitReceivedRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseNoOfDaysUpdateRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseNoOfTraysUpdateRequest;
-use App\Http\Requests\Web\Admin\CaseReq\CaseUploadVideoRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseStoreRequest;
 use App\Http\Requests\Web\Admin\CaseReq\CaseUpdateRequest;
-use App\Http\Requests\Web\General\CaseReq\CaseUploadAttachmentRequest;
+use App\Http\Requests\Web\Admin\CaseReq\CaseUploadVideoRequest;
 use App\Http\Resources\Api\Patient\CaseRes\CaseAttachmentResource;
 use App\Http\Resources\Api\Patient\Order\OrderResource;
 use App\Http\Resources\Api\Patient\User\PatientResource;
 use App\Http\Resources\Api\Patient\User\UserResource;
-use Illuminate\Support\Facades\Mail;
 use App\Models\Appointment;
 use App\Models\CaseAttachment;
 use App\Models\CaseClinicalCondition;
@@ -34,17 +31,13 @@ use App\Models\PasswordReset;
 use App\Models\Patient;
 use App\Models\Setting;
 use App\Models\User;
-use App\Notifications\Auth\NewPatientFromWeb;
-use App\Notifications\CaseNotification\VideoUploadedNotification;
-use App\Notifications\CaseNotification\TrayModificationNotification;
+use App\Traits\EmailTrait;
+use DateTimeZone;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use App\Traits\EmailTrait;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 
 class CaseController extends Controller
@@ -53,11 +46,13 @@ class CaseController extends Controller
 
     protected $path;
     protected $attachment_path;
+
     public function __construct()
     {
         $this->path = config('custom.attachment_path.case_video');
         $this->attachment_path = config('custom.attachment_path.case');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -65,29 +60,29 @@ class CaseController extends Controller
      */
     public function index(Request $request)
     {
-         try {
+        try {
             $ClinicalConditions = ClinicalCondition::all();
             $ClinicDoctors = ClinicDoctor::all();
-             $cases = CaseModel::select('*')->where('doctor_id', $request->user()->id)->orderBy('updated_at', 'desc');
+            $cases = CaseModel::select('*')->where('doctor_id', $request->user()->id)->orderBy('updated_at', 'desc');
 
-             if ($request->has('filter') && !empty($request->filter)) {
-                     $filter = $request->filter;
-                             $cases = $cases->where(function ($query) use ($filter) {
-                     $query->where('id', $filter)
+            if ($request->has('filter') && !empty($request->filter)) {
+                $filter = $request->filter;
+                $cases = $cases->where(function ($query) use ($filter) {
+                    $query->where('id', $filter)
                         ->orWhere('name', 'like', "%" . $filter . "%")
                         ->orWhere('phone_no', 'like', "%" . $filter . "%")
                         ->orWhere('gender', $filter)
                         ->orWhere('email', 'like', "%" . $filter . "%");
                 });
             }
-                    $cases = $cases->orderBy('id', 'desc')->get();
-                   return view('doctor.container.case.case-view-new', compact('cases','ClinicalConditions','ClinicDoctors'));
+            $cases = $cases->orderBy('id', 'desc')->get();
+            return view('doctor.container.case.case-view-new', compact('cases', 'ClinicalConditions', 'ClinicDoctors'));
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -96,26 +91,27 @@ class CaseController extends Controller
     {
         try {
 
-             $cases = CaseModel::select('*')->where('doctor_id', $request->user()->id)->orderBy('updated_at', 'desc');
-             $ClinicalConditions = ClinicalCondition::all();
-             $ClinicDoctors = ClinicDoctor::all();
-            if ($request->has('filter') && !empty($request->filter)){
-                 $filter = $request->filter;
-                 $cases = $cases->where(function ($query) use ($filter){
-                     $query->where('id', $filter)
+            $cases = CaseModel::select('*')->where('doctor_id', $request->user()->id)->orderBy('updated_at', 'desc');
+            $ClinicalConditions = ClinicalCondition::all();
+            $ClinicDoctors = ClinicDoctor::all();
+            if ($request->has('filter') && !empty($request->filter)) {
+                $filter = $request->filter;
+                $cases = $cases->where(function ($query) use ($filter) {
+                    $query->where('id', $filter)
                         ->orWhere('name', 'like', "%" . $filter . "%")
                         ->orWhere('phone_no', 'like', "%" . $filter . "%")
                         ->orWhere('gender', $filter)
                         ->orWhere('email', 'like', "%" . $filter . "%");
                 });
             }
-             $cases = $cases->orderBy('id', 'desc')->paginate(15);
+            $cases = $cases->orderBy('id', 'desc')->paginate(15);
 
-             return view('doctor.container.case.case-view', compact('cases','ClinicalConditions','ClinicDoctors'));
-         }catch (Exception $e) {
+            return view('doctor.container.case.case-view', compact('cases', 'ClinicalConditions', 'ClinicDoctors'));
+        } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
-         }
-     }
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -133,143 +129,143 @@ class CaseController extends Controller
         }
     }
 
-    public function case_store(CaseStoreRequest $request){
+    public function case_store(CaseStoreRequest $request)
+    {
         try {
 
             DB::beginTransaction();
             $user_id = $request->user()->id;
             $doctor_id = auth()->user()->id;
             $password = Str::random(6);
-           $request->request->add(['created_by' => $user_id]);
-           $request->request->add(['password' => $password]);
+            $request->request->add(['created_by' => $user_id]);
+            $request->request->add(['password' => $password]);
 
-           $user = User::where('email', $request->email)->first();
-           $patientData = [
-               'name' =>  $request->name,
-               'phone' =>  $request->phone_no,
-               'gender' =>  $request->gender,
-               'dob' =>  $request->dob,
-           ];
-           if (!empty($user) && isset($user->id)) {
-               User::where('id', $user->id)->update($patientData);
-           } else {
-               if($request->email){
-                   $patientData['email'] = $request->email;
-                   $user = User::create($patientData);
-                   $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
-                   $otp = rand(10000, 99999);
+            $user = User::where('email', $request->email)->first();
+            $patientData = [
+                'name' => $request->name,
+                'phone' => $request->phone_no,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+            ];
+            if (!empty($user) && isset($user->id)) {
+                User::where('id', $user->id)->update($patientData);
+            } else {
+                if ($request->email) {
+                    $patientData['email'] = $request->email;
+                    $user = User::create($patientData);
+                    $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
+                    $otp = rand(10000, 99999);
 
-                   $PasswordReset = new PasswordReset();
-                   $PasswordReset->email = $request->email;
-                   $PasswordReset->token = $token;
-                   $PasswordReset->otp = $otp;
-                   if ($PasswordReset->save()) {
-                       // $user->notify(new NewPatientFromWeb($PasswordReset));
-                   }
+                    $PasswordReset = new PasswordReset();
+                    $PasswordReset->email = $request->email;
+                    $PasswordReset->token = $token;
+                    $PasswordReset->otp = $otp;
+                    if ($PasswordReset->save()) {
+                        // $user->notify(new NewPatientFromWeb($PasswordReset));
+                    }
 
-                   $request->request->add(['patient_id' => $user->id]);
-                   Patient::firstOrCreate(['user_id' => $user->id, 'doctor_id' => $doctor_id], ['user_id' => $user->id, 'doctor_id' => $doctor_id]);
-             }
-           }
+                    $request->request->add(['patient_id' => $user->id]);
+                    Patient::firstOrCreate(['user_id' => $user->id, 'doctor_id' => $doctor_id], ['user_id' => $user->id, 'doctor_id' => $doctor_id]);
+                }
+            }
 
-           $Setting = Setting::first();
-           $request->request->add(['doctor_id' => $doctor_id]);
-           $request->request->add(['arch_to_treat' => $request->has('arch_to_treat') ? 'UPPER' : 'LOWER']);
-           $request->request->add(['a_p_relationship' => $request->has('a_p_relationship') ? 'MAINTAIN' : 'IMPROVE']);
-           $request->request->add(['overjet' => $request->has('overjet') ? 'MAINTAIN' : 'IMPROVE']);
-           $request->request->add(['overbite' => $request->has('overbite') ? 'MAINTAIN' : 'IMPROVE']);
-           $request->request->add(['midline' => $request->has('midline') ? 'MAINTAIN' : 'IMPROVE']);
+            $Setting = Setting::first();
+            $request->request->add(['doctor_id' => $doctor_id]);
+            $request->request->add(['arch_to_treat' => $request->has('arch_to_treat') ? 'UPPER' : 'LOWER']);
+            $request->request->add(['a_p_relationship' => $request->has('a_p_relationship') ? 'MAINTAIN' : 'IMPROVE']);
+            $request->request->add(['overjet' => $request->has('overjet') ? 'MAINTAIN' : 'IMPROVE']);
+            $request->request->add(['overbite' => $request->has('overbite') ? 'MAINTAIN' : 'IMPROVE']);
+            $request->request->add(['midline' => $request->has('midline') ? 'MAINTAIN' : 'IMPROVE']);
 
-           $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
-           $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
-           $arrRes['msg']  = "Data saved successfully";
-           $arrRes['done'] = true;
+            $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
+            $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
+            $arrRes['msg'] = "Data saved successfully";
+            $arrRes['done'] = true;
 
-           $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount','address','impression_kit_order_id', 'created_by', 'embedded_url'));
-           if ($Case) {
+            $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount', 'address', 'impression_kit_order_id', 'created_by', 'embedded_url'));
+            if ($Case) {
                 $user = User::find($doctor_id);
                 $data['case'] = $Case;
                 $case_id = $Case->id;
                 $username = $request->name;
                 $to = auth()->user()->email;
-               $subject = "New Case (ID: ". $case_id .") Received";
-               $data['case_id'] = $case_id;
-               $data['doctor_name'] = auth()->user()->name;
-               $data['patient_name'] = $username;
-               $html = view('emails.caseRegistered', $data)->render();
-               $check = $this->sendMailViaPostMark($html, $to, $subject);
+                $subject = "New Case (ID: " . $case_id . ") Received";
+                $data['case_id'] = $case_id;
+                $data['doctor_name'] = auth()->user()->name;
+                $data['patient_name'] = $username;
+                $html = view('emails.caseRegistered', $data)->render();
+                $check = $this->sendMailViaPostMark($html, $to, $subject);
 
 
-               $to = "info@accualigners.com";
-               $html = view('emails.caseRegisteredAdmin', $data)->render();
-               $check = $this->sendMailViaPostMark($html, $to, $subject);
+                $to = "info@accualigners.com";
+                $html = view('emails.caseRegisteredAdmin', $data)->render();
+                $check = $this->sendMailViaPostMark($html, $to, $subject);
 
-               if (!empty($request->impression_kit_order_id))
-                   Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
+                if (!empty($request->impression_kit_order_id))
+                    Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
 
-               if (!empty($request->clinical_conditions)) {
-                   $CaseClinicalCondition = [];
-                   foreach ($request->clinical_conditions as $clinical_condition) {
-                       $CaseClinicalCondition[] = [
-                           'case_id' => $case_id,
-                           'clinical_condition_id' => $clinical_condition,
-                           'created_by' => $user_id
+                if (!empty($request->clinical_conditions)) {
+                    $CaseClinicalCondition = [];
+                    foreach ($request->clinical_conditions as $clinical_condition) {
+                        $CaseClinicalCondition[] = [
+                            'case_id' => $case_id,
+                            'clinical_condition_id' => $clinical_condition,
+                            'created_by' => $user_id
 
-                       ];
-                   }
+                        ];
+                    }
 
-                   CaseClinicalCondition::insert($CaseClinicalCondition);
-               }
-               $attachments = explode(',', $request->attachment_ids);
-               if (!empty($attachments)) {
-                   CaseAttachment::whereIn('id', $attachments)->update([
-                       'case_id' => $case_id
-                   ]);
-               }
+                    CaseClinicalCondition::insert($CaseClinicalCondition);
+                }
+                $attachments = explode(',', $request->attachment_ids);
+                if (!empty($attachments)) {
+                    CaseAttachment::whereIn('id', $attachments)->update([
+                        'case_id' => $case_id
+                    ]);
+                }
 
-                 //Image attachment update
-                 if (!empty($request->image_attachment_ids))
-                 {
-                     foreach ($request->image_attachment_ids as $id) {
-                     if($id != 0){
-                                 CaseAttachment::where('id', $id)->update(['case_id' => $case_id]);
+                //Image attachment update
+                if (!empty($request->image_attachment_ids)) {
+                    foreach ($request->image_attachment_ids as $id) {
+                        if ($id != 0) {
+                            CaseAttachment::where('id', $id)->update(['case_id' => $case_id]);
 
-                                 }
-                             }
-                 }
+                        }
+                    }
+                }
 
 
-               DB::commit();
+                DB::commit();
 
-                 $data['settings'] = $Setting;
-                 $data['msg']  = "Data saved successfully";
-                 $data['done'] = true;
+                $data['settings'] = $Setting;
+                $data['msg'] = "Data saved successfully";
+                $data['done'] = true;
 
-                  return response()->json($data);
+                return response()->json($data);
 
-               //  return redirect(route('doctor.case.payment.index', ['case' => $case_id]))->with(['successMessage' => 'Created successfully']);
-           }
-        //    DB::rollBack();
-        //    $arrRes['done'] = false;
-        //    $arrRes['msg'] = 'Error in saving Data';
-        //    $arrRes['case'] = '';
-        //    return response()->json($arrRes);
-           // return redirect()->back()->withErrors('Something went wrong');
-       } catch (Exception $e) {
-           DB::rollBack();
-           $arrRes['done'] = false;
-           $arrRes['msg'] = 'Error in saving Data';
-           $arrRes['case'] = '';
-           return response()->json($arrRes);
-           //  return redirect()->back()->withErrors($e->getMessage());
-       }
+                //  return redirect(route('doctor.case.payment.index', ['case' => $case_id]))->with(['successMessage' => 'Created successfully']);
+            }
+            //    DB::rollBack();
+            //    $arrRes['done'] = false;
+            //    $arrRes['msg'] = 'Error in saving Data';
+            //    $arrRes['case'] = '';
+            //    return response()->json($arrRes);
+            // return redirect()->back()->withErrors('Something went wrong');
+        } catch (Exception $e) {
+            DB::rollBack();
+            $arrRes['done'] = false;
+            $arrRes['msg'] = 'Error in saving Data';
+            $arrRes['case'] = '';
+            return response()->json($arrRes);
+            //  return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CaseStoreRequest $request)
@@ -286,15 +282,15 @@ class CaseController extends Controller
 
             $user = User::where('email', $request->email)->first();
             $patientData = [
-                'name' =>  $request->name,
-                'phone' =>  $request->phone_no,
-                'gender' =>  $request->gender,
-                'dob' =>  $request->dob,
+                'name' => $request->name,
+                'phone' => $request->phone_no,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
             ];
             if (!empty($user) && isset($user->id)) {
                 User::where('id', $user->id)->update($patientData);
             } else {
-                if($request->email){
+                if ($request->email) {
                     $patientData['email'] = $request->email;
                     $user = User::create($patientData);
                     $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
@@ -310,7 +306,7 @@ class CaseController extends Controller
 
                     $request->request->add(['patient_id' => $user->id]);
                     Patient::firstOrCreate(['user_id' => $user->id, 'doctor_id' => $doctor_id], ['user_id' => $user->id, 'doctor_id' => $doctor_id]);
-              }
+                }
             }
 
             $Setting = Setting::first();
@@ -324,7 +320,7 @@ class CaseController extends Controller
             $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
             $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
 
-            $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment','additional_comment', 'comment', 'processing_fee_amount','address', 'impression_kit_order_id', 'created_by', 'embedded_url'));
+            $Case = CaseModel::create($request->only('patient_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount', 'address', 'impression_kit_order_id', 'created_by', 'embedded_url'));
 
             if ($Case) {
                 $user = User::find($doctor_id);
@@ -332,7 +328,7 @@ class CaseController extends Controller
                 $username = $request->name;
 
                 $to = auth()->user()->email;
-                $subject = "Case (ID: ". $case_id .") Received";
+                $subject = "Case (ID: " . $case_id . ") Received";
                 $data['case_id'] = $case_id;
                 $data['doctor_name'] = auth()->user()->name;
                 $data['patient_name'] = $username;
@@ -350,7 +346,7 @@ class CaseController extends Controller
                 if (!empty($request->clinical_conditions)) {
                     $CaseClinicalCondition = [];
                     foreach ($request->clinical_conditions as $clinical_condition) {
-                         $CaseClinicalCondition[] = [
+                        $CaseClinicalCondition[] = [
                             'case_id' => $case_id,
                             'clinical_condition_id' => $clinical_condition,
                             'created_by' => $user_id
@@ -367,16 +363,15 @@ class CaseController extends Controller
                 }
 
 
-                 //Image attachment update
-                 if (!empty($request->image_attachment_ids))
-                 {
-                     foreach ($request->image_attachment_ids as $id) {
-                     if($id != 0){
-                                 CaseAttachment::where('id', $id)->update(['case_id' => $case_id]);
+                //Image attachment update
+                if (!empty($request->image_attachment_ids)) {
+                    foreach ($request->image_attachment_ids as $id) {
+                        if ($id != 0) {
+                            CaseAttachment::where('id', $id)->update(['case_id' => $case_id]);
 
-                                 }
-                             }
-                 }
+                        }
+                    }
+                }
 
                 DB::commit();
                 $case = CaseModel::find($case_id);
@@ -397,7 +392,7 @@ class CaseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     // public function show(CaseEditRequest $request, $id)
@@ -419,7 +414,7 @@ class CaseController extends Controller
     //     }
     // }
 
-        /*_____________new show function_____________*/
+    /*_____________new show function_____________*/
     public function show(CaseEditRequest $request, $id)
     {
 
@@ -430,7 +425,7 @@ class CaseController extends Controller
             $selfies = $case->selfies->where('tray_no', 1);
             $time_logs = $case->time_logs->where('tray_no', 1);
             $data['settings'] = Setting::first();
-            $data['ClinicDoctors'] =  ClinicDoctor::where(['doctor_id' => auth()->user()->id])->get();
+            $data['ClinicDoctors'] = ClinicDoctor::where(['doctor_id' => auth()->user()->id])->get();
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
             // dd($data['appointments']->toArray());
             return view('doctor.container.case.case-view-form-new', $data);
@@ -439,7 +434,8 @@ class CaseController extends Controller
         }
     }
 
-    public function show_new($id, Request $request){
+    public function show_new($id, Request $request)
+    {
         try {
             $case = CaseModel::where('id', $id)->where('doctor_id', $request->user()->id)->first();
             $data['edit_values'] = $case;
@@ -454,13 +450,13 @@ class CaseController extends Controller
 
             $data['user_timezone'] = $user_timezone->getName(); // Set user's timezone
 
-            $order= Order::where('case_id','=',$id)->first();
-            $data['order']=$order;
+            $order = Order::where('case_id', '=', $id)->first();
+            $data['order'] = $order;
 
             $selfies = $case->selfies->where('tray_no', 1);
             $time_logs = $case->time_logs->where('tray_no', 1);
             $data['settings'] = Setting::first();
-            $data['ClinicDoctors'] =  ClinicDoctor::where(['doctor_id' => auth()->user()->id])->get();
+            $data['ClinicDoctors'] = ClinicDoctor::where(['doctor_id' => auth()->user()->id])->get();
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
             // dd($data['appointments']->toArray());
             return view('doctor.container.case.case-view-form-new', $data);
@@ -468,6 +464,7 @@ class CaseController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
+
     public function edit(CaseEditRequest $request, $id)
     {
         try {
@@ -501,8 +498,8 @@ class CaseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(CaseUpdateRequest $request, $id)
@@ -517,15 +514,15 @@ class CaseController extends Controller
 
             $user = User::where('email', $request->email)->first();
             $patientData = [
-                'name' =>  $request->name,
-                'phone' =>  $request->phone_no,
-                'gender' =>  $request->gender,
-                'dob' =>  $request->dob,
+                'name' => $request->name,
+                'phone' => $request->phone_no,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
             ];
             if (!empty($user) && isset($user->id)) {
                 User::where('id', $user->id)->update($patientData);
             } else {
-                if($request->email){
+                if ($request->email) {
                     $patientData['email'] = $request->email;
                     $user = User::create($patientData);
                     $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
@@ -541,7 +538,7 @@ class CaseController extends Controller
 
                     $request->request->add(['patient_id' => $user->id]);
                     Patient::updateOrCreate(['user_id' => $user->id, 'user_id' => $user->id], ['clinic_doctor_id' => $request->doctor_id, 'doctor_id' => $request->doctor_id, 'user_id' => $user->id]);
-              }
+                }
             }
 
             $request->request->add(['doctor_id' => $Case->doctor_id]);
@@ -557,7 +554,7 @@ class CaseController extends Controller
             $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
 
             $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
-            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment','additional_comment', 'comment', 'processing_fee_amount', 'impression_kit_order_id', 'created_by'));
+            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount', 'impression_kit_order_id', 'created_by'));
 
             if ($Case) {
                 $case_id = $id;
@@ -591,6 +588,7 @@ class CaseController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
+
     public function update_new(Request $request)
     {
         $id = $request['ElementId'];
@@ -604,18 +602,18 @@ class CaseController extends Controller
             $request->request->add(['password' => $password]);
 
             $user = User::where('email', $request->email)->first();
-             $patientData = [
-                'name' =>  $request->name,
-                'phone' =>  $request->phone_no,
-                'gender' =>  $request->gender,
-                'dob' =>  $request->dob,
-             ];
+            $patientData = [
+                'name' => $request->name,
+                'phone' => $request->phone_no,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+            ];
 
-             if (!empty($user) && isset($user->id)) {
+            if (!empty($user) && isset($user->id)) {
                 User::where('id', $user->id)->update($patientData);
-             } else {
+            } else {
 
-                if($request->email){
+                if ($request->email) {
                     $patientData['email'] = $request->email;
                     $user = User::create($patientData);
                     $token = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 60);
@@ -631,7 +629,7 @@ class CaseController extends Controller
 
                     $request->request->add(['patient_id' => $user->id]);
                     Patient::updateOrCreate(['user_id' => $user->id, 'user_id' => $user->id], ['clinic_doctor_id' => $request->doctor_id, 'doctor_id' => $request->doctor_id, 'user_id' => $user->id]);
-              }
+                }
             }
 
 
@@ -649,7 +647,7 @@ class CaseController extends Controller
             $request->request->add(['dob' => date("Y-m-d", strtotime($request->dob))]);
 
             $request->request->add(['processing_fee_amount' => $Setting->case_fee]);
-            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount','address', 'impression_kit_order_id', 'created_by','embedded_url'));
+            $Case->update($request->only('patient_id', 'clinic_doctor_id', 'doctor_id', 'name', 'email', 'phone_no', 'gender', 'dob', 'clinical_comment', 'arch_to_treat', 'a_p_relationship', 'overjet', 'overbite', 'midline', 'prescription_comment', 'additional_comment', 'comment', 'processing_fee_amount', 'address', 'impression_kit_order_id', 'created_by', 'embedded_url'));
 
             if ($Case) {
 
@@ -680,13 +678,12 @@ class CaseController extends Controller
                 DB::commit();
 
                 $case = CaseModel::find($case_id);
-                if($case->processing_fee_paid == 0)
-                {
+                if ($case->processing_fee_paid == 0) {
                     $settings = Setting::first();
                     $data['case'] = $case;
                     $data['settings'] = $settings;
                     return response()->json($data);
-                }else{
+                } else {
                     $arrRes['done'] = true;
                     $arrRes['msg'] = 'Data updated successfully';
                     return response()->json($arrRes);
@@ -713,31 +710,27 @@ class CaseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $recordIds = explode(",",$id);
-        try{
-            foreach($recordIds as $id)
-            {
+        $recordIds = explode(",", $id);
+        try {
+            foreach ($recordIds as $id) {
 
 
                 $case = CaseModel::find($id);
-                if($case->forceDelete())
-                {
-                    $arrRes['msg']  = "Data deleted successfully";
+                if ($case->forceDelete()) {
+                    $arrRes['msg'] = "Data deleted successfully";
                     $arrRes['done'] = true;
-                }else{
+                } else {
                     $arrRes['done'] = false;
                     $arrRes['msg'] = 'Error in deleting Data';
                 }
             }
             return response()->json($arrRes);
-            }
-
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $arrRes['done'] = false;
             $arrRes['msg'] = 'Error in deleting Data';
             return response()->json($arrRes);
@@ -856,7 +849,7 @@ class CaseController extends Controller
 
             $html = view('doctor.container.case.components.case-concern', ['concern' => $concern])->render();
 
-            return successJsonResponse_h('Added advice', ['html' => $html,'concern' => $concern]);
+            return successJsonResponse_h('Added advice', ['html' => $html, 'concern' => $concern]);
         } catch (Exception $e) {
             return errorJsonResponse_h($e->getMessage());
         }
@@ -886,60 +879,61 @@ class CaseController extends Controller
             return errorJsonResponse_h($e->getMessage());
         }
     }
+
     // CaseUploadAttachmentRequest
     public function uploadAttachment2(Request $request)
     {
         try {
-        $user_id = $request->user()->id;
-        $sort_order = $request->sort_order;
-        $attachment_type = $request->attachment_type;
-        $sort_order=1;
+            $user_id = $request->user()->id;
+            $sort_order = $request->sort_order;
+            $attachment_type = $request->attachment_type;
+            $sort_order = 1;
 
 
-        foreach($request->file('attachment') as $file){
-        // $file = $request->file('attachment');
-        $mimeType = $file->getClientMimeType();
-        // $name = 'case-' . $user_id . '-' . time() . '.' . $file->getClientOriginalExtension();
-        $name = 'case-' . $user_id . '-' . time() . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-        Storage::disk(env('FILE_SYSTEM'))->putFileAs($this->attachment_path, $file, $name);
+            foreach ($request->file('attachment') as $file) {
+                // $file = $request->file('attachment');
+                $mimeType = $file->getClientMimeType();
+                // $name = 'case-' . $user_id . '-' . time() . '.' . $file->getClientOriginalExtension();
+                $name = 'case-' . $user_id . '-' . time() . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                Storage::disk(env('FILE_SYSTEM'))->putFileAs($this->attachment_path, $file, $name);
 
-        if ($attachment_type != "OTHER" && $request->has('case_id') && !empty($request->case_id)) {
-            $CaseAttachment = CaseAttachment::updateOrCreate(
-                 [
-                    'case_id' => $request->case_id,
-                    'sort_order' => $sort_order,
-                    'attachment_type' => $attachment_type
-                 ],
-                 [
-                    'name' => $name,
-                    'path' => $this->attachment_path,
-                    'created_by' => $user_id
-                 ]
-            );
-        } else {
-            $CaseAttachment = CaseAttachment::create([
-                'case_id' => isset($request->case_id) && !empty($request->case_id) ? $request->case_id : null,
-                'sort_order' => $sort_order,
-                'attachment_type' => $attachment_type,
-                'name' => $name,
-                'path' => $this->attachment_path,
-                'created_by' => $user_id
-            ]);
+                if ($attachment_type != "OTHER" && $request->has('case_id') && !empty($request->case_id)) {
+                    $CaseAttachment = CaseAttachment::updateOrCreate(
+                        [
+                            'case_id' => $request->case_id,
+                            'sort_order' => $sort_order,
+                            'attachment_type' => $attachment_type
+                        ],
+                        [
+                            'name' => $name,
+                            'path' => $this->attachment_path,
+                            'created_by' => $user_id
+                        ]
+                    );
+                } else {
+                    $CaseAttachment = CaseAttachment::create([
+                        'case_id' => isset($request->case_id) && !empty($request->case_id) ? $request->case_id : null,
+                        'sort_order' => $sort_order,
+                        'attachment_type' => $attachment_type,
+                        'name' => $name,
+                        'path' => $this->attachment_path,
+                        'created_by' => $user_id
+                    ]);
+                }
+
+                $CaseAttachment = new CaseAttachmentResource($CaseAttachment);
+                if ($mimeType == 'application/octet-stream') {
+                    $CaseAttachment->name = 'stl.jpg';
+                } elseif ($mimeType == 'application/pdf') {
+                    $CaseAttachment->name = 'pdf.jpg';
+                }
+                $sort_order++;
+                $attachmentCollection[] = $CaseAttachment;
+            }
+            return successJsonResponse_h('Uploaded successfully', $attachmentCollection);
+        } catch (Exception $e) {
+            return errorJsonResponse_h($e->getMessage());
         }
-
-        $CaseAttachment = new CaseAttachmentResource($CaseAttachment);
-        if ($mimeType == 'application/octet-stream') {
-            $CaseAttachment->name = 'stl.jpg';
-        } elseif ($mimeType == 'application/pdf') {
-            $CaseAttachment->name = 'pdf.jpg';
-        }
-        $sort_order++;
-        $attachmentCollection[] = $CaseAttachment;
-    }
-        return successJsonResponse_h('Uploaded successfully',$attachmentCollection);
-    } catch (Exception $e) {
-        return errorJsonResponse_h($e->getMessage());
-    }
     }
 
     public function uploadAttachment(Request $request)
@@ -954,18 +948,17 @@ class CaseController extends Controller
             $name = 'case-' . $user_id . '-' . time() . '.' . $file->getClientOriginalExtension();
             // dd($this->attachment_path);
             Storage::disk(env('FILE_SYSTEM'))->putFileAs($this->attachment_path, $file, $name);
-            if(isset($request->image_id)){
+            if (isset($request->image_id)) {
 
-                if(CaseAttachment::where('id', $request->image_id)->update(['name' => $name,
-                'path' => $this->attachment_path,
-                'created_by' => $user_id])){
+                if (CaseAttachment::where('id', $request->image_id)->update(['name' => $name,
+                    'path' => $this->attachment_path,
+                    'created_by' => $user_id])) {
                     return successJsonResponse_h('File Updated Successfully');
-                }else{
+                } else {
                     return successJsonResponse_h('Error while updating');
                 }
 
-            }
-           else if ($attachment_type != "OTHER" && $request->has('case_id') && !empty($request->case_id)) {
+            } else if ($attachment_type != "OTHER" && $request->has('case_id') && !empty($request->case_id)) {
                 $CaseAttachment = CaseAttachment::updateOrCreate(
                     [
                         'case_id' => $request->case_id,
@@ -994,7 +987,7 @@ class CaseController extends Controller
             } elseif ($mimeType == 'application/pdf') {
                 $CaseAttachment->name = 'pdf.jpg';
             }
-            return successJsonResponse_h('Uploaded successfully',$CaseAttachment);
+            return successJsonResponse_h('Uploaded successfully', $CaseAttachment);
         } catch (Exception $e) {
             return errorJsonResponse_h($e->getMessage());
         }
@@ -1167,7 +1160,7 @@ class CaseController extends Controller
         $CaseTimeLog = CaseTimeLog::selectRaw(
             '
             ROUND(SUM((`check_out`-`check_in`)/60),2) AS average_minuts,'
-                . $title[$report_by] . ' AS title'
+            . $title[$report_by] . ' AS title'
         )
             ->where('case_id', $case_id)
             ->where('tray_no', $tray_no)
@@ -1217,7 +1210,6 @@ class CaseController extends Controller
                 ->where('tray_no', $tray_no)
                 ->where('check_out', '!=', '')
                 ->whereNotNull('check_out')
-
                 ->whereDate('created_at', $date)
                 // ->groupBy('created_at')
                 ->get();
@@ -1228,42 +1220,41 @@ class CaseController extends Controller
 
     public function deleteAttachment(Request $request)
     {
-        $CaseAttachment=CaseAttachment::find($request->id);
-        if($CaseAttachment->forceDelete())
-        {
+        $CaseAttachment = CaseAttachment::find($request->id);
+        if ($CaseAttachment->forceDelete()) {
             $data['done'] = true;
             $data['message'] = 'Image deleted successfully';
-        }else{
+        } else {
             $data['done'] = false;
             $data['message'] = 'Error in Deleting Image';
         }
         return response()->json($data);
-     }
+    }
 
-     public function updateAttachment(Request $request)
-     {
+    public function updateAttachment(Request $request)
+    {
 
-        if(CaseAttachment::where($request->id)->update())
-        {
+        if (CaseAttachment::where($request->id)->update()) {
             $data['done'] = true;
             $data['message'] = 'Image deleted successfully';
-        }else{
+        } else {
             $data['done'] = false;
             $data['message'] = 'Error in Deleting Image';
         }
         return response()->json($data);
-     }
+    }
 
-      public function getallAdvicesDoctor(Request $request){
+    public function getallAdvicesDoctor(Request $request)
+    {
 
-         $concern = CaseConcern::where('case_id' ,'=', $request->case_id)->orderBy('id','desc')->get();
+        $concern = CaseConcern::where('case_id', '=', $request->case_id)->orderBy('id', 'desc')->get();
 
-         if($concern->count() > 0){
-            return response()->json(['done' => true , 'concern' => $concern]);
+        if ($concern->count() > 0) {
+            return response()->json(['done' => true, 'concern' => $concern]);
 
-         }else{
+        } else {
             return response()->json(['done' => false]);
-         }
+        }
 
-      }
+    }
 }

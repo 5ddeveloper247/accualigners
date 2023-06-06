@@ -2024,8 +2024,10 @@
                             //                             </div>
                             //                         </div>`;
                             //          }
-                            $("#append").prepend($html);
-                            refresh();
+                            // $("#append").prepend($html);
+
+                            refresh(true);
+
                             $("#advice_comment").val('');
 
                         }
@@ -2446,12 +2448,11 @@
 
             </script>
             <script>
-                setTimeout(function () {
-                    refresh();
-
+                setInterval(function () {
+                    refresh(true);
                 }, 5000);
 
-                function refresh() {
+                function refresh(is_scroll = false) {
 
                     $.ajax({
                         url: '{{url("admin/case/get-advices")}}',
@@ -2462,29 +2463,13 @@
                             'case_id': "{{ $edit_values->id }}",
 
                         },
-                        beforeSend: function () {
-                            ajaxLoader();
-                        },
-                        xhr: function () {
-                            var xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener("progress", function (evt) {
-                                if (evt.lengthComputable) {
-                                    console.log(evt)
-                                    var percentComplete = evt.loaded / evt.total;
-                                    percentComplete = parseInt(percentComplete * 100);
-                                    ajaxLoaderprograss(percentComplete);
-                                }
-                            }, false);
-                            return xhr;
-                        },
-
                         success: function (responseCollection) {
 
-                            console.log(responseCollection);
+
                             $('.remove_ajax').remove();
 
                             $.each(responseCollection.concern, function (key, value) {
-                                console.log(value.id);
+
                                 //    console.log(key + ": " + value);
                                 var date = new Date(value.created_at);
                                 var time = date.toLocaleTimeString([], {
@@ -2545,6 +2530,12 @@
                                 }
 
                             });
+                            if(is_scroll == true){
+                                $('#append').animate({
+                                    scrollTop: $("#append").offset().top
+                                }, 2000);
+                            }
+
                         }
                         , error: function (e) {
                             var responseCollection = e.responseJSON;
