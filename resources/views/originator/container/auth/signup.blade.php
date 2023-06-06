@@ -200,7 +200,7 @@
                     <div class="row m-3 py-4 ">
                         <div class="col-md-12 hide_msg2" style="display:none;">
                             <div class="alert alert-danger hide_msg2" id="msg2" style="text-align: center;">
-                                hello</div>
+                                </div>
                         </div>
                         <div class="col-md-12 registerborder">
                             <div class="row">
@@ -281,7 +281,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="inputdokanaza ">
-                                        <label>VAT number* </label>
+                                        <label>VAT Number* </label>
                                         <input type="text" name="vat" id="vat_number" class="form-control"
                                             placeholder="Enter here" value="{{ old('vat') }}">
                                     </div>
