@@ -1477,7 +1477,7 @@
 
                 $("#video_upload_case").change(function (event) {
                     var output = document.getElementById('addvideoCase');
-                    output.setAttribute("src", "https://accualigners.app/vendors/images/videocase.png");
+                    output.setAttribute("src", "https://accualigners.app/vendors/images/videocase.jpg");
                 })
 
                 function addvideolink() {
