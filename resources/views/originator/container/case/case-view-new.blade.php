@@ -728,11 +728,11 @@
                                         </svg>
                                         <div class="hidden-box">
                                             <div class="row  ">
-                                                <div class="col-md-4 " style="margin-bottom: 1.5rem!important;">
+                                                <div class="col-md-4 d-flex flex-column" style="margin-bottom: 1.5rem!important;">
 
 
                                                     <label for="">Arch to treat*</label>
-                                                    <div class="btn-group ">
+                                                    <div class="btn-group w-75">
                                                         <input type="checkbox" id="arch_to_treat" value="1"
                                                                name="arch_to_treat" data-toggle="toggle"
                                                                data-onstyle="outline-primary"
@@ -740,10 +740,10 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 " style="margin-bottom: 1.5rem!important;">
+                                                <div class="col-md-4  d-flex flex-column" style="margin-bottom: 1.5rem!important;">
 
                                                     <label for="">A-P Relation*</label>
-                                                    <div class="btn-group ">
+                                                    <div class="btn-group w-75">
                                                         <input type="checkbox" id="a_p_relationship"
                                                                name="a_p_relationship" data-toggle="toggle"
                                                                data-onstyle="outline-primary"
@@ -753,11 +753,11 @@
 
                                                 </div>
 
-                                                <div class="col-md-4 " style="margin-bottom: 1.5rem!important;">
+                                                <div class="col-md-4  d-flex flex-column" style="margin-bottom: 1.5rem!important;">
                                                     <label for="">OverJet *<span
                                                             style="visibility:hidden;">overflow</span></label>
 
-                                                    <div class="btn-group ">
+                                                    <div class="btn-group w-75">
                                                         <input type="checkbox" id="overjet" name="overjet"
                                                                data-toggle="toggle" data-onstyle="outline-primary"
                                                                data-offstyle="outline-secondary" data-style="ios">
@@ -766,11 +766,11 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="col-md-4 " style="margin-bottom: 1.5rem!important;">
+                                                <div class="col-md-4  d-flex flex-column" style="margin-bottom: 1.5rem!important;">
                                                     <label for="">Overbite *<span
                                                             style="visibility:hidden;">overflow</span></label>
 
-                                                    <div class="btn-group ">
+                                                    <div class="btn-group w-75">
                                                         <input type="checkbox" id="overbite" name="overbite"
                                                                data-toggle="toggle" data-onstyle="outline-primary"
                                                                data-offstyle="outline-secondary" data-style="ios">
@@ -779,11 +779,11 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="col-md-4 " style="margin-bottom: 1.5rem!important;">
+                                                <div class="col-md-4  d-flex flex-column" style="margin-bottom: 1.5rem!important;">
                                                     <label for="">MidLine* <span
                                                             style="visibility:hidden;">overflow</span></label>
 
-                                                    <div class="btn-group ">
+                                                    <div class="btn-group w-75">
                                                         <input type="checkbox" id="midline" name="midline"
                                                                data-toggle="toggle" data-onstyle="outline-primary"
                                                                data-offstyle="outline-secondary" data-style="ios">
