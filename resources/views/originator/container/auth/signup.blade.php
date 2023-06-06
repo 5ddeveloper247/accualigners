@@ -61,7 +61,7 @@
                             <h4 class="mt-4">Create New Account</h4>
                             <p>Please Enter your Sign-up Details</p>
                             <m style="cursor: pointer"></m>
-                            <a style="position: relative;top: 7px;">User info<span
+                            <a style="position: relative;top: 7px;">User Info<span
                                     class="m-2">__________________</span>
                                 <img src="{{ asset('/vendors/images/Check.png') }}" width="18"
                                     class=" m-1">Billing Info</a>
@@ -190,7 +190,7 @@
                         <p>Please Enter your Sign-up Details</p>
                         <img src="{{ asset('/vendors/images/tick.PNG') }}" width="20"
                             style="position: relative;top: 10px;cursor:pointer;" id="user_info" />
-                        <a style="position: relative;top: 7px;">User info<span
+                        <a style="position: relative;top: 7px;">User Info<span
                                 class="m-2">__________________</span>
                         </a>
                         <m style="position: relative;top: 4px;"></m>

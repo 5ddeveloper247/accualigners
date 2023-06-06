@@ -340,6 +340,9 @@ function CopyToClipboard(value, showNotification, notificationText) {
 })();
 	// next button
 	$(document).ready(function(){
+	    setTimeout(function () {
+            $('#email').val('');
+        },500)
 		$("#nextBtn").click(function(){
 			if($("#title").val() == ''){
 				$('#msg').text('Please Enter Title');
@@ -419,6 +422,8 @@ function CopyToClipboard(value, showNotification, notificationText) {
 			}
 			else{
 				$('#msg1').text('');
+                $('#pass').val('');
+                $('#confirm_pass').val('');
 				$("#prev").addClass('d-none');
 		  		$("#next").removeClass('d-none');
 			}
