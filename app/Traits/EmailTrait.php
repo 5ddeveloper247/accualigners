@@ -11,11 +11,11 @@ trait EmailTrait
     {
         try {
             Mail::send($view, $data, function ($message) use ($data) {
-                if (array_key_exists('from', $data)) {
-                    $message->from($data['from'], 'Accu Aligners');
-                } else {
+//                if (array_key_exists('from', $data)) {
+//                    $message->from($data['from'], 'Accu Aligners');
+//                } else {
                     $message->from('noreply@accualigners.app', 'Accu Aligners');
-                }
+//                }
                 if (array_key_exists('subject', $data)) {
                     $message->subject($data['subject']);
                 } else {
@@ -67,5 +67,5 @@ trait EmailTrait
     //         dd($e->getMessage()); // return the error message
     //     }
     // }
-    
+
 }

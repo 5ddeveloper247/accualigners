@@ -107,15 +107,18 @@ class DoctorController extends Controller
                     $to = $request->email;
                     $subject = "Welcome To Accualigners";
                     $data['username'] = $request->name;
-                    $html = view('emails.welcomeDoctor',$data)->render();
-                    $check = $this->sendMailViaPostMark($html, $to, $subject);
+                    $data['subject'] =$subject;
+                    $data['email'] =$to;
+                    $this->sendMail($data, 'emails.welcomeDoctor');
 
                     //Admin
                     $to = "info@accualigners.com";
                     $subject = "New Doctor Created";
                     $data['username'] = $request->name;
-                    $html = view('emails.newDoctorAdmin',$data)->render();
-                    $check = $this->sendMailViaPostMark($html, $to, $subject);
+                    $data['subject'] =$subject;
+                    $data['email'] =$to;
+                    $this->sendMail($data, 'emails.newDoctorAdmin');
+
 
                      $arrRes['msg']  = "Data saved successfully";
                      $arrRes['done'] = true;

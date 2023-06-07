@@ -22,15 +22,15 @@ class OrderController extends Controller
      */
     public function index_old(Request $request)
     {
-        
-        
+
+
         try{
-            $product =  null; 
+            $product =  null;
             if($request->has('product')){
                 if($request->product == 'aligner'){
-                    $product =  'ALIGNER'; 
+                    $product =  'ALIGNER';
                 }elseif($request->product == 'impression-kit'){
-                    $product =  'IMPRESSION KIT'; 
+                    $product =  'IMPRESSION KIT';
                 }
             }
             $orders = Order::select('*');
@@ -59,14 +59,14 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        
+
         try{
-            $product =  null; 
+            $product =  null;
             if($request->has('product')){
                 if($request->product == 'aligner'){
-                    $product =  'ALIGNER'; 
+                    $product =  'ALIGNER';
                 }elseif($request->product == 'impression-kit'){
-                    $product =  'IMPRESSION KIT'; 
+                    $product =  'IMPRESSION KIT';
                 }
             }
             $orders = Order::select('*');
@@ -135,19 +135,19 @@ class OrderController extends Controller
      */
     public function edit(OrderEditRequest $request, $id)
     {
-            
+
         try{
               $order = Order::find($id);
-            
+
               $case = CaseModel::find($order->case_id);
               $data['edit_values'] = $order;
             if($case!=null){
 
               $data['case'] = $case;
               $data['doctor'] = $case->doctor()->first();
-            
+
              }
-            
+
              return view('originator.container.order.order-form', $data);
         }catch(Exception $e){
              return redirect()->back()->withErrors($e->getMessage());
@@ -199,14 +199,16 @@ class OrderController extends Controller
          if($order->order_url != null){
                  $data['order_url'] = $order->order_url;
          }
-            
+
          if($inputs['status'] === "DISPATCHED"){
                 $CaseModel->update(['status' => 'CLOSED']);
             }
-            
+
             $data['body'] = 'The delivery status for the Accualigners Trays has been ' .$order->status. ' for case ID '.$CaseModel->id.', belonging to '. $CaseModel->name .', can be found in the link provided';
-            $html = view('emails.orderStatus', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
+             $data['subject'] =$subject;
+             $data['email'] =$to;
+             $this->sendMail($data, 'emails.orderStatus');
+
             return redirect()->back()->with(['successMessage' => 'Order status updated successfully']);
 
         }catch(Exception $e){
@@ -232,19 +234,23 @@ class OrderController extends Controller
             if($order->order_url != null){
                  $data['order_url'] = $order->order_url;
             }
-            
+
             if($request->status === "DISPATCHED"){
                 $CaseModel->update(['status' => 'CLOSED']);
             }
-            
+
             $data['body'] = 'The delivery status for the Accualigners Trays has been ' .$order->status. ' for case ID '.$CaseModel->id.', belonging to '. $CaseModel->name .', can be found in the link provided';
-            $html = view('emails.orderStatus', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.orderStatus');
+
 
             //Admin
             $to = "info@accualigners.com";
-            $html = view('emails.orderStatusAdmin', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.orderStatusAdmin');
+
 
             return response()->json(['successMessage' => 'success']);
 
@@ -271,7 +277,7 @@ class OrderController extends Controller
         }
     }
     public function delete(Request $request){
-        
+
           try{
             // return response()->json(['message'=>'success']);
             $order = Order::find(intval($request->id));
