@@ -98,7 +98,7 @@ $path = parse_url($currentUrl, PHP_URL_PATH);
                             </div>
                             @foreach($case as $case_item)
                             @isset($case_item->lastConcern->message)
-                            <div class="row m-1 mb-2" style="cursor:pointer" onclick="showMessage('{{$case_item->id}}')">
+                            <div class="row m-1 mb-2" style="cursor:pointer" onclick="showMessage('{{$case_item->id}}',true)">
                                 <div class="col-md-12  py-2 bground">
                                     <div class="row">
                                         <div class="col-md-2 p-0 ">

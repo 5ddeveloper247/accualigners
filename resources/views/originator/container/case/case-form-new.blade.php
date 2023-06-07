@@ -2448,10 +2448,14 @@
 
             </script>
             <script>
-                setInterval(function () {
-                    refresh(true);
-                }, 5000);
 
+                setTimeout(function () {
+                    refresh(true);
+                    setInterval(function () {
+                        refresh();
+                    }, 5000);
+                }, 5000);
+                
                 function refresh(is_scroll = false) {
 
                     $.ajax({
