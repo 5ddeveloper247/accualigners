@@ -127,14 +127,14 @@ class SupportController extends Controller
             $data['patient_name'] =$case->name;
             $data['response'] =$lastMessage->message;
 
-            $html = view('emails.notificationEmail', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.notificationEmail');
 
             $data['done'] = true;
             $data['msg'] = 'Email Sent successfully';
             return $data;
-            }
-        else{
+            } else{
             $data['done'] = false;
             $data['msg'] = 'Error in sending Email';
 
