@@ -20,9 +20,9 @@ use App\Traits\EmailTrait;
 class PaymentController extends Controller
 {
     use EmailTrait;
-    
+
     public function index(CasePaymentIndexRequest $request, $id){
-        
+
         try{
              $case = CaseModel::find($id);
              $settings = Setting::first();
@@ -50,8 +50,8 @@ class PaymentController extends Controller
             $case = CaseModel::find($request->id);
             $settings = Setting::first();
             $case->update([
-               'processing_fee_paid' => 1, 
-               'processing_fee_payment_name' => 'Invoice', 
+               'processing_fee_paid' => 1,
+               'processing_fee_payment_name' => 'Invoice',
                'processing_fee_payment_responses' => "Payment Processed",
                'processing_fee_payment_at' => Carbon::now(),
                'payment_status' => 'treatment-plan'
@@ -61,12 +61,12 @@ class PaymentController extends Controller
            // $username = auth()->user()->name;
            // $to = auth()->user()->email;
            // $subject = "Treatment Plan Process";
-           
+
            // $data['case_id'] =  $case->id;
            // $data['doctor_name'] = auth()->user()->name;
            // $html = view('emails.general',$data)->render();
            // $check = $this->sendMailViaPostMark($html, $to, $subject);
-           
+
              $username = $case->name;
              $to = "info@accualigners.com";
              $subject = "Case Id: ". $case->id ." Treatment Plan Process";
@@ -76,11 +76,13 @@ class PaymentController extends Controller
              [ 'link' => url('admin/case/92'), 'text' => 'View Case']
            ];
            $data['body'] = 'Please review the files sent by Dr. '.auth()->user()->name.' for treatment planning of patient '. $case->name .' (case ID '.$case->id.'), including scans of the upper and lower jaw and a profile picture.';
-           $html = view('emails.general', $data)->render();
-                $check = $this->sendMailViaPostMark($html, $to, $subject);
+              $data['subject'] =$subject;
+              $data['email'] =$to;
+              $this->sendMail($data, 'emails.general');
+
           return response()->json(['data' => 'success']);
 
-           
+
            return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);
            // return redirect()->back()->with(['successMessage' => 'Payment successfully processed']);
        }catch(Exception $e){
@@ -89,17 +91,17 @@ class PaymentController extends Controller
        }
 
  }
-    
+
     public function storeInvoice(Request $request){
-        
+
         try{
 
              $case = CaseModel::find($request->case);
-             
+
              $settings = Setting::first();
              $case->update([
-                'processing_fee_paid' => 1, 
-                'processing_fee_payment_name' => 'Invoice', 
+                'processing_fee_paid' => 1,
+                'processing_fee_payment_name' => 'Invoice',
                 'processing_fee_payment_responses' => "Payment Processed",
                 'processing_fee_payment_at' => Carbon::now(),
                 'payment_status' => 'treatment-plan'
@@ -109,12 +111,12 @@ class PaymentController extends Controller
             // $username = auth()->user()->name;
             // $to = auth()->user()->email;
             // $subject = "Treatment Plan Process";
-            
+
             // $data['case_id'] =  $case->id;
             // $data['doctor_name'] = auth()->user()->name;
             // $html = view('emails.general',$data)->render();
             // $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+
             $username = $case->name;
             $to = "info@accualigners.com";
             $subject = "Case Id: ". $case->id ." Treatment Plan Process";
@@ -124,9 +126,11 @@ class PaymentController extends Controller
              [ 'link' => url('admin/case/92'), 'text' => 'View Case']
             ];
             $data['body'] = 'Please review the files sent by Dr. '.auth()->user()->name.' for treatment planning of patient '. $case->name .' (case ID '.$case->id.'), including scans of the upper and lower jaw and a profile picture.';
-            $html = view('emails.general', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.general');
+
+
             return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);
             // return redirect()->back()->with(['successMessage' => 'Payment successfully processed']);
         }catch(Exception $e){
@@ -136,7 +140,7 @@ class PaymentController extends Controller
     }
 
     public function store_new(Request $request){
-             
+
         try{
             $case = CaseModel::find($request->id);
             $settings = Setting::first();
@@ -145,26 +149,26 @@ class PaymentController extends Controller
                     "amount" => $request->amount * 100,
                     "currency" => strtolower($settings->currency),
                     "source" => $request->stripeToken,
-                    "description" => "Processing fee payment against case Id " . $request->id 
+                    "description" => "Processing fee payment against case Id " . $request->id
            ]);
             $case->update([
-               'processing_fee_paid' => 1, 
-               'processing_fee_payment_name' => 'Stripe', 
+               'processing_fee_paid' => 1,
+               'processing_fee_payment_name' => 'Stripe',
                'processing_fee_payment_responses' => "Payment Processed",
                'processing_fee_payment_at' => Carbon::now(),
                'payment_status' => 'treatment-plan'
             ]);
-           
+
            /// Doctor
            // $username = auth()->user()->name;
            // $to = auth()->user()->email;
            // $subject = "Treatment Plan Process";
-           
+
            // $data['case_id'] =  $case->id;
            // $data['doctor_name'] = auth()->user()->name;
            // $html = view('emails.general',$data)->render();
            // $check = $this->sendMailViaPostMark($html, $to, $subject);
-           
+
            $username = $case->name;
            $to = "info@accualigners.com";
            $subject = "Case Id: ". $case->id ." Treatment Plan Process";
@@ -174,9 +178,11 @@ class PaymentController extends Controller
             [ 'link' => url('admin/case/92'), 'text' => 'View Case']
            ];
            $data['body'] = 'Please review the files sent by Dr. '.auth()->user()->name.' for treatment planning of patient '. $case->name .' (case ID '.$case->id.'), including scans of the upper and lower jaw and a profile picture.';
-           $html = view('emails.general', $data)->render();
-               $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.general');
+
+
            return response()->json(['data' => 'success']);
 
            return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);
@@ -195,11 +201,11 @@ class PaymentController extends Controller
                      "amount" => $case->processing_fee_amount * 100,
                      "currency" => strtolower($settings->currency),
                      "source" => $request->stripeToken,
-                     "description" => "Processing fee payment against case Id " . $id 
+                     "description" => "Processing fee payment against case Id " . $id
             ]);
              $case->update([
-                'processing_fee_paid' => 1, 
-                'processing_fee_payment_name' => 'Stripe', 
+                'processing_fee_paid' => 1,
+                'processing_fee_payment_name' => 'Stripe',
                 'processing_fee_payment_responses' => "Payment Processed",
                 'processing_fee_payment_at' => Carbon::now(),
                 'payment_status' => 'treatment-plan'
@@ -209,12 +215,12 @@ class PaymentController extends Controller
             // $username = auth()->user()->name;
             // $to = auth()->user()->email;
             // $subject = "Treatment Plan Process";
-            
+
             // $data['case_id'] =  $case->id;
             // $data['doctor_name'] = auth()->user()->name;
             // $html = view('emails.general',$data)->render();
             // $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+
             $username = $case->name;
             $to = "info@accualigners.com";
             $subject = "Case Id: ". $case->id ." Treatment Plan Process";
@@ -224,8 +230,10 @@ class PaymentController extends Controller
              [ 'link' => url('admin/case/92'), 'text' => 'View Case']
             ];
             $data['body'] = 'Please review the files sent by Dr. '.auth()->user()->name.' for treatment planning of patient '. $case->name .' (case ID '.$case->id.'), including scans of the upper and lower jaw and a profile picture.';
-            $html = view('emails.general', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.general');
+
             return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);
         }catch(Exception $e){
             return redirect()->back()->withErrors($e->getMessage());
@@ -233,7 +241,7 @@ class PaymentController extends Controller
     }
     /*_______________digital scan store___________*/
     public function store_digital_scan(Request $request){
-             
+
         try{
             $case = CaseModel::find($request->id);
             $settings = Setting::first();
@@ -242,15 +250,15 @@ class PaymentController extends Controller
                     "amount" => 1000,
                     "currency" => strtolower($settings->currency),
                     "source" => $request->stripeToken,
-                    "description" => "Processing fee payment against case Id " . $request->id 
+                    "description" => "Processing fee payment against case Id " . $request->id
            ]);
             $case->update([
-               'digital_scan_fee' => 1, 
-               'digital_scan_amount' => 1000, 
+               'digital_scan_fee' => 1,
+               'digital_scan_amount' => 1000,
                'payment_status' => 'digital_scan'
             ]);
-           
-           
+
+
            $username = $case->name;
            $to = "info@accualigners.com";
            $subject = "Case Id: ". $case->id ." Digital Scan Paid";
@@ -260,9 +268,11 @@ class PaymentController extends Controller
             [ 'link' => url('admin/case/'.$case->id), 'text' => 'View Case']
            ];
            $data['body'] = 'Please review the files sent by Dr. '.auth()->user()->name.' for digital scan of the patient '. $case->name .' (case ID '.$case->id.'), including scans of the upper and lower jaw and a profile picture.';
-           $html = view('emails.general', $data)->render();
-               $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.general');
+
+
            return response()->json(['data' => 'success']);
 
            return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);
@@ -277,11 +287,11 @@ class PaymentController extends Controller
                     $case = CaseModel::find($request->id);
                     $settings = Setting::first();
                     $case->update([
-                        'digital_scan_fee' => 1, 
-                        'digital_scan_amount' => 1000, 
+                        'digital_scan_fee' => 1,
+                        'digital_scan_amount' => 1000,
                         'payment_status' => 'digital_scan'
                     ]);
-                    
+
                     $username = $case->name;
                     $to = "info@accualigners.com";
                     $subject = "Case Id: ". $case->id ." Digital Scan Paid";
@@ -291,9 +301,11 @@ class PaymentController extends Controller
                     [ 'link' => url('admin/case/'.$case->id), 'text' => 'View Case']
                     ];
                     $data['body'] = 'Please review the files sent by Dr. '.auth()->user()->name.' for digital scan of the patient '. $case->name .' (case ID '.$case->id.'), including scans of the upper and lower jaw and a profile picture.';
-                    $html = view('emails.general', $data)->render();
-                        $check = $this->sendMailViaPostMark($html, $to, $subject);
-                    
+                        $data['subject'] =$subject;
+                        $data['email'] =$to;
+                        $this->sendMail($data, 'emails.general');
+
+
                     return response()->json(['data' => 'success']);
 
                     return redirect('doctor/case')->with(['successMessage' => 'Payment successfully processed']);

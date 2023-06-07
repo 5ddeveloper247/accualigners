@@ -193,13 +193,17 @@ class CaseController extends Controller
                 $data['case_id'] = $case_id;
                 $data['doctor_name'] = auth()->user()->name;
                 $data['patient_name'] = $username;
-                $html = view('emails.caseRegistered', $data)->render();
-                $check = $this->sendMailViaPostMark($html, $to, $subject);
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.caseRegistered');
+
 
 
                 $to = "info@accualigners.com";
-                $html = view('emails.caseRegisteredAdmin', $data)->render();
-                $check = $this->sendMailViaPostMark($html, $to, $subject);
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.caseRegisteredAdmin');
+
 
                 if (!empty($request->impression_kit_order_id))
                     Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
@@ -332,13 +336,16 @@ class CaseController extends Controller
                 $data['case_id'] = $case_id;
                 $data['doctor_name'] = auth()->user()->name;
                 $data['patient_name'] = $username;
-                $html = view('emails.caseRegistered', $data)->render();
-                $check = $this->sendMailViaPostMark($html, $to, $subject);
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.caseRegistered');
+
                 //admin
                 $to = "info@accualigners.com";
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.caseRegisteredAdmin');
 
-                $html = view('emails.caseRegisteredAdmin', $data)->render();
-                $check = $this->sendMailViaPostMark($html, $to, $subject);
 
                 if (!empty($request->impression_kit_order_id))
                     Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
@@ -800,8 +807,10 @@ class CaseController extends Controller
 
             $data['case_id'] = $case->id;
             $data['patient_name'] = $case->name;
-            $html = view('emails.modificationRequest', $data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.modificationRequest');
+
 
             // Mail::send('emails.modificationRequest',
             //     array(

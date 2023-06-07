@@ -211,8 +211,10 @@ class CaseController extends Controller
                 $data['case_id'] = $case_id;
                 $data['doctor_name'] = auth()->user()->name;
                 $data['patient_name'] = $username;
-                $html = view('emails.caseRegistered', $data)->render();
-                $check = $this->sendMailViaPostMark($html, $to, $subject);
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.caseRegistered');
+
 
                 if (!empty($request->impression_kit_order_id))
                     Order::where('id', $request->impression_kit_order_id)->update(['used_in_case' => 1]);
@@ -718,8 +720,10 @@ class CaseController extends Controller
              $data['case_id'] = $CaseModel->id;
              //  $data['doctor_name'] = $username;
              $data['patient_name'] = $CaseModel->name;
-             $html = view('emails.videoUploadNotification', $data)->render();
-             $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.videoUploadNotification');
+
 
 
          if(!empty($CaseModel->doctor)){
@@ -728,13 +732,17 @@ class CaseController extends Controller
              $data['case_id'] = $CaseModel->id;
              $data['doctor_name'] = $username;
              $data['patient_name'] = $CaseModel->name;
-             $html = view('emails.videoUploadNotification', $data)->render();
-             $check = $this->sendMailViaPostMark($html, $to, $subject);
+             $data['subject'] =$subject;
+             $data['email'] =$to;
+             $this->sendMail($data, 'emails.videoUploadNotification');
+
             }
              //Admin
              $to = "info@accualigners.com";
-             $html = view('emails.videoUploadNotificationAdmin', $data)->render();
-             $check = $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.videoUploadNotificationAdmin');
+
 
 
 

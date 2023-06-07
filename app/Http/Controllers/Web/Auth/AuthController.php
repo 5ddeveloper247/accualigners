@@ -24,22 +24,22 @@ use App\Traits\EmailTrait;
 class AuthController extends Controller
 {
     use EmailTrait;
-    
+
     public function loginView(){
         return view('originator.container.auth.login');
     }
     public function loginViewnew(){
         return view('originator.container.auth.loginnew');
     }
-    
+
     public function resetPasswordView(){
         return view('originator.container.auth.reset');
     }
-    
+
      public function changePasswordView(){
         return view('originator.container.auth.change');
     }
-    
+
     public function login(LoginRequest $request)
     {
 
@@ -111,8 +111,8 @@ class AuthController extends Controller
             $inputs['user_type'] = 'doctor';
             $inputs['name'] = $username;
             $user =  User::create($inputs);
-    
-         
+
+
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
              $inputs['created_by'] = auth()->user()->id;
@@ -131,9 +131,11 @@ class AuthController extends Controller
             $to = $request->email;
             $subject = "Welcome To Accualigners";
             $data['username'] = $username;
-            $html = view('emails.welcomeDoctor',$data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
-            
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.welcomeDoctor');
+
+
              /// Admin
             $to = "info@accualigners.com";
             $subject = "New Doctor Registered";
@@ -141,10 +143,12 @@ class AuthController extends Controller
             $data['address'] = $address;
             $data['clinic'] = $clinic;
             $data['doctor'] = $user;
-            $html = view('emails.welcomeDoctorAdmin',$data)->render();
-            $check = $this->sendMailViaPostMark($html, $to, $subject);
-           
-            DB::commit();    
+                $data['subject'] =$subject;
+                $data['email'] =$to;
+                $this->sendMail($data, 'emails.welcomeDoctorAdmin');
+
+
+            DB::commit();
             if(auth()->user()->role->slug === 'admin'){
                  return redirect('admin')->withSuccess('You have Successfully loggedin');
             }
@@ -157,10 +161,10 @@ class AuthController extends Controller
             else{
                  return redirect('doctor')->withSuccess('You have Successfully loggedin');
             }
-            
+
         }
-            
-           
+
+
             return redirect('/login')->with(['successMessage' => 'Successfully signed up!']);
         } catch (Exception $e) {
              DB::rollback();
@@ -186,13 +190,15 @@ class AuthController extends Controller
             }
             $user->otp = $otp;
             $user->save();
-            
+
             $subject = "Reset Your Password";
             $data['name'] = $request->name;
             $data['otp'] = $otp;
             $to = $user->email;
-            $html = view('emails.reset-password',$data)->render();
-            $this->sendMailViaPostMark($html, $to, $subject);
+            $data['subject'] =$subject;
+            $data['email'] =$to;
+            $this->sendMail($data, 'emails.reset-password');
+
             DB::commit();
             return redirect('change/password')->with(['successMessage' => 'Otp has been sent on your email']);
         } catch (\Throwable $th) {
