@@ -1,25 +1,11 @@
-function showMessage(id) {
+function showMessage(id,is_scroll = false) {
     $.ajax({
         url: base_url + "/show_message",
         method: 'POST',
         data: {
             case_id: id
         },
-        beforeSend: function () {
-            ajaxLoader();
 
-        },
-        xhr: function () {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    ajaxLoaderprograss(percentComplete);
-                }
-            }, false);
-            return xhr;
-        },
         success: function (response) {
 
             div_concern.empty();
@@ -31,12 +17,16 @@ function showMessage(id) {
                     div_concern.append('<div class="row mt-3"><div class="col-md-1 mt-3 pb-3"><img src="https://accualigners.app/vendors/images/logo.png" width="30"></div><div class="col-md-10 mt-3 py-3" id="doctor_msg"><span style="font-size:16px;" >' + message.message + '</span><br><span style="font-size:13px;color: #afafaf;"> ' + moment(message.created_at).format('h:mm A') + '</span></div></div>');
                 }
             });
-            //scroll to bottom
-            div_concern.scrollTop(div_concern.prop('scrollHeight'));
+            if(is_scroll == true){
+                //scroll to bottom
+                div_concern.scrollTop(div_concern.prop('scrollHeight'));
+            }
+
 
             //making send message active
             $('#admin_response').removeAttr('readonly');
             $('#btnSend').removeAttr('disabled');
+
         },
         error: function (xhr, status, error) {
             $('#loader').fadeOut();
@@ -44,6 +34,13 @@ function showMessage(id) {
         }
     });
 }
+setInterval(function () {
+    if($('#btnSend').data('id') != ''){
+        var id = $('#btnSend').data('id');
+        showMessage(id)
+    }
+
+}, 5000);
 
 /*__________send message__________*/
 function sendMessage(btn) {
@@ -96,6 +93,7 @@ function sendMessage(btn) {
                 //making send message active
                 $('#admin_response').removeAttr('readonly');
                 $('#btnSend').removeAttr('disabled');
+
             } else {
                 toastr.error(response[1].msg, 'Error', {timeOut: 2000});
             }

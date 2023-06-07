@@ -2835,9 +2835,11 @@
                         }
                     });
                 });
-
-                setInterval(function () {
+                setTimeout(function () {
                     refresh(true);
+                    setInterval(function () {
+                        refresh();
+                    }, 5000);
                 }, 5000);
 
                 function refresh(is_scroll = false) {
@@ -2921,6 +2923,7 @@
 
                             });
                         if(is_scroll == true){
+                            console.log('scroll');
                             $('#append').animate({
                                 scrollTop: $("#append").offset().top
                             }, 2000);

@@ -865,7 +865,7 @@ class OrderAlignerController extends Controller
                 $trays_amount = ($case_amount->missing_trays_amount == NULL) ? 0 : $case_amount->missing_trays_amount;
                 $total_amount_actual = $request->total_amount + $trays_amount;
 
-                if (CaseModel::where('id', $request->id)->update(['no_of_missing_trays' => NULL, 'missing_trays_amount' => $total_amount_actual])) {
+                if (CaseModel::where('id', $request->id)->update(['no_of_missing_trays' => NULL,'no_of_trays' => ($case_amount->no_of_trays+$case_amount->no_of_missing_trays), 'missing_trays_amount' => $total_amount_actual])) {
                     return response()->json(['success' => 'Payment']);
                 } else {
                     DB::rollBack();
@@ -1048,7 +1048,7 @@ class OrderAlignerController extends Controller
                 $trays_amount = ($case_amount->missing_trays_amount == NULL) ? 0 : $case_amount->missing_trays_amount;
                 $total_amount_actual = $request->total_amount + $trays_amount;
 
-                if (CaseModel::where('id', $request->id)->update(['no_of_missing_trays' => NULL, 'missing_trays_amount' => $total_amount_actual])) {
+                if (CaseModel::where('id', $request->id)->update(['no_of_missing_trays' => NULL,'no_of_trays' => ($case_amount->no_of_trays+$case_amount->no_of_missing_trays), 'missing_trays_amount' => $total_amount_actual])) {
                     return response()->json(['success' => 'Payment']);
                 } else {
                     DB::rollBack();
