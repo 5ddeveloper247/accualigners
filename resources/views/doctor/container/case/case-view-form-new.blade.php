@@ -620,7 +620,7 @@
                                                        style="padding:6px 8px!important;font-size: 12px;">
                                                         Pending</a>
                                                 @else
-                                                    <a class="painbtn  "
+                                                    <a class="painbtn"
                                                        style="padding:6px 8px!important;font-size: 12px;"> Paid</a>
                                                 @endif
 
@@ -2648,9 +2648,9 @@
                             //      var unit_amount=response.data.edit_values.unit_amout - (response.data.edit_values.discount/response.data.edit_values.quantity);
                             //      $('#unit_price').text(unit_amount+'<?php echo $default_currency; ?>');
                             //  }
-                            $('#quantity').text(response.data.edit_values.quantity);
+                            $('#quantity').text(response.data.case.first_MS_trays);
                             $('#shipping2').text(response.data.edit_values.shipping_charges + '<?php echo $default_currency; ?>');
-                            $('#total_price').text(response.data.edit_values.total_amount + '<?php echo $default_currency; ?>');
+                            $('#total_price').text(response.data.case.first_MS_amount + '<?php echo $default_currency; ?>');
                             $('#name').text(response.data.edit_values.name);
                             $('#name_id').text('ID:' + response.data.edit_values.doctor_id);
                             $('#email').text(response.data.edit_values.email);

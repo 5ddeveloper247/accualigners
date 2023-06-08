@@ -214,6 +214,8 @@ class OrderAlignerController extends Controller
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
                     'processing_fee_payment_at' => Carbon::now(),
+                    'first_MS_trays'=>  $inputs['quantity'],
+                    'first_MS_amount'=>$inputs['total_amount'],
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -298,6 +300,8 @@ class OrderAlignerController extends Controller
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
                     'processing_fee_payment_at' => Carbon::now(),
+                    'first_MS_trays'=>  $inputs['quantity'],
+                    'first_MS_amount'=>$inputs['total_amount'],
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -865,7 +869,7 @@ class OrderAlignerController extends Controller
                 $trays_amount = ($case_amount->missing_trays_amount == NULL) ? 0 : $case_amount->missing_trays_amount;
                 $total_amount_actual = $request->total_amount + $trays_amount;
 
-                if (CaseModel::where('id', $request->id)->update(['no_of_missing_trays' => NULL,'no_of_trays' => ($case_amount->no_of_trays+$case_amount->no_of_missing_trays), 'missing_trays_amount' => $total_amount_actual])) {
+                if (CaseModel::where('id', $request->id)->update(['aligner_kit_order_id'=>$newOrder->id,'no_of_missing_trays' => NULL,'no_of_trays' => ($case_amount->no_of_trays+$case_amount->no_of_missing_trays), 'missing_trays_amount' => $total_amount_actual,'has_concern'=>0])) {
                     return response()->json(['success' => 'Payment']);
                 } else {
                     DB::rollBack();
@@ -1048,7 +1052,7 @@ class OrderAlignerController extends Controller
                 $trays_amount = ($case_amount->missing_trays_amount == NULL) ? 0 : $case_amount->missing_trays_amount;
                 $total_amount_actual = $request->total_amount + $trays_amount;
 
-                if (CaseModel::where('id', $request->id)->update(['no_of_missing_trays' => NULL,'no_of_trays' => ($case_amount->no_of_trays+$case_amount->no_of_missing_trays), 'missing_trays_amount' => $total_amount_actual])) {
+                if (CaseModel::where('id', $request->id)->update(['aligner_kit_order_id'=>$order->id,'no_of_missing_trays' => NULL,'no_of_trays' => ($case_amount->no_of_trays+$case_amount->no_of_missing_trays), 'missing_trays_amount' => $total_amount_actual,'has_concern'=>0])) {
                     return response()->json(['success' => 'Payment']);
                 } else {
                     DB::rollBack();

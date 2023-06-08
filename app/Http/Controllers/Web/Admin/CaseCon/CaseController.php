@@ -342,6 +342,7 @@ class CaseController extends Controller
             $data['user_timezone'] = $user_timezone->getName(); // Set user's timezone
             $order= Order::where('case_id','=',$id)->first();
             $data['order']=$order;
+//dd($case->aligner,$order);
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
             return view('originator.container.case.case-form-new', $data);
          } catch (Exception $e) {
