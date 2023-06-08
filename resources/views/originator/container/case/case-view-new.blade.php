@@ -220,6 +220,7 @@
     }
     
 
+
 </style>
 <div class="mobile-menu-overlay"></div>
 <!-- saadullah -->
@@ -356,17 +357,21 @@
                                                                 @else
                                                                     @if ($case->status == 'CLOSED')
                                                                         {{ ucfirst(strtolower('Complete')) }}
-                                                                    @elseif(empty($case->video_uploaded) && empty($edit_values->video_embedded))
+                                                                    @elseif(empty($case->video_uploaded) && empty($case->video_embedded))
                                                                         {{ ucfirst(strtolower('Acculigners Lab')) }}
                                                                     @elseif (
-                                                                        (!empty($case->video_uploaded) || !empty($edit_values->video_embedded)) &&
+                                                                        (!empty($case->video_uploaded) || !empty($case->video_embedded)) &&
                                                                             !$case->has_concern &&
                                                                             empty($case->aligner_kit_order_id))
                                                                         {{ ucfirst(strtolower('Review to dentist')) }}
                                                                     @elseif ($case->has_concern)
                                                                         {{ ucfirst(strtolower('Review to you')) }}
                                                                     @elseif (!empty($case->aligner_kit_order_id) && isset($case->aligner->status))
-                                                                        @if ($case->aligner->status == 'DELIVERED')
+                                                                        @if ($case->aligner->status == 'DISPATCHED')
+                                                                            {{ ucfirst(strtolower($case->aligner->status)) }}
+                                                                        @elseif ($case->aligner->status == 'DELIVERED')
+                                                                            {{ ucfirst(strtolower($case->aligner->status)) }}
+                                                                        @elseif ($case->aligner->status == 'PENDING')
                                                                             {{ ucfirst(strtolower($case->aligner->status)) }}
                                                                         @elseif ($case->aligner->status == 'CANCELED')
                                                                             {{ ucfirst(strtolower($case->aligner->status)) }}

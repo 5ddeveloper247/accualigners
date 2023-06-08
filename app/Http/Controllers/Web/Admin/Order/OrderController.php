@@ -200,9 +200,11 @@ class OrderController extends Controller
                  $data['order_url'] = $order->order_url;
          }
 
-         if($inputs['status'] === "DISPATCHED"){
-                $CaseModel->update(['status' => 'CLOSED']);
-            }
+             if($request->status === "DISPATCHED"){
+                 $CaseModel->update(['status' => 'CLOSED']);
+             }else{
+                 $CaseModel->update(['status' => 'CONFIRMED']);
+             }
 
             $data['body'] = 'The delivery status for the Accualigners Trays has been ' .$order->status. ' for case ID '.$CaseModel->id.', belonging to '. $CaseModel->name .', can be found in the link provided';
              $data['subject'] =$subject;
@@ -224,6 +226,7 @@ class OrderController extends Controller
             $order->status=$request->status;
             $order->order_url=$request->order_url;
             $order->save();
+
             // $order->update($inputs);
             $CaseModel = CaseModel::with('doctor')->find($order->case_id);
             $username = $CaseModel->doctor->name;
@@ -235,8 +238,10 @@ class OrderController extends Controller
                  $data['order_url'] = $order->order_url;
             }
 
-            if($request->status === "DISPATCHED"){
+            if($request->status === "DISPATCHED") {
                 $CaseModel->update(['status' => 'CLOSED']);
+            }else{
+                $CaseModel->update(['status' => 'CONFIRMED']);
             }
 
             $data['body'] = 'The delivery status for the Accualigners Trays has been ' .$order->status. ' for case ID '.$CaseModel->id.', belonging to '. $CaseModel->name .', can be found in the link provided';

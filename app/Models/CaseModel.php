@@ -50,11 +50,13 @@ class CaseModel extends Model
         'video_uploaded',
         'video_embedded',
         'missing_trays_amount',
-        'address',  
+        'address',
         'status',
-        'payment_status',      
+        'payment_status',
         'created_by',
-        'embedded_url'
+        'embedded_url',
+        'first_MS_trays',
+        'first_MS_amount' 
     ];
 
     public function patient(){
@@ -78,7 +80,7 @@ class CaseModel extends Model
         return CaseConcern::where('case_id',$this->id)->latest()->first();
     }
 
-  
+
 
     public function aligner(){
         return $this->belongsTo(Order::class, 'aligner_kit_order_id', 'id');
