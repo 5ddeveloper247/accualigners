@@ -214,8 +214,8 @@ class OrderAlignerController extends Controller
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
                     'processing_fee_payment_at' => Carbon::now(),
-                    'first_MS_trays'=>  $inputs['quantity'],
-                    'first_MS_amount'=>$inputs['total_amount'],
+                    'first_MS_trays'=>  $case->no_of_trays,
+                    'first_MS_amount'=>$total_amount,
                     'status' => 'CONFIRMED',
                 ]);
 
@@ -300,9 +300,9 @@ class OrderAlignerController extends Controller
                     'aligner_kit_order_id' => $order->id,
                     'payment_status' => 'first-installment',
                     'processing_fee_payment_at' => Carbon::now(),
-                    'first_MS_trays'=>  $inputs['quantity'],
-                    'first_MS_amount'=>$inputs['total_amount'],
-                    'status' => 'CONFIRMED',
+                    'first_MS_trays'=>  $case->no_of_trays,
+                    'first_MS_amount'=>$total_amount,
+                    'status' => 'CONFIRMED'
                 ]);
 
                 DB::commit();
