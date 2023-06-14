@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+           
         ],
 
         'api' => [
@@ -68,6 +69,14 @@ class Kernel extends HttpKernel
         'isPatient' => \App\Http\Middleware\Api\IsPatient::class,
         'isDoctor' => \App\Http\Middleware\Api\IsDoctor::class,
         'user_permission' => \App\Http\Middleware\Web\UserPermissionMiddleware::class,
-
+        'check.agreement' => \App\Http\Middleware\CheckAgreementStatus::class,
+        // 'check.agreement' => function ($request, $next) {
+        //     if (auth()->check() && auth()->user()->agreement_status === 1) {
+        //         return $next($request);
+        //     }
+    
+        //     abort(403, 'You must accept the terms and conditions.');
+        // },
+       
     ];
 }

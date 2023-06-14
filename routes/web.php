@@ -299,7 +299,7 @@ Route::prefix(trans('siteConfig.subDomain.web.doctor'))->name('doctor.')->group(
 
          Route::get('case/download-attachment/{case_id}', [CaseController::class, 'downloadAttachment'])->name('case.download-attachment');
 
-         Route::resource('case', DoctorCaseController::class);
+         Route::resource('case', DoctorCaseController::class)->middleware('check.agreement');
 
           Route::post('case/store/new', [DoctorCaseController::class, 'case_store'])->name('case.store.new');
          /* new route */
