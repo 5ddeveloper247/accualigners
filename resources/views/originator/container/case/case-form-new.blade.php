@@ -586,7 +586,7 @@
                                                data-type="TREATMENT-PLAN-PDF" data-sort="1"
                                                onchange="preViewImage(this)"
                                                hidden>
-                                        <img src="{{asset('link/files/app-assets/images/case/upload.png')}}"
+                                        <img src="{{ !empty($treatment_attachment) ? 'https://accualigners.app/storage/images/file.png': asset('link/files/app-assets/images/case/upload.png')}}"
                                              id="IMAGE_1"
                                              alt="Image" class="img-thumbnail"
                                              style="max-width:250% !important;float:right;">
@@ -825,7 +825,7 @@
                                              style="">
                                         <a href="{{ $image }}" target="_blank" download="{{ $image }}"
                                            style="font-size: 11px;font-family: 'Inter';line-height: 25px;font-weight: 700;">{{ ucwords($attachment->attachment_type) }}
-                                            <img 
+                                            <img
                                                 src="{{ asset('vendors/images/download.png') }}"
                                                 width="15"
                                                 class="mx-2"></a>

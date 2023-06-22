@@ -109,6 +109,7 @@ class CaseController extends Controller
                 });
             }
             $cases = $cases->orderBy('id', 'desc')->get();
+
             return view('originator.container.case.case-view-new', compact('cases','ClinicalConditions', 'ClinicDoctors' , 'doctors'));
 
         } catch (Exception $e) {
@@ -344,6 +345,8 @@ class CaseController extends Controller
             $data['order']=$order;
 //dd($case->aligner,$order);
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
+            $data['treatment_attachment'] = CaseAttachment::where('case_id',$case->id)->where('attachment_type','TREATMENT-PLAN-PDF')->first();
+
             return view('originator.container.case.case-form-new', $data);
          } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
