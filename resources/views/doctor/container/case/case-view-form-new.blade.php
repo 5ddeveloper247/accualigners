@@ -206,10 +206,12 @@
                                 <h4 class="px-3"> Treatment plan</h4>
                             </div>
                             <div class="col-xl-6 py-2">
-                                <a href="{{ url('doctor/case/download-attachment/' . $edit_values->id . '?type=TREATMENT-PLAN-PDF') }}"
-                                   data-toggle="tooltip" data-original-title="Download Treatment Plan PDF"> Download
+                                @if(!empty($treatment_attachment))
+                                <a href="{{ asset('public/storage/' . $treatment_attachment->path . $treatment_attachment->name) }}"
+                                   data-toggle="tooltip" data-original-title="Download Treatment Plan PDF" download> Download
                                     Treatment Plan <img src="{{ asset('vendors/images/download.png') }}"
                                                         width="15"></a>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
