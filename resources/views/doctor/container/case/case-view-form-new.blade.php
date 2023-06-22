@@ -207,8 +207,8 @@
                             </div>
                             <div class="col-xl-6 py-2">
                                 @if(!empty($treatment_attachment))
-                                <a href="{{ asset('public/storage/' . $treatment_attachment->path . $treatment_attachment->name) }}"
-                                   data-toggle="tooltip" data-original-title="Download Treatment Plan PDF" download> Download
+                                <a href="{{ storageUrl_h($treatment_attachment->path . $treatment_attachment->name) }}"
+                                   data-toggle="tooltip" data-original-title="Download Treatment Plan PDF" download="{{ storageUrl_h($treatment_attachment->path . $treatment_attachment->name) }}"> Download
                                     Treatment Plan <img src="{{ asset('vendors/images/download.png') }}"
                                                         width="15"></a>
                                 @endif
