@@ -465,7 +465,8 @@ class CaseController extends Controller
             $data['settings'] = Setting::first();
             $data['ClinicDoctors'] = ClinicDoctor::where(['doctor_id' => auth()->user()->id])->get();
             $data['appointments'] = Appointment::where('patient_id', $case->patient_id)->orderBy('id', 'desc')->limit(3)->get();
-            // dd($data['appointments']->toArray());
+            $data['treatment_attachment'] = CaseAttachment::where('case_id',$case->id)->where('attachment_type','TREATMENT-PLAN-PDF')->first();
+
             return view('doctor.container.case.case-view-form-new', $data);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
